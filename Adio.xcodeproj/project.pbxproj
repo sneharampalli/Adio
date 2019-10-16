@@ -13,6 +13,7 @@
 		44C5F0AD2356715F00687307 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0AB2356715F00687307 /* Main.storyboard */; };
 		44C5F0AF2356716200687307 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0AE2356716200687307 /* Assets.xcassets */; };
 		44C5F0B22356716200687307 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0B02356716200687307 /* LaunchScreen.storyboard */; };
+		44C5F0BB23567DD100687307 /* BeautifulNow.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0BA23567DD100687307 /* BeautifulNow.m4a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		44C5F0AE2356716200687307 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		44C5F0B12356716200687307 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		44C5F0B32356716200687307 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		44C5F0BA23567DD100687307 /* BeautifulNow.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = BeautifulNow.m4a; path = ../../../Documents/BeautifulNow.m4a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		44C5F0A42356715F00687307 /* Adio */ = {
 			isa = PBXGroup;
 			children = (
+				44C5F0BA23567DD100687307 /* BeautifulNow.m4a */,
 				44C5F0A52356715F00687307 /* AppDelegate.swift */,
 				44C5F0A72356715F00687307 /* SceneDelegate.swift */,
 				44C5F0A92356715F00687307 /* ViewController.swift */,
@@ -126,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				44C5F0B22356716200687307 /* LaunchScreen.storyboard in Resources */,
+				44C5F0BB23567DD100687307 /* BeautifulNow.m4a in Resources */,
 				44C5F0AF2356716200687307 /* Assets.xcassets in Resources */,
 				44C5F0AD2356715F00687307 /* Main.storyboard in Resources */,
 			);
