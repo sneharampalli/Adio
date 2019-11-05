@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+//import AVAudioSession
 
 class ViewController: UIViewController, AVAudioPlayerDelegate {
     
@@ -18,7 +19,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
     @IBOutlet weak var playBTN: UIButton!
     var soundPlayer : AVAudioPlayer!
-        
+    
     func setupPlayer() {
         let audioFilename = Bundle.main.path(forResource: "BeautifulNow", ofType: "m4a")
         do {
@@ -33,11 +34,21 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     @IBAction func pauseAudio(_ sender: UIButton) {
         if playBTN.titleLabel?.text == "Play" {
-            playBTN.setTitle("Stop", for: .normal)
             setupPlayer()
+            do {
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch {
+                print(error)
+            }
+            playBTN.setTitle("Stop", for: .normal)
             soundPlayer.play()
         } else {
             soundPlayer.stop()
+            do {
+                try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            } catch {
+                print(error)
+            }
             playBTN.setTitle("Play", for: .normal)
         }
     }
