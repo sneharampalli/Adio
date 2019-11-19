@@ -12,6 +12,27 @@ import AVFoundation
 
 class ViewController: UIViewController, AVAudioPlayerDelegate {
     
+    let SpotifyClientID = Constants.apiKey
+    let SpotifyRedirectURL = URL(string: "adio://adio-login-playback")!
+
+    lazy var configuration = SPTConfiguration(
+      clientID: SpotifyClientID,
+      redirectURL: SpotifyRedirectURL
+    )
+    
+    lazy var appRemote: SPTAppRemote = {
+      let appRemote = SPTAppRemote(configuration: self.configuration, logLevel: .debug)
+      appRemote.connectionParameters.accessToken = self.accessToken
+      appRemote.delegate = self
+      return appRemote
+    }()
+    
+    lazy var playURI = ""
+    
+    func connect() {
+      self.appRemote.authorizeAndPlayURI(self.playURI)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
