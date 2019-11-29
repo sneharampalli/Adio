@@ -12,26 +12,26 @@ import AVFoundation
 
 class ViewController: UIViewController, AVAudioPlayerDelegate {
     
-    let SpotifyClientID = Constants.apiKey
-    let SpotifyRedirectURL = URL(string: "adio://adio-login-playback")!
-
-    lazy var configuration = SPTConfiguration(
-      clientID: SpotifyClientID,
-      redirectURL: SpotifyRedirectURL
-    )
+//    let SpotifyClientID = Constants.apiKey
+//    let SpotifyRedirectURL = URL(string: "adio://adio-login-playback")!
+//
+//    lazy var configuration = SPTConfiguration(
+//      clientID: SpotifyClientID,
+//      redirectURL: SpotifyRedirectURL
+//    )
+//
+//    lazy var appRemote: SPTAppRemote = {
+//      let appRemote = SPTAppRemote(configuration: self.configuration, logLevel: .debug)
+//      appRemote.connectionParameters.accessToken = self.accessToken
+//      appRemote.delegate = self
+//      return appRemote
+//    }()
     
-    lazy var appRemote: SPTAppRemote = {
-      let appRemote = SPTAppRemote(configuration: self.configuration, logLevel: .debug)
-      appRemote.connectionParameters.accessToken = self.accessToken
-      appRemote.delegate = self
-      return appRemote
-    }()
-    
-    lazy var playURI = ""
-    
-    func connect() {
-      self.appRemote.authorizeAndPlayURI(self.playURI)
-    }
+//    lazy var playURI = ""
+//
+//    func connect() {
+//      self.appRemote.authorizeAndPlayURI(self.playURI)
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +40,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
     @IBOutlet weak var playBTN: UIButton!
     var soundPlayer : AVAudioPlayer!
+    
+    @IBOutlet weak var playButtonImage: UIImageView!
     
     func setupPlayer() {
         let audioFilename = Bundle.main.path(forResource: "BeautifulNow", ofType: "m4a")
@@ -54,15 +56,16 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     @IBAction func pauseAudio(_ sender: UIButton) {
-        if playBTN.titleLabel?.text == "Play" {
+        if playBTN.titleLabel?.text == "start" {
             setupPlayer()
             do {
                 try AVAudioSession.sharedInstance().setActive(true)
             } catch {
                 print(error)
             }
-            playBTN.setTitle("Stop", for: .normal)
+            playBTN.setTitle("stop", for: .normal)
             soundPlayer.play()
+            playButtonImage.isHighlighted = true
         } else {
             soundPlayer.stop()
             do {
@@ -70,7 +73,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             } catch {
                 print(error)
             }
-            playBTN.setTitle("Play", for: .normal)
+            playBTN.setTitle("start", for: .normal)
+            playButtonImage.isHighlighted = false
         }
     }
 }

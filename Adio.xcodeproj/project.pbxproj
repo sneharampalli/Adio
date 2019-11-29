@@ -14,7 +14,6 @@
 		44C5F0AF2356716200687307 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0AE2356716200687307 /* Assets.xcassets */; };
 		44C5F0B22356716200687307 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0B02356716200687307 /* LaunchScreen.storyboard */; };
 		44C5F0BB23567DD100687307 /* BeautifulNow.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0BA23567DD100687307 /* BeautifulNow.m4a */; };
-		C932F3142384B3A700439CBF /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C932F3132384B3A700439CBF /* SpotifyiOS.framework */; };
 		C932F3182384B7C100439CBF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C932F3172384B7C100439CBF /* Constants.swift */; };
 		FCBBF26B2372357300BAD88A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBF26A2372357300BAD88A /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
@@ -30,8 +29,8 @@
 		44C5F0B32356716200687307 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44C5F0BA23567DD100687307 /* BeautifulNow.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = BeautifulNow.m4a; path = ../../../Documents/BeautifulNow.m4a; sourceTree = "<group>"; };
 		C932F3112384A8CE00439CBF /* Adio-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Adio-Bridging-Header.h"; sourceTree = "<group>"; };
-		C932F3132384B3A700439CBF /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyiOS.framework; path = "../../../../Downloads/ios-sdk-1.0.2/SpotifyiOS.framework"; sourceTree = "<group>"; };
 		C932F3172384B7C100439CBF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C932F3192387351700439CBF /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyiOS.framework; path = Frameworks/SpotifyiOS.framework; sourceTree = "<group>"; };
 		FCBBF26A2372357300BAD88A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FCBBF26C2372359900BAD88A /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -41,7 +40,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C932F3142384B3A700439CBF /* SpotifyiOS.framework in Frameworks */,
 				FCBBF26B2372357300BAD88A /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,7 +84,7 @@
 		FCBBF2692372357300BAD88A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C932F3132384B3A700439CBF /* SpotifyiOS.framework */,
+				C932F3192387351700439CBF /* SpotifyiOS.framework */,
 				FCBBF26C2372359900BAD88A /* AudioUnit.framework */,
 				FCBBF26A2372357300BAD88A /* AVFoundation.framework */,
 			);
@@ -314,14 +312,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TJKQ5NWLSB;
+				HEADER_SEARCH_PATHS = "Frameworks/**";
 				INFOPLIST_FILE = Adio/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = SA.Adio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Adio/Adio-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Adio/Adio-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -334,14 +335,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TJKQ5NWLSB;
+				HEADER_SEARCH_PATHS = "Frameworks/**";
 				INFOPLIST_FILE = Adio/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = SA.Adio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Adio/Adio-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Adio/Adio-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
