@@ -39,29 +39,29 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // App will open with playing music - set to a dummy song for the timebeing.
-        setupPlayer()
-        do {
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print(error)
-        }
-        playBTN.setTitle("stop", for: .normal)
-        soundPlayer.play()
-        playButtonImage.isHighlighted = true
-        
+        playBTN.setTitle("start", for: .normal)
+        self.playButtonImage.isHighlighted = false
         // Set the @withTimeInterval to be around 2 minutes, 5.0 seconds for testing purposes.
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { timer in
             // This will be where we play the ad.
-            self.soundPlayer.stop()
+            self.setupPlayer()
             do {
-                try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+                try AVAudioSession.sharedInstance().setActive(true)
             } catch {
                 print(error)
             }
-            self.playBTN.setTitle("start", for: .normal)
-            self.playButtonImage.isHighlighted = false
+            self.playBTN.setTitle("stop", for: .normal)
+            self.soundPlayer.play()
+            self.playButtonImage.isHighlighted = true
             // Similarly, set the @withTimeInterval to be around 2 minutes, 5.0 seconds for testing purposes.
             self.timerPlay = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { timerPlay in
+                // Stop playing the ads
+                self.soundPlayer.stop()
+                do {
+                    try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+                } catch {
+                    print(error)
+                }
                 self.viewDidLoad()
             }
         }
