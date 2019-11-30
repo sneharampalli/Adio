@@ -33,8 +33,38 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
 //      self.appRemote.authorizeAndPlayURI(self.playURI)
 //    }
     
+    var timer:Timer!
+    var timerPlay:Timer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        // App will open with playing music - set to a dummy song for the timebeing.
+        setupPlayer()
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print(error)
+        }
+        playBTN.setTitle("stop", for: .normal)
+        soundPlayer.play()
+        playButtonImage.isHighlighted = true
+        
+        // Set the @withTimeInterval to be around 2 minutes, 5.0 seconds for testing purposes.
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { timer in
+            // This will be where we play the ad.
+            self.soundPlayer.stop()
+            do {
+                try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            } catch {
+                print(error)
+            }
+            self.playBTN.setTitle("start", for: .normal)
+            self.playButtonImage.isHighlighted = false
+            // Similarly, set the @withTimeInterval to be around 2 minutes, 5.0 seconds for testing purposes.
+            self.timerPlay = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { timerPlay in
+                self.viewDidLoad()
+            }
+        }
         // Do any additional setup after loading the view.
     }
         
@@ -56,26 +86,26 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     @IBAction func pauseAudio(_ sender: UIButton) {
-        if playBTN.titleLabel?.text == "start" {
-            setupPlayer()
-            do {
-                try AVAudioSession.sharedInstance().setActive(true)
-            } catch {
-                print(error)
-            }
-            playBTN.setTitle("stop", for: .normal)
-            soundPlayer.play()
-            playButtonImage.isHighlighted = true
-        } else {
-            soundPlayer.stop()
-            do {
-                try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-            } catch {
-                print(error)
-            }
-            playBTN.setTitle("start", for: .normal)
-            playButtonImage.isHighlighted = false
-        }
+//        if playBTN.titleLabel?.text == "start" {
+//            setupPlayer()
+//            do {
+//                try AVAudioSession.sharedInstance().setActive(true)
+//            } catch {
+//                print(error)
+//            }
+//            playBTN.setTitle("stop", for: .normal)
+//            soundPlayer.play()
+//            playButtonImage.isHighlighted = true
+//        } else {
+//            soundPlayer.stop()
+//            do {
+//                try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+//            } catch {
+//                print(error)
+//            }
+//            playBTN.setTitle("start", for: .normal)
+//            playButtonImage.isHighlighted = false
+//        }
     }
 }
 

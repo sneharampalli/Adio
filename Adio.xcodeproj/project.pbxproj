@@ -14,7 +14,6 @@
 		44C5F0AF2356716200687307 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0AE2356716200687307 /* Assets.xcassets */; };
 		44C5F0B22356716200687307 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0B02356716200687307 /* LaunchScreen.storyboard */; };
 		44C5F0BB23567DD100687307 /* BeautifulNow.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0BA23567DD100687307 /* BeautifulNow.m4a */; };
-		C932F3182384B7C100439CBF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C932F3172384B7C100439CBF /* Constants.swift */; };
 		FCBBF26B2372357300BAD88A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBF26A2372357300BAD88A /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,7 +28,6 @@
 		44C5F0B32356716200687307 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44C5F0BA23567DD100687307 /* BeautifulNow.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = BeautifulNow.m4a; path = ../../../Documents/BeautifulNow.m4a; sourceTree = "<group>"; };
 		C932F3112384A8CE00439CBF /* Adio-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Adio-Bridging-Header.h"; sourceTree = "<group>"; };
-		C932F3172384B7C100439CBF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C932F3192387351700439CBF /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyiOS.framework; path = Frameworks/SpotifyiOS.framework; sourceTree = "<group>"; };
 		FCBBF26A2372357300BAD88A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FCBBF26C2372359900BAD88A /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
@@ -76,7 +74,6 @@
 				44C5F0AE2356716200687307 /* Assets.xcassets */,
 				44C5F0B02356716200687307 /* LaunchScreen.storyboard */,
 				44C5F0B32356716200687307 /* Info.plist */,
-				C932F3172384B7C100439CBF /* Constants.swift */,
 			);
 			path = Adio;
 			sourceTree = "<group>";
@@ -166,7 +163,6 @@
 				44C5F0AA2356715F00687307 /* ViewController.swift in Sources */,
 				44C5F0A62356715F00687307 /* AppDelegate.swift in Sources */,
 				44C5F0A82356715F00687307 /* SceneDelegate.swift in Sources */,
-				C932F3182384B7C100439CBF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
