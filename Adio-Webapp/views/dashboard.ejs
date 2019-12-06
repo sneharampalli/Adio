@@ -10,7 +10,33 @@
 
 <body>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script type="text/javascript">
   todo: insert map here
+
+  $(document).ready(function () {
+      $("#addAudioBtn").click(function () {
+
+      });
+
+   </script>
+   <div class="wrapper">
+   	<div id= "formContent">
+        <!-- Add Audio Button -->
+        <h2 id="addAudioBtn" class="inactive underlineHover">Add Audio Clip</h2>
+
+        <!-- Submit specific info (lat/long, radius) -->
+        <form id="addAudio">
+        	<span id="error-ea">
+            <input type="text" id="latitude" class="fadeIn first" name="latitude" placeholder="latitude"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'Latitude'">
+            <input type="text" id="longitude" class="fadeIn first" name="longitude" placeholder="longitude"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'Longitude'">
+            <input type="text" id="targetRadius" class="fadeIn first" name="targetRadius" placeholder="targetRadius"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'Target Radius'">
+          </span>
+        </form>
+    </div>
+   </div>
 </body>
 
 </html>
