@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/css/login.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#signup").hide().attr("formnovalidate");
+    });
+    $(document).ready(function () {
+      $("#signupBtn").click(function () {
+        if ($("#signinBtn").hasClass("active")) {
+          $("#formContent").animate({ height: $("#formContent").height() + $("#signup").height() - $("#signin").height() }, 400);
+          $("#signin").hide().attr("formnovalidate");
+          $("#signup").show();
+          $("#signinBtn").addClass("inactive underlineHover");
+          $("#signinBtn").removeClass("active");
+          $("#signupBtn").removeClass("inactive underlineHover");
+          $("#signupBtn").addClass("active");
+        }
+      });
+      $("#signinBtn").click(function () {
+        if ($("#signupBtn").hasClass("active")) {
+          $("#formContent").animate({ height: $("#formContent").height() + $("#signin").height() - $("#signup").height() }, 400);
+          $("#signin").show();
+          $("#signup").hide().attr("formnovalidate");
+          $("#signinBtn").removeClass("inactive underlineHover");
+          $("#signinBtn").addClass("active");
+          $("#signupBtn").addClass("inactive underlineHover");
+          $("#signupBtn").removeClass("active");
+        }
+      });
+      $("#password").focus(function () {
+        $("#password").removeClass("error");
+      });
+      $("#email").focus(function () {
+        $("#email").removeClass("error");
+      });
+      $("#first-name").focus(function () {
+        $("#first-name").removeClass("error");
+      });
+      $("#last-name").focus(function () {
+        $("#last-name").removeClass("error");
+      });
+      $("#new-companyname").focus(function () {
+        $("#new-companyname").removeClass("error");
+      });
+      $("#new-email").focus(function () {
+        $("#new-email").removeClass("error");
+      });
+      $("#new-password").focus(function () {
+        $("#new-password").removeClass("error");
+      });
+      $("#confirm-password").focus(function () {
+        $("#confirm-password").removeClass("error");
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.forms["signin"].addEventListener('submit', checkLogin);
+    });
+
+    var checkLogin = function (e) {
+      e.preventDefault();
+      valid = true;
+      if (e.target.email.value === '') {
+        $('#error-ea').addClass("animated shake");
+        $("#email").addClass("error");
+        $('#error-ea').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+          function (e) {
+            $('#error-ea').removeClass('animated shake');
+          });
+        valid = false;
+      }
+      if (e.target.password.value === '') {
+        $('#error-pw').addClass("animated shake");
+        $("#password").addClass("error");
+        $('#error-pw').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+          function (e) {
+            $('#error-pw').removeClass('animated shake');
+          });
+        valid = false;
+      }
+      if (valid) {
+        $.post('/checkLogin', { email: e.target.email.value.toLowerCase(), password: e.target.password.value }, function (data) {
+          var err = data.err;
+          if (!err) {
+            location.reload();
+          } else {
+            if (err === "Incorrect password") {
+              $('#error-pw').addClass("animated shake");
+              $("#password").addClass("error");
+              $('#error-pw').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function (e) {
+                  $('#error-pw').removeClass('animated shake');
+                });
+            } else if (err === "Company does not exist") {
+              $('#error-ea').addClass("animated shake");
+              $("#email").addClass("error");
+              $('#error-ea').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function (e) {
+                  $('#error-ea').removeClass('animated shake');
+                });
+            } else {
+              $('#error-pw').addClass("animated shake");
+              $("#password").addClass("error");
+              $('#error-pw').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function (e) {
+                  $('#error-pw').removeClass('animated shake');
+                });
+              $('#error-ea').addClass("animated shake");
+              $("#email").addClass("error");
+              $('#error-ea').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function (e) {
+                  $('#error-ea').removeClass('animated shake');
+                });
+            }
+          }
+        });
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.forms["signup"].addEventListener('submit', createAccount);
+    });
+
+    var createAccount = function (e) {
+      e.preventDefault();
+      valid = true;
+      if (e.target.firstName.value === '') {
+        $('#error-fn').addClass("animated shake");
+        $("#first-name").addClass("error");
+        $('#error-fn').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+          function (e) {
+            $('#error-fn').removeClass('animated shake');
+          });
+        valid = false;
+      }
+      if (e.target.lastName.value === '') {
+        $('#error-ln').addClass("animated shake");
+        $("#last-name").addClass("error");
+        $('#error-ln').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+          function (e) {
+            $('#error-ln').removeClass('animated shake');
+          });
+        valid = false;
+      }
+      if (e.target.newCompanyname.value === '') {
+        $('#error-ncn').addClass("animated shake");
+        $("#new-companyname").addClass("error");
+        $('#error-ncn').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+          function (e) {
+            $('#error-ncn').removeClass('animated shake');
+          });
+        valid = false;
+      }
+      if (e.target.newEmail.value === '' || /\s/.test(e.target.newEmail.value)) {
+        $('#error-nea').addClass("animated shake");
+        $("#new-email").addClass("error");
+        $('#error-nea').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+          function (e) {
+            $('#error-nea').removeClass('animated shake');
+          });
+        valid = false;
+      }
+      if (e.target.newPassword.value === '') {
+        $('#error-npw').addClass("animated shake");
+        $("#new-password").addClass("error");
+        $('#error-npw').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+          function (e) {
+            $('#error-npw').removeClass('animated shake');
+          });
+        valid = false;
+      }
+      if (e.target.confirmPassword.value === '') {
+        $('#error-cpw').addClass("animated shake");
+        $("#confirm-password").addClass("error");
+        $('#error-cpw').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+          function (e) {
+            $('#error-cpw').removeClass('animated shake');
+          });
+        valid = false;
+      }
+      if (e.target.newPassword.value !== e.target.confirmPassword.value) {
+        $('#error-npw').addClass("animated shake");
+        $("#new-password").addClass("error");
+        $('#error-npw').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+          function (e) {
+            $('#error-npw').removeClass('animated shake');
+          });
+        $('#error-cpw').addClass("animated shake");
+        $("#confirm-password").addClass("error");
+        $('#error-cpw').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+          function (e) {
+            $('#error-cpw').removeClass('animated shake');
+          });
+        valid = false;
+      }
+      if (valid) {
+        $.post('/createAccount', { newCompanyname: e.target.newCompanyname.value, firstName: e.target.firstName.value, lastName: e.target.lastName.value, newEmail: e.target.newEmail.value.toLowerCase(), newPassword: e.target.newPassword.value, confirmPassword: e.target.confirmPassword.value }, function (data) {
+          var err = data.err;
+          if (!err) {
+            location.reload();
+          } else {
+            if (err === "Company already exists" || err.name === "ValidationError") {
+              $('#error-nea').addClass("animated shake");
+              $("#new-email").addClass("error");
+              $('#error-nea').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function (e) {
+                  $('#error-nea').removeClass('animated shake');
+                });
+            } else {
+              $('#error-fn').addClass("animated shake");
+              $("#first-name").addClass("error");
+              $('#error-fn').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function (e) {
+                  $('#error-fn').removeClass('animated shake');
+                });
+              $('#error-ln').addClass("animated shake");
+              $("#last-name").addClass("error");
+              $('#error-ln').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function (e) {
+                  $('#error-ln').removeClass('animated shake');
+                });
+              $('#error-ncn').addClass("animated shake");
+              $("#new-companyname").addClass("error");
+              $('#error-ncn').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function (e) {
+                  $('#error-ncn').removeClass('animated shake');
+                });
+              $('#error-nea').addClass("animated shake");
+              $("#new-email").addClass("error");
+              $('#error-nea').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function (e) {
+                  $('#error-nea').removeClass('animated shake');
+                });
+              $('#error-npw').addClass("animated shake");
+              $("#new-password").addClass("error");
+              $('#error-npw').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function (e) {
+                  $('#error-npw').removeClass('animated shake');
+                });
+              $('#error-cpw').addClass("animated shake");
+              $("#confirm-password").addClass("error");
+              $('#error-cpw').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                function (e) {
+                  $('#error-cpw').removeClass('animated shake');
+                });
+            }
+          }
+        });
+      }
+    };
+
+
+  </script>
+  <div class="wrapper">
+    <h1 class="fadeIn zeroth">Adio</h1>
+    <h3 class="fadeIn third">subtitle here</h3>
+    <div class="wrapper fadeInDown">
+
+      <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 id="signinBtn" class="active"> Sign In </h2>
+        <h2 id="signupBtn" class="inactive underlineHover">Sign Up</h2>
+
+        <!-- Login Form -->
+        <form id="signin">
+          <span id="error-ea">
+            <input type="text" id="email" class="fadeIn first" name="email" placeholder="email"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+          </span>
+          <span id="error-pw">
+            <input type="password" id="password" class="fadeIn second" name="password" placeholder="password"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
+          </span>
+          <input type="submit" class="fadeIn third" value="Sign In">
+        </form>
+
+        <form id="signup">
+          <div id="error-ncn">
+            <input type="text" id="new-companyname" class="fadeIn first" name="newCompanyname"
+              placeholder="company name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'company name'">
+          </div>
+          <div id="name-wrapper">
+            <div id="error-fn">
+              <input type="text" id="first-name" class="fadeIn second" name="firstName" placeholder="first name"
+                onfocus="this.placeholder = ''" onblur="this.placeholder = 'first name'">
+            </div>
+            <div id="error-ln">
+              <input type="text" id="last-name" class="fadeIn second" name="lastName" placeholder="last name"
+                onfocus="this.placeholder = ''" onblur="this.placeholder = 'last name'">
+            </div>
+          </div>
+          <div id="error-nea">
+            <input type="text" id="new-email" class="fadeIn third" name="newEmail" placeholder="email"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+          </div>
+          <div id="error-npw">
+            <input type="password" id="new-password" class="fadeIn fourth" name="newPassword" placeholder="new password"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'new password'">
+          </div>
+          <div id="error-cpw">
+            <input type="password" id="confirm-password" class="fadeIn fifth" name="confirmPassword"
+              placeholder="confirm password" onfocus="this.placeholder = ''"
+              onblur="this.placeholder = 'confirm password'">
+          </div>
+          <input type="submit" class="fadeIn sixth" value="Sign Up">
+        </form>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

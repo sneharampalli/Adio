@@ -1,0 +1,16 @@
+{
+   "name": "Adio",
+   "version": "0.0.1",
+   "scripts": {
+      "start": "node app.js"
+   },
+   "dependencies": {
+      "async": "*",
+      "aws-sdk": "^2.580.0",
+      "dynamodb": "^1.2.1",
+      "ejs": "^3.0.1",
+      "express": "3.3.8",
+      "lru-cache": "*",
+      "socket.io": "^2.3.0"
+   }
+}
