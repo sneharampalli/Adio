@@ -33,32 +33,27 @@ var dbCheckLogin = function (email, password, route_callback) {
 
 // Function to create a new login for a company in the database
 var dbCreateAccount = function (email, firstname, lastname, companyname, password, route_callback) {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (!re.test(String(email))) {
-    route_callback(false, "Not a valid email");
-  } else {
-    Company.get(email, function (err, acc) {
-      if (err) {
-        route_callback(false, err);
-      } else if (acc === null) {
-        Company.create({
-          email: email,
-          firstname: firstname,
-          lastname: lastname,
-          companyname: companyname,
-          password: password
-        }, function (err, acc) {
-          if (err) {
-            route_callback(false, err);
-          } else {
-            route_callback(true, null);
-          }
-        });
-      } else {
-        route_callback(false, "Company already exists");
-      }
-    });
-  }
+  Company.get(email, function (err, acc) {
+    if (err) {
+      route_callback(false, err);
+    } else if (acc === null) {
+      Company.create({
+        email: email,
+        firstname: firstname,
+        lastname: lastname,
+        companyname: companyname,
+        password: password
+      }, function (err, acc) {
+        if (err) {
+          route_callback(false, err);
+        } else {
+          route_callback(true, null);
+        }
+      });
+    } else {
+      route_callback(false, "Company already exists");
+    }
+  });
 };
 
 var database = {
