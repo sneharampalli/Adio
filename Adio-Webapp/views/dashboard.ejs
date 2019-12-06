@@ -18,6 +18,12 @@
 
       });
 
+
+
+  var verifyAudio = function (e) {
+
+  };
+
    </script>
    <div class="wrapper">
    	<div id= "formContent">
@@ -27,6 +33,10 @@
         <!-- Submit specific info (lat/long, radius) -->
         <form id="addAudio">
         	<span id="error-ea">
+        	<label class="btn btn-default">
+			    Please select audio file <input type="file" hidden>
+			</label>
+
             <input type="text" id="latitude" class="fadeIn first" name="latitude" placeholder="latitude"
               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Latitude'">
             <input type="text" id="longitude" class="fadeIn first" name="longitude" placeholder="longitude"
