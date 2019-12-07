@@ -2,6 +2,7 @@ var async = require('async');
 var dynamo = require('dynamodb');
 dynamo.AWS.config.loadFromPath('config.json');
 Joi = require('joi');
+var crypto = require('crypto');
 
 var Company = dynamo.define('Company', {
   hashKey: 'email',
@@ -10,7 +11,8 @@ var Company = dynamo.define('Company', {
     companyname: Joi.string(),
     firstname: Joi.string(),
     lastname: Joi.string(),
-    password: Joi.string(),
+    salt: Joi.string(),
+    hash: Joi.string(),
   }
 });
 
@@ -22,7 +24,8 @@ var dbCheckLogin = function (email, password, route_callback) {
     } else if (acc === null) {
       route_callback(false, "Company does not exist");
     } else {
-      if (acc.get('password') === password) {
+      hash = crypto.pbkdf2Sync(password, acc.get('salt'), 1000, 64, `sha512`).toString(`hex`);
+      if (acc.get('hash') === hash) {
         route_callback(true, null);
       } else {
         route_callback(false, "Incorrect password");
@@ -37,12 +40,15 @@ var dbCreateAccount = function (email, firstname, lastname, companyname, passwor
     if (err) {
       route_callback(false, err);
     } else if (acc === null) {
+      var salt = crypto.randomBytes(16).toString('hex');
+      var hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`);
       Company.create({
         email: email,
         firstname: firstname,
         lastname: lastname,
         companyname: companyname,
-        password: password
+        salt: salt,
+        hash: hash,
       }, function (err, acc) {
         if (err) {
           route_callback(false, err);

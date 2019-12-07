@@ -9,9 +9,18 @@ var Company = dynamo.define('Company', {
 		companyname: Joi.string(),
 		firstname: Joi.string(),
 		lastname: Joi.string(),
-		password: Joi.string(),
+		salt: Joi.string(),
+		hash: Joi.string(),
 	}
 });
+
+// Company.deleteTable(function (err) {
+// 	if (err) {
+// 		console.log('Error deleting table: ', err);
+// 	} else {
+// 		console.log('Table has been deleted');
+// 	}
+// });
 
 dynamo.createTables(function (err) {
 	if (err) {
