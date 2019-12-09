@@ -22,23 +22,28 @@ app.get('/logout', routes.get_logout);
 const aws = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
- 
+
 const s3 = new aws.S3({ /* ... */ })
- 
+
 const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'adio-1',
     metadata: function (req, file, cb) {
-      cb(null, {fieldName: file.fieldname});
+      cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
       cb(null, file.originalname)
     }
   })
 })
- 
-app.post('/audio', upload.single('music'), function(req, res, next) {
+
+app.post('/audio', upload.single('music'), function (req, res, next) {
+  if (req.file) {
+    console.log("Successfully received!")
+  } else {
+    console.log("Error!");
+  }
   res.redirect('/');
 })
 
