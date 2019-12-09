@@ -5,50 +5,184 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="/css/login.css" rel="stylesheet" type="text/css">
+  <link href="/css/dashboard.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript"
+    src="http://maps.google.com/maps/api/js?key=AIzaSyBz1wVCigPqKRUOumbHEMwz_KzQW-5mbzY"></script>
   <script type="text/javascript">
-  todo: insert map here
+    var map;
+    var markers = new Set();
+    var markerNames = new Map();
 
-  $(document).ready(function () {
-      $("#addAudioBtn").click(function () {
+    function getLocation() {
+      loadMap(null);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      }
+    }
 
+    function showPosition(position) {
+      loadMap(position);
+    }
+
+    /* First, we define a function that creates a new Google Map and installs
+       it in the 'map' DIV (see the HTML part at the bottom). */
+
+    var loadMap = function (position) {
+      if (position) {
+        var myOptions = {
+          center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+          zoom: 14,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          backgroundColor: '#96D1C7'
+        };
+      } else {
+        var myOptions = {
+          center: new google.maps.LatLng(39.952335, -75.163789),
+          zoom: 11,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          backgroundColor: '#96D1C7'
+        };
+      }
+      map = new google.maps.Map(document.getElementById("map"), myOptions);
+      // google.maps.event.addListener(map, 'click', function (event) {
+      //   document.getElementsByName('latitude')[0].value = event.latLng.lat()
+      //   document.getElementsByName('longitude')[0].value = event.latLng.lng();
+      // });
+      //loadGeoData();
+    };
+
+    /* We then assign this function to the 'onload' property of the main window,
+       so that it will be called as soon as the browser has finished loading the page. */
+
+    window.onload = getLocation;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.forms["addAudio"].addEventListener('submit', addRestaurant);
+    });
+
+    var addRestaurant = function (e) {
+      e.preventDefault();
+      $.ajax({
+        url: "/audio",
+        type: "POST",
+        data: new FormData(document.forms["addAudio"]),
+        processData: false,
+        contentType: false,
+        success: function () {
+          $("#music").val('');
+        }
       });
+    };
 
+    // window.setInterval(function () { loadGeoData(); }, 5000);
 
+    // /* Finally, we need a function that downloads the geo data from the server (which is
+    //    running visualizer.js and makes the data available under '/getGeoData') and
+    //    puts a marker on the map for each line of the geo data */
 
-  var verifyAudio = function (e) {
+    // var loadGeoData = function () {
+    //   // Send a request for the geo data to the server, and provide a (nameless) callback
+    //   // function that will be called when the geo data has been downloaded
 
-  };
+    //   $.get('/getrestaurantsdata', function (data) {
 
-   </script>
-   <div class="wrapper">
-   	<div id= "formContent">
-        <!-- Add Audio Button -->
-        <h2 id="addAudioBtn" class="inactive underlineHover">Add Audio Clip</h2>
+    //     // When we reach this point, the geo data has been downloaded and is now available
+    //     // as 'data' (the argument of the callback)
 
-        <!-- Submit specific info (lat/long, radius) -->
-        <form id="addAudio">
-        	<span id="error-ea">
-        	<label for="avatar">Choose an audio file:</label>
+    //     // ... and then iterate over the lines
+    //     var copyMarkers = new Set(markers);
+    //     var arr = data.arr;
+    //     var user = data.user;
+    //     arr.forEach(function (restaurant) {
+    //       var latitude = restaurant.latitude;
+    //       var longitude = restaurant.longitude;
+    //       var name = restaurant.name;
+    //       var description = restaurant.description;
+    //       var creator = restaurant.creator;
 
-        	<label class="btn btn-default">
-			    <input type="file" hidden>
-			</label>
+    //       if (!markers.has(name)) {
+    //         addMarker(latitude, longitude, name, description, creator, user);
+    //       } else {
+    //         copyMarkers.delete(name);
+    //       }
+    //     });
+    //     copyMarkers.forEach(function (name) {
+    //       markers.delete(name);
+    //       markerNames.get(name).setMap(null);
+    //       markerNames.delete(name);
+    //     });
+    //   });
+    // };
 
-            <input type="text" id="latitude" class="fadeIn first" name="latitude" placeholder="latitude"
-              onfocus="this.placeholder = ''" onblur="this.placeholder = 'Latitude'">
-            <input type="text" id="longitude" class="fadeIn first" name="longitude" placeholder="longitude"
-              onfocus="this.placeholder = ''" onblur="this.placeholder = 'Longitude'">
-            <input type="text" id="targetRadius" class="fadeIn first" name="targetRadius" placeholder="targetRadius"
-              onfocus="this.placeholder = ''" onblur="this.placeholder = 'Target Radius'">
-          </span>
-        </form>
+    // var addMarker = function (latitude, longitude, name, description, creator, user) {
+    //   // Now we create a marker at the location that was specified
+    //   var myLatLng = new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude));
+    //   var marker = new google.maps.Marker({
+    //     position: myLatLng,
+    //     title: name,
+    //     icon: {
+    //       url: creator === user ? "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png" : "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+    //     }
+    //   });
+    //   marker.setMap(map);
+
+    //   var contentString = "<b>" + name + "</b></br><p>" + description + "</br><i>Added by " + creator + "&nbsp</i></p>"; //"<a href=" + photo + "><img src=" + photo + " height='150 px' width='150 px'/></a></br>"
+
+    //   // Now we create the info window (which is initially hidden)...
+
+    //   marker['infowindow'] = new google.maps.InfoWindow({
+    //     content: contentString
+    //   });
+
+    //   // ... and we add a 'listener' function to the marker that will
+    //   // be called when someone clicks on it. The listener will then
+    //   // open the info window we just created.
+
+    //   google.maps.event.addListener(marker, 'click', function () {
+    //     this['infowindow'].open(map, this);
+    //   });
+
+    //   google.maps.event.addListener(marker, 'rightclick', function () {
+    //     if (user === creator) {
+    //       $.post('/deleterestaurant', { name: name }, function (data) {
+    //         var err = data.err;
+    //         if (!err) {
+    //           marker.setMap(null);
+    //         } else {
+    //           alert(err.toString());
+    //         }
+    //       });
+    //     } else {
+    //       alert('You do not have permission to delete this restaurant as you are not the user that created this marker.');
+    //     }
+    //   });
+    //   markers.add(name);
+    //   markerNames.set(name, marker);
+    // };
+  </script>
+  <div class="wrapper">
+    <div id="map"></div>
+    <div id="formContent">
+      <!-- Add Audio Button -->
+      <form enctype="multipart/form-data" name="addAudio">
+        <input type="file" name="music" id="music" />
+        <!-- <span id="error-ea">
+          <input type="text" id="email" class="fadeIn first" name="email" placeholder="email"
+            onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+        </span>
+        <span id="error-pw">
+          <input type="password" id="password" class="fadeIn second" name="password" placeholder="password"
+            onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
+        </span> -->
+        <input type="submit" />
+      </form>
     </div>
-   </div>
+  </div>
 </body>
 
 </html>
