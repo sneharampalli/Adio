@@ -4,7 +4,8 @@ const app = express();
 const path = require('path');
 const http = require('http').Server(app);
 const db = require('./models/database.js');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+var AthenaExpress = require('athena-express');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.cookieParser());
@@ -30,10 +31,11 @@ const upload = multer({
     s3: s3,
     bucket: 'adio-1',
     metadata: function (req, file, cb) {
-      cb(null, { fieldName: file.fieldname });
+      cb(null, { email: req.session.email, fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-      cb(null, file.originalname)
+      var path = req.session.email + '/' + file.originalname;
+      cb(null, path);
     }
   })
 })
@@ -43,9 +45,10 @@ app.post('/audio', upload.single('music'), function (req, res, next) {
     console.log("Successfully received!")
   } else {
     console.log("Error!");
-  }
-  res.redirect('/');
+  }  
 })
+
+// app.get('/renderAudio', routes.get_audio);
 
 http.listen(8080);
 console.log('Server running on port 8080.');

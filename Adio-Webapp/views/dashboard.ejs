@@ -23,6 +23,7 @@
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
       }
+
     }
 
     function showPosition(position) {
@@ -62,10 +63,10 @@
     window.onload = getLocation;
 
     document.addEventListener('DOMContentLoaded', function () {
-      document.forms["addAudio"].addEventListener('submit', addRestaurant);
+      document.forms["addAudio"].addEventListener('submit', submitAudio);
     });
 
-    var addRestaurant = function (e) {
+    var submitAudio = function (e) {
       e.preventDefault();
       $.ajax({
         url: "/audio",
@@ -77,6 +78,9 @@
           $("#music").val('');
         }
       });
+      // $.get('/renderAudio', {}, function (data) {
+      //   console.log(data);
+      // });
     };
 
     // window.setInterval(function () { loadGeoData(); }, 5000);
@@ -171,18 +175,14 @@
       <!-- Add Audio Button -->
       <form enctype="multipart/form-data" name="addAudio">
         <input type="file" name="music" id="music" />
-        <!-- <span id="error-ea">
-          <input type="text" id="email" class="fadeIn first" name="email" placeholder="email"
-            onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
-        </span>
-        <span id="error-pw">
-          <input type="password" id="password" class="fadeIn second" name="password" placeholder="password"
-            onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
-        </span> -->
         <input type="submit" />
       </form>
     </div>
   </div>
+  
+
+  <h2><%= data %></h1>
+  
 </body>
 
 </html>
