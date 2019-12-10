@@ -173,16 +173,31 @@
     <div id="map"></div>
     <div id="formContent">
       <!-- Add Audio Button -->
-      <form enctype="multipart/form-data" name="addAudio">
+      <form enctype="multipart/form-data" name="addAudio" id="signup">
+        <div id="error-ncn">
+          <input type="text" id="new-companyname" class="fadeIn first" name="newCompanyname" placeholder="campaign name"
+            onfocus="this.placeholder = ''" onblur="this.placeholder = 'campaign name'">
+        </div>
+        <div id="name-wrapper">
+          <div id="error-fn">
+            <input type="text" id="first-name" class="fadeIn second" name="firstName" placeholder="latitude"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'latitude'">
+          </div>
+          <div id="error-ln">
+            <input type="text" id="last-name" class="fadeIn second" name="lastName" placeholder="longitude"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'longitude'">
+          </div>
+        </div>
+        <div id="error-ncn">
+          <input type="text" id="new-companyname" class="fadeIn first" name="newCompanyname"
+            placeholder="broadcast radius (miles)" onfocus="this.placeholder = ''"
+            onblur="this.placeholder = 'broadcast radius (miles)'">
+        </div>
         <input type="file" name="music" id="music" />
         <input type="submit" />
       </form>
     </div>
   </div>
-  
-
-  <h2><%= data %></h1>
-  
 </body>
 
 </html>
