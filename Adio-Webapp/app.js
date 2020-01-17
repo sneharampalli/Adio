@@ -31,7 +31,14 @@ const upload = multer({
     s3: s3,
     bucket: 'adio-1',
     metadata: function (req, file, cb) {
-      cb(null, { email: req.session.email, fieldName: file.fieldname });
+      cb(null, { 
+        email: req.session.email, 
+        campaignName: req.body.campaignName,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        broadcastRadius: req.body.broadcastRadius,
+        fieldName: file.fieldname
+      });
     },
     key: function (req, file, cb) {
       var path = req.session.email + '/' + file.originalname;
@@ -40,7 +47,7 @@ const upload = multer({
   })
 })
 
-app.post('/audio', upload.single('music'), function (req, res, next) {
+app.post('/audio', upload.single('ad'), function (req, res, next) {
   if (req.file) {
     console.log("Successfully received!")
   } else {
