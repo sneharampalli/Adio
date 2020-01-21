@@ -17,13 +17,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FC3C51F323D7689E00E13C8F /* adio-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "adio-bridging-header.h"; sourceTree = "<group>"; };
 		FC9E3AF723D6914700BF062A /* Adio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC9E3AFA23D6914700BF062A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC9E3B0323D6914900BF062A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC9E3B0623D6914900BF062A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FC9E3B0823D6914900BF062A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC9E3B2A23D6926900BF062A /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
-		FC9E3B2C23D6932800BF062A /* adio-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "adio-bridging-header.h"; sourceTree = "<group>"; };
 		FC9E3B2D23D6940000BF062A /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		FC9E3B3023D6945A00BF062A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FC9E3B3223D6970700BF062A /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 				FC9E3B0323D6914900BF062A /* Assets.xcassets */,
 				FC9E3B0523D6914900BF062A /* LaunchScreen.storyboard */,
 				FC9E3B0823D6914900BF062A /* Info.plist */,
-				FC9E3B2C23D6932800BF062A /* adio-bridging-header.h */,
+				FC3C51F323D7689E00E13C8F /* adio-bridging-header.h */,
 			);
 			path = Adio;
 			sourceTree = "<group>";
