@@ -41,7 +41,7 @@ const upload = multer({
       });
     },
     key: function (req, file, cb) {
-      var path = req.session.email + '/' + file.originalname;
+      var path = req.session.email + '/' + req.body.campaignName + '/' + file.originalname;
       cb(null, path);
     }
   })
@@ -49,13 +49,11 @@ const upload = multer({
 
 app.post('/audio', upload.single('ad'), function (req, res, next) {
   if (req.file) {
-    console.log("Successfully received!")
+    console.log("Successfully received!");
   } else {
     console.log("Error!");
   }  
 })
-
-// app.get('/renderAudio', routes.get_audio);
 
 http.listen(8080);
 console.log('Server running on port 8080.');

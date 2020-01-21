@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/css/dashboard.css" rel="stylesheet" type="text/css">
-  <link href="/css/login.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -75,14 +74,18 @@
         data: new FormData(document.forms["addAudio"]),
         processData: false,
         contentType: false,
-        success: function () {
+        success: function (data) {
           $("#ad").val('');
         }
       });
-      // $.get('/renderAudio', {}, function (data) {
-      //   console.log(data);
-      // });
     };
+
+    window.addEventListener('load', function() {
+      var data_string = <%- JSON.stringify(data) %>;
+      var all_ads = data_string.Contents;
+      // Render the ads here
+      console.log(data_string);
+    });
 
     // window.setInterval(function () { loadGeoData(); }, 5000);
 
@@ -170,13 +173,8 @@
     //   markerNames.set(name, marker);
     // };
   </script>
-
   <div class="wrapper">
     <div id="map"></div>
-    <br><br><br><br>
-    <br><br><br><br>
-    <br><br><br><br>
-    <br><br><br><br>
     <div id="formContent">
       <!-- Add Audio Button -->
       <form enctype="multipart/form-data" name="addAudio" id="signup" >
@@ -199,10 +197,18 @@
             placeholder="broadcast radius (miles)" onfocus="this.placeholder = ''"
             onblur="this.placeholder = 'broadcast radius (miles)'">
         </div>
-        <input type="file" name="ad" id="ad"  />
-        <input type="submit"/>
+        <input type="file" name="ad" id="ad" />
+        <input type="submit" />
       </form>
     </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
   </div>
 </body>
 
