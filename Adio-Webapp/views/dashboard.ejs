@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/css/dashboard.css" rel="stylesheet" type="text/css">
+  <link href="/css/login.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -169,6 +170,36 @@
     <div id="map"></div>
     <div id="formContent">
       <!-- Add Audio Button -->
+      <form id="signup">
+        <div id="error-ncn">
+          <input type="text" id="new-companyname" class="fadeIn first" name="newCompanyname"
+            placeholder="company name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'company name'">
+        </div>
+        <div id="name-wrapper">
+          <div id="error-fn">
+            <input type="text" id="first-name" class="fadeIn second" name="firstName" placeholder="first name"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'first name'">
+          </div>
+          <div id="error-ln">
+            <input type="text" id="last-name" class="fadeIn second" name="lastName" placeholder="last name"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'last name'">
+          </div>
+        </div>
+        <div id="error-nea">
+          <input type="text" id="new-email" class="fadeIn third" name="newEmail" placeholder="email"
+            onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+        </div>
+        <div id="error-npw">
+          <input type="password" id="new-password" class="fadeIn fourth" name="newPassword" placeholder="new password"
+            onfocus="this.placeholder = ''" onblur="this.placeholder = 'new password'">
+        </div>
+        <div id="error-cpw">
+          <input type="password" id="confirm-password" class="fadeIn fifth" name="confirmPassword"
+            placeholder="confirm password" onfocus="this.placeholder = ''"
+            onblur="this.placeholder = 'confirm password'">
+        </div>
+        <input type="submit" class="fadeIn sixth" value="Sign Up">
+      </form>
       <form enctype="multipart/form-data" name="addAudio">
         <input type="file" name="music" id="music" />
         <!-- <span id="error-ea">
