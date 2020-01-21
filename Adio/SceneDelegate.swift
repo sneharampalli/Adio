@@ -8,7 +8,35 @@
 
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate {
+    
+    let spotifyClientID = "3acb2978a8e74a4cac2e9fbec4cdd7b9"
+    let spotifyRedirectURL = URL(string: "adio-login://adio-spotify-callback")!
+    
+    weak var viewControllerDelegate: PlayerDelegate? = nil
+    
+    static private let kAccessTokenKey = "access-token-key"
+    var accessToken = UserDefaults.standard.string(forKey: kAccessTokenKey) {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(accessToken, forKey: SceneDelegate.kAccessTokenKey)
+            defaults.synchronize()
+            print("🔮🔮🔮 GOT AN ACCESS TOKEN: \(accessToken!)")
+        }
+    }
+    
+    lazy var spotifyConfiguration = SPTConfiguration(
+        clientID: spotifyClientID,
+        redirectURL: spotifyRedirectURL
+    )
+    
+    lazy var appRemote: SPTAppRemote = {
+        let appRemote = SPTAppRemote(configuration: self.spotifyConfiguration, logLevel: .debug)
+        appRemote.connectionParameters.accessToken = self.accessToken
+        appRemote.delegate = self
+        //appRemote.playerAPI?.delegate = self
+        return appRemote
+    }()
 
     var window: UIWindow?
 
