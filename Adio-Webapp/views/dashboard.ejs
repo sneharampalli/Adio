@@ -24,6 +24,7 @@
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
       }
+
     }
 
     function showPosition(position) {
@@ -63,10 +64,10 @@
     window.onload = getLocation;
 
     document.addEventListener('DOMContentLoaded', function () {
-      document.forms["addAudio"].addEventListener('submit', addRestaurant);
+      document.forms["addAudio"].addEventListener('submit', submitAudio);
     });
 
-    var addRestaurant = function (e) {
+    var submitAudio = function (e) {
       e.preventDefault();
       $.ajax({
         url: "/audio",
@@ -75,9 +76,12 @@
         processData: false,
         contentType: false,
         success: function () {
-          $("#music").val('');
+          $("#ad").val('');
         }
       });
+      // $.get('/renderAudio', {}, function (data) {
+      //   console.log(data);
+      // });
     };
 
     // window.setInterval(function () { loadGeoData(); }, 5000);
@@ -170,46 +174,27 @@
     <div id="map"></div>
     <div id="formContent">
       <!-- Add Audio Button -->
-      <form id="signup">
+      <form enctype="multipart/form-data" name="addAudio" id="signup" >
         <div id="error-ncn">
-          <input type="text" id="new-companyname" class="fadeIn first" name="newCompanyname"
-            placeholder="company name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'company name'">
+          <input type="text" id="campaign-name" class="fadeIn first" name="campaignName" placeholder="campaign name"
+            onfocus="this.placeholder = ''" onblur="this.placeholder = 'campaign name'">
         </div>
         <div id="name-wrapper">
           <div id="error-fn">
-            <input type="text" id="first-name" class="fadeIn second" name="firstName" placeholder="first name"
-              onfocus="this.placeholder = ''" onblur="this.placeholder = 'first name'">
+            <input type="text" id="latitude" class="fadeIn second" name="latitude" placeholder="latitude"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'latitude'">
           </div>
           <div id="error-ln">
-            <input type="text" id="last-name" class="fadeIn second" name="lastName" placeholder="last name"
-              onfocus="this.placeholder = ''" onblur="this.placeholder = 'last name'">
+            <input type="text" id="longitude" class="fadeIn second" name="longitude" placeholder="longitude"
+              onfocus="this.placeholder = ''" onblur="this.placeholder = 'longitude'">
           </div>
         </div>
-        <div id="error-nea">
-          <input type="text" id="new-email" class="fadeIn third" name="newEmail" placeholder="email"
-            onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+        <div id="error-ncn">
+          <input type="text" id="broadcast-radius" class="fadeIn first" name="broadcastRadius"
+            placeholder="broadcast radius (miles)" onfocus="this.placeholder = ''"
+            onblur="this.placeholder = 'broadcast radius (miles)'">
         </div>
-        <div id="error-npw">
-          <input type="password" id="new-password" class="fadeIn fourth" name="newPassword" placeholder="new password"
-            onfocus="this.placeholder = ''" onblur="this.placeholder = 'new password'">
-        </div>
-        <div id="error-cpw">
-          <input type="password" id="confirm-password" class="fadeIn fifth" name="confirmPassword"
-            placeholder="confirm password" onfocus="this.placeholder = ''"
-            onblur="this.placeholder = 'confirm password'">
-        </div>
-        <input type="submit" class="fadeIn sixth" value="Sign Up">
-      </form>
-      <form enctype="multipart/form-data" name="addAudio">
-        <input type="file" name="music" id="music" />
-        <!-- <span id="error-ea">
-          <input type="text" id="email" class="fadeIn first" name="email" placeholder="email"
-            onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
-        </span>
-        <span id="error-pw">
-          <input type="password" id="password" class="fadeIn second" name="password" placeholder="password"
-            onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
-        </span> -->
+        <input type="file" name="ad" id="ad" />
         <input type="submit" />
       </form>
     </div>

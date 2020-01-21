@@ -7,6 +7,11 @@ body {
     width: 100%;
 }
 
+.footer {
+    padding: 10px;
+    text-align: center;
+}
+
 #map {
     position: absolute;
     top: 0px;
@@ -198,6 +203,21 @@ input[type=password] {
 
 #email, #password, #new-email, #new-companyname, #new-password, #confirm-password {
     width: 85%;
+}
+
+#campaign-name, #broadcast-radius {
+    width: 85%;
+}
+
+#latitude, #longitude {
+    width: 100%;
+    margin-right: 0;
+    margin-left:0;
+}
+
+#latitude.error, #longitude.error, #campaign-name.error, #broadcast-radius.error {
+    border-color: red;
+    border-radius: 4px;
 }
 
 input[type=text]:focus,

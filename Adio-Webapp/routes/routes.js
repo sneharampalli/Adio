@@ -2,6 +2,37 @@ var db = require('../models/database.js');
 var dynamo = require('dynamodb');
 dynamo.AWS.config.loadFromPath('config.json');
 
+const aws = require('aws-sdk')
+const s3 = new aws.S3({ /* ... */ })
+
+// var postS3Objects = function (req, res) {
+//   var params = {
+//     Bucket: "adio-1",
+//     Prefix: req.session.email + '/',
+//   };
+//   var objs = [];
+//   s3.listObjectsV2(params, function (err, data) {
+//     if (err) {
+//       console.log(err, err.stack); // an error occurred
+//     }
+//     else {
+//       for (let i = 0; i < data.Contents.length; i++) {
+//         var getParams = {
+//           Bucket: "adio-1",
+//           Key: data.Contents[i].Key
+//         };
+//         s3.getObject(getParams, function (err2, data2) {
+//           if (err2) {
+//             console.log(err2, err2.stack); // an error occurred
+//           } else {
+//             res.send({ data: data2 });
+//           }
+//         });
+//       }
+//     }
+//   });
+// }
+
 // Get route for main / home / login page
 var getMain = function (req, res) {
   if (req.session.loginsuccess) {
@@ -56,7 +87,8 @@ var routes = {
   get_main: getMain,
   post_checklogin: postCheckLogin,
   post_createaccount: postCreateAccount,
-  get_logout: getLogout
+  get_logout: getLogout,
+  // get_audio: postS3Objects
 };
 
 module.exports = routes;
