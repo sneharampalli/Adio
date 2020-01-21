@@ -2,44 +2,29 @@
 //  AppDelegate.swift
 //  Adio
 //
-//  Created by Sneha Rampalli on 10/15/19.
-//  Copyright © 2019 Sneha Rampalli. All rights reserved.
+//  Created by Romit Nagda on 1/20/20.
+//  Copyright © 2020 Romit Nagda. All rights reserved.
 //
 
 import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-//, SPTAppRemoteDelegate, SPTAppRemotePlayerStateDelegate {
-
-//    func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
-//      // Connection was successful, you can begin issuing commands
-//      print("connected")
-//      self.appRemote.playerAPI?.delegate = self
-//      self.appRemote.playerAPI?.subscribe(toPlayerState: { (result, error) in
-//        if let error = error {
-//          debugPrint(error.localizedDescription)
-//        }
-//      })
-//    }
-//
-//    func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
-//      print("disconnected")
-//    }
-//    func appRemote(_ appRemote: SPTAppRemote, didFailConnectionAttemptWithError error: Error?) {
-//      print("failed")
-//    }
-//    func playerStateDidChange(_ playerState: SPTAppRemotePlayerState) {
-//      debugPrint("Track name: %@", playerState.track.name)
-//      print("player state changed")
-//    }
+    
+    class var sharedInstance: AppDelegate {
+        get {
+            return UIApplication.shared.delegate as! AppDelegate
+        }
+    }
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
         return true
     }
 
     // MARK: UISceneSession Lifecycle
+
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
@@ -53,29 +38,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
-//    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-//      let parameters = appRemote.authorizationParameters(from: url);
-//
-//            if let access_token = parameters?[SPTAppRemoteAccessTokenKey] {
-//                appRemote.connectionParameters.accessToken = access_token
-//                self.accessToken = access_token
-//            } else if let error_description = parameters?[SPTAppRemoteErrorDescriptionKey] {
-//                // Show the error
-//            }
-//      return true
-//    }
-//
-//    func applicationWillResignActive(_ application: UIApplication) {
-//      if self.appRemote.isConnected {
-//        self.appRemote.disconnect()
-//      }
-//    }
-//
-//    func applicationDidBecomeActive(_ application: UIApplication) {
-//      if let _ = self.appRemote.connectionParameters.accessToken {
-//        self.appRemote.connect()
-//      }
-//    }
-
+    /*
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        let parameters = appRemote.authorizationParameters(from: url)
+        
+        if let access_token = parameters?[SPTAppRemoteAccessTokenKey] {
+            appRemote.connectionParameters.accessToken = access_token
+            self.accessToken = access_token
+            print("Success! The access token is \(access_token)")
+        } else if let error_description = parameters?[SPTAppRemoteErrorDescriptionKey] {
+            dump(error_description)
+        }
+        return true
+    }*/
+    
+    /*func playSong() {
+        SPTAppRemote.checkIfSpotifyAppIsActive { (isActive) in
+            print("Spotify is active: \(isActive)")
+            self.appRemote = SPTAppRemote(configuration: AppDelegate().configuration, logLevel: .debug)
+            let spotifyInstalled = self.appRemote.authorizeAndPlayURI("spotify:track:69bp2EbF7Q2rqc5N3ylezZ")
+            if !(spotifyInstalled ?? false) {
+                fatalError()
+            } else {
+                print("Spotify is installed! Woo.")
+            }
+        }
+    }*/
 }
-

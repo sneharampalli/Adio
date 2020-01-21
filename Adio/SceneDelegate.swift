@@ -2,8 +2,8 @@
 //  SceneDelegate.swift
 //  Adio
 //
-//  Created by Sneha Rampalli on 10/15/19.
-//  Copyright © 2019 Sneha Rampalli. All rights reserved.
+//  Created by Romit Nagda on 1/20/20.
+//  Copyright © 2020 Romit Nagda. All rights reserved.
 //
 
 import UIKit
@@ -47,35 +47,99 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
     }
+    
+    lazy var spotifyConfiguration = SPTConfiguration(
+        clientID: spotifyClientID,
+        redirectURL: spotifyRedirectURL
+    )
+    
+    lazy var appRemote: SPTAppRemote = {
+        let appRemote = SPTAppRemote(configuration: self.spotifyConfiguration, logLevel: .debug)
+        appRemote.connectionParameters.accessToken = self.accessToken
+        appRemote.delegate = self
+        //appRemote.playerAPI?.delegate = self
+        return appRemote
+    }()
 
-    func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not neccessarily discarded (see `application:didDiscardSceneSessions` instead).
+    var window: UIWindow?
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {
+            return
+        }
+        let parameters = appRemote.authorizationParameters(from: url);
+        if let access_token = parameters?[SPTAppRemoteAccessTokenKey] {
+            appRemote.connectionParameters.accessToken = access_token
+            self.accessToken = access_token
+        } else if let _ = parameters?[SPTAppRemoteErrorDescriptionKey] {
+            // Show the error
+        }
     }
-
+    
     func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        connect()
     }
-
+    
     func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
+        appRemote.disconnect()
     }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
+    
+    func connect() {
+        appRemote.connect()
     }
-
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
+    
+    // MARK: AppRemoteDelegate
+    func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
+        self.appRemote = appRemote
+        
+        self.appRemote.playerAPI?.delegate = self
+        self.appRemote.playerAPI?.subscribe(toPlayerState: { (result, error) in
+        if let error = error {
+            debugPrint(error.localizedDescription)
+            }
+        })
+        // Want to play a new track?
+               // self.appRemote.playerAPI?.play("spotify:track:13WO20hoD72L0J13WTQWlT", callback: { (result, error) in
+               //     if let error = error {
+               //         print(error.localizedDescription)
+               //     }
+               // })
     }
-
-
+    
+    func appRemote(_ appRemote: SPTAppRemote, didFailConnectionAttemptWithError error: Error?) {
+        viewControllerDelegate?.didFailConnection(with: error)
+    }
+    
+    func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
+        viewControllerDelegate?.didDisconnect(with: error)
+    }
 }
 
+extension SceneDelegate: SPTAppRemotePlayerStateDelegate {
+    func playerStateDidChange(_ playerState: SPTAppRemotePlayerState) {
+        self.viewControllerDelegate?.didUpdatePlayer(with: playerState)
+        self.appRemote.imageAPI?.fetchImage(forItem: playerState.track, with: CGSize(width: 2000, height: 2000), callback: { (image, error) in
+            if let image = image as? UIImage {
+                self.viewControllerDelegate?.didFetch(image, forTrackURI: playerState.track.uri)
+            }
+        })
+    }
+}
+
+extension SceneDelegate: PlayerControl {
+    func playSong(with uri: String) {
+        self.appRemote.authorizeAndPlayURI("spotify:track:\(uri)")
+    }
+    
+    func pause() {
+        self.appRemote.playerAPI?.pause({ (result, error) in
+            print("🥵⏸")
+            dump(error)
+            dump(result)
+        })
+    }
+    
+    func playSongWith(_ trackId: String) {
+        self.appRemote.authorizeAndPlayURI("spotify:track:\(trackId)")
+    }
+}
