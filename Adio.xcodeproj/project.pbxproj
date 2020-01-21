@@ -7,102 +7,82 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		44C5F0A62356715F00687307 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C5F0A52356715F00687307 /* AppDelegate.swift */; };
-		44C5F0A82356715F00687307 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C5F0A72356715F00687307 /* SceneDelegate.swift */; };
-		44C5F0AA2356715F00687307 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C5F0A92356715F00687307 /* ViewController.swift */; };
-		44C5F0AD2356715F00687307 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0AB2356715F00687307 /* Main.storyboard */; };
-		44C5F0AF2356716200687307 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0AE2356716200687307 /* Assets.xcassets */; };
-		44C5F0B22356716200687307 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0B02356716200687307 /* LaunchScreen.storyboard */; };
-		44C5F0BB23567DD100687307 /* BeautifulNow.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 44C5F0BA23567DD100687307 /* BeautifulNow.m4a */; };
-		C93CCA452399BE1D007000DC /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C93CCA442399BE1D007000DC /* SpotifyiOS.framework */; };
-		C93CCA492399BF30007000DC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93CCA482399BF30007000DC /* Constants.swift */; };
-		FCBBF26B2372357300BAD88A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBF26A2372357300BAD88A /* AVFoundation.framework */; };
+		FC9E3AFB23D6914700BF062A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9E3AFA23D6914700BF062A /* AppDelegate.swift */; };
+		FC9E3B0423D6914900BF062A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC9E3B0323D6914900BF062A /* Assets.xcassets */; };
+		FC9E3B0723D6914900BF062A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC9E3B0523D6914900BF062A /* LaunchScreen.storyboard */; };
+		FC9E3B2B23D6926900BF062A /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9E3B2A23D6926900BF062A /* SpotifyiOS.framework */; };
+		FC9E3B2E23D6940000BF062A /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9E3B2D23D6940000BF062A /* PlayerViewController.swift */; };
+		FC9E3B3123D6945A00BF062A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC9E3B2F23D6945A00BF062A /* Main.storyboard */; };
+		FC9E3B3323D6970700BF062A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9E3B3223D6970700BF062A /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		44C5F0A22356715F00687307 /* Adio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adio.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		44C5F0A52356715F00687307 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		44C5F0A72356715F00687307 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		44C5F0A92356715F00687307 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		44C5F0AC2356715F00687307 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		44C5F0AE2356716200687307 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		44C5F0B12356716200687307 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		44C5F0B32356716200687307 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		44C5F0BA23567DD100687307 /* BeautifulNow.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = BeautifulNow.m4a; path = ../../../Documents/BeautifulNow.m4a; sourceTree = "<group>"; };
-		C932F3112384A8CE00439CBF /* Adio-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Adio-Bridging-Header.h"; sourceTree = "<group>"; };
-		C93CCA442399BE1D007000DC /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyiOS.framework; path = Adio/Frameworks/SpotifyiOS.framework; sourceTree = "<group>"; };
-		C93CCA482399BF30007000DC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		FCBBF26A2372357300BAD88A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		FCBBF26C2372359900BAD88A /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		FC9E3AF723D6914700BF062A /* Adio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC9E3AFA23D6914700BF062A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FC9E3B0323D6914900BF062A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FC9E3B0623D6914900BF062A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FC9E3B0823D6914900BF062A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC9E3B2A23D6926900BF062A /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
+		FC9E3B2C23D6932800BF062A /* adio-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "adio-bridging-header.h"; sourceTree = "<group>"; };
+		FC9E3B2D23D6940000BF062A /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		FC9E3B3023D6945A00BF062A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FC9E3B3223D6970700BF062A /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		44C5F09F2356715F00687307 /* Frameworks */ = {
+		FC9E3AF423D6914700BF062A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCBBF26B2372357300BAD88A /* AVFoundation.framework in Frameworks */,
-				C93CCA452399BE1D007000DC /* SpotifyiOS.framework in Frameworks */,
+				FC9E3B2B23D6926900BF062A /* SpotifyiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		44C5F0992356715F00687307 = {
+		FC9E3AEE23D6914700BF062A = {
 			isa = PBXGroup;
 			children = (
-				44C5F0A42356715F00687307 /* Adio */,
-				44C5F0A32356715F00687307 /* Products */,
-				FCBBF2692372357300BAD88A /* Frameworks */,
+				FC9E3AF923D6914700BF062A /* Adio */,
+				FC9E3AF823D6914700BF062A /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		44C5F0A32356715F00687307 /* Products */ = {
+		FC9E3AF823D6914700BF062A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				44C5F0A22356715F00687307 /* Adio.app */,
+				FC9E3AF723D6914700BF062A /* Adio.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		44C5F0A42356715F00687307 /* Adio */ = {
+		FC9E3AF923D6914700BF062A /* Adio */ = {
 			isa = PBXGroup;
 			children = (
-				C93CCA482399BF30007000DC /* Constants.swift */,
-				C932F3112384A8CE00439CBF /* Adio-Bridging-Header.h */,
-				44C5F0BA23567DD100687307 /* BeautifulNow.m4a */,
-				44C5F0A52356715F00687307 /* AppDelegate.swift */,
-				44C5F0A72356715F00687307 /* SceneDelegate.swift */,
-				44C5F0A92356715F00687307 /* ViewController.swift */,
-				44C5F0AB2356715F00687307 /* Main.storyboard */,
-				44C5F0AE2356716200687307 /* Assets.xcassets */,
-				44C5F0B02356716200687307 /* LaunchScreen.storyboard */,
-				44C5F0B32356716200687307 /* Info.plist */,
+				FC9E3B3223D6970700BF062A /* SceneDelegate.swift */,
+				FC9E3B2F23D6945A00BF062A /* Main.storyboard */,
+				FC9E3B2D23D6940000BF062A /* PlayerViewController.swift */,
+				FC9E3B2A23D6926900BF062A /* SpotifyiOS.framework */,
+				FC9E3AFA23D6914700BF062A /* AppDelegate.swift */,
+				FC9E3B0323D6914900BF062A /* Assets.xcassets */,
+				FC9E3B0523D6914900BF062A /* LaunchScreen.storyboard */,
+				FC9E3B0823D6914900BF062A /* Info.plist */,
+				FC9E3B2C23D6932800BF062A /* adio-bridging-header.h */,
 			);
 			path = Adio;
-			sourceTree = "<group>";
-		};
-		FCBBF2692372357300BAD88A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C93CCA442399BE1D007000DC /* SpotifyiOS.framework */,
-				FCBBF26C2372359900BAD88A /* AudioUnit.framework */,
-				FCBBF26A2372357300BAD88A /* AVFoundation.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		44C5F0A12356715F00687307 /* Adio */ = {
+		FC9E3AF623D6914700BF062A /* Adio */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 44C5F0B62356716200687307 /* Build configuration list for PBXNativeTarget "Adio" */;
+			buildConfigurationList = FC9E3B2123D6914A00BF062A /* Build configuration list for PBXNativeTarget "Adio" */;
 			buildPhases = (
-				44C5F09E2356715F00687307 /* Sources */,
-				44C5F09F2356715F00687307 /* Frameworks */,
-				44C5F0A02356715F00687307 /* Resources */,
+				FC9E3AF323D6914700BF062A /* Sources */,
+				FC9E3AF423D6914700BF062A /* Frameworks */,
+				FC9E3AF523D6914700BF062A /* Resources */,
 			);
 			buildRules = (
 			);
@@ -110,25 +90,25 @@
 			);
 			name = Adio;
 			productName = Adio;
-			productReference = 44C5F0A22356715F00687307 /* Adio.app */;
+			productReference = FC9E3AF723D6914700BF062A /* Adio.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		44C5F09A2356715F00687307 /* Project object */ = {
+		FC9E3AEF23D6914700BF062A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1110;
-				LastUpgradeCheck = 1110;
-				ORGANIZATIONNAME = "Sneha Rampalli";
+				LastSwiftUpdateCheck = 1120;
+				LastUpgradeCheck = 1120;
+				ORGANIZATIONNAME = "Romit Nagda";
 				TargetAttributes = {
-					44C5F0A12356715F00687307 = {
-						CreatedOnToolsVersion = 11.1;
+					FC9E3AF623D6914700BF062A = {
+						CreatedOnToolsVersion = 11.2;
 					};
 				};
 			};
-			buildConfigurationList = 44C5F09D2356715F00687307 /* Build configuration list for PBXProject "Adio" */;
+			buildConfigurationList = FC9E3AF223D6914700BF062A /* Build configuration list for PBXProject "Adio" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -136,65 +116,63 @@
 				en,
 				Base,
 			);
-			mainGroup = 44C5F0992356715F00687307;
-			productRefGroup = 44C5F0A32356715F00687307 /* Products */;
+			mainGroup = FC9E3AEE23D6914700BF062A;
+			productRefGroup = FC9E3AF823D6914700BF062A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				44C5F0A12356715F00687307 /* Adio */,
+				FC9E3AF623D6914700BF062A /* Adio */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		44C5F0A02356715F00687307 /* Resources */ = {
+		FC9E3AF523D6914700BF062A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44C5F0B22356716200687307 /* LaunchScreen.storyboard in Resources */,
-				44C5F0BB23567DD100687307 /* BeautifulNow.m4a in Resources */,
-				44C5F0AF2356716200687307 /* Assets.xcassets in Resources */,
-				44C5F0AD2356715F00687307 /* Main.storyboard in Resources */,
+				FC9E3B3123D6945A00BF062A /* Main.storyboard in Resources */,
+				FC9E3B0723D6914900BF062A /* LaunchScreen.storyboard in Resources */,
+				FC9E3B0423D6914900BF062A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		44C5F09E2356715F00687307 /* Sources */ = {
+		FC9E3AF323D6914700BF062A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44C5F0AA2356715F00687307 /* ViewController.swift in Sources */,
-				44C5F0A62356715F00687307 /* AppDelegate.swift in Sources */,
-				44C5F0A82356715F00687307 /* SceneDelegate.swift in Sources */,
-				C93CCA492399BF30007000DC /* Constants.swift in Sources */,
+				FC9E3AFB23D6914700BF062A /* AppDelegate.swift in Sources */,
+				FC9E3B2E23D6940000BF062A /* PlayerViewController.swift in Sources */,
+				FC9E3B3323D6970700BF062A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		44C5F0AB2356715F00687307 /* Main.storyboard */ = {
+		FC9E3B0523D6914900BF062A /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				44C5F0AC2356715F00687307 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		44C5F0B02356716200687307 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				44C5F0B12356716200687307 /* Base */,
+				FC9E3B0623D6914900BF062A /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		FC9E3B2F23D6945A00BF062A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FC9E3B3023D6945A00BF062A /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		44C5F0B42356716200687307 /* Debug */ = {
+		FC9E3B1F23D6914A00BF062A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -244,7 +222,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -254,7 +232,7 @@
 			};
 			name = Debug;
 		};
-		44C5F0B52356716200687307 /* Release */ = {
+		FC9E3B2023D6914A00BF062A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -298,7 +276,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -308,82 +286,76 @@
 			};
 			name = Release;
 		};
-		44C5F0B72356716200687307 /* Debug */ = {
+		FC9E3B2223D6914A00BF062A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TJKQ5NWLSB;
+				DEVELOPMENT_TEAM = 24M7S7AU4J;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Adio/Frameworks",
+					"$(PROJECT_DIR)/Adio",
 				);
-				HEADER_SEARCH_PATHS = "Frameworks/**";
 				INFOPLIST_FILE = Adio/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = SA.Adio;
+				PRODUCT_BUNDLE_IDENTIFIER = adio.Adio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Adio/Adio-Bridging-Header.h";
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Adio/Adio-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Adio/adio-bridging-header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		44C5F0B82356716200687307 /* Release */ = {
+		FC9E3B2323D6914A00BF062A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TJKQ5NWLSB;
+				DEVELOPMENT_TEAM = 24M7S7AU4J;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Adio/Frameworks",
+					"$(PROJECT_DIR)/Adio",
 				);
-				HEADER_SEARCH_PATHS = "Frameworks/**";
 				INFOPLIST_FILE = Adio/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = SA.Adio;
+				PRODUCT_BUNDLE_IDENTIFIER = adio.Adio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Adio/Adio-Bridging-Header.h";
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Adio/Adio-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Adio/adio-bridging-header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		44C5F09D2356715F00687307 /* Build configuration list for PBXProject "Adio" */ = {
+		FC9E3AF223D6914700BF062A /* Build configuration list for PBXProject "Adio" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				44C5F0B42356716200687307 /* Debug */,
-				44C5F0B52356716200687307 /* Release */,
+				FC9E3B1F23D6914A00BF062A /* Debug */,
+				FC9E3B2023D6914A00BF062A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		44C5F0B62356716200687307 /* Build configuration list for PBXNativeTarget "Adio" */ = {
+		FC9E3B2123D6914A00BF062A /* Build configuration list for PBXNativeTarget "Adio" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				44C5F0B72356716200687307 /* Debug */,
-				44C5F0B82356716200687307 /* Release */,
+				FC9E3B2223D6914A00BF062A /* Debug */,
+				FC9E3B2323D6914A00BF062A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 44C5F09A2356715F00687307 /* Project object */;
+	rootObject = FC9E3AEF23D6914700BF062A /* Project object */;
 }
