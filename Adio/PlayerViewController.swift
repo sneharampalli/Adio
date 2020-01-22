@@ -35,6 +35,8 @@ class PlayerViewController: UIViewController, AVAudioPlayerDelegate {
     var timerPlay:Timer!
     
     var isPaused = true
+    var newSong = false
+    var currSong = ""
     weak var playerControl: PlayerControl? = nil
 
     override func viewDidLoad() {
@@ -102,44 +104,46 @@ extension PlayerViewController: PlayerDelegate {
     
     func didUpdatePlayer(with player: SPTAppRemotePlayerState) {
         print("DID UPDATE PLAYER")
-        print(player.isPaused ? "⏸" : "▶️")
-        print(player.contextTitle)
         print(player.playbackPosition)
         print(player.track.name)
+        if self.currSong != "" && self.currSong != player.track.name {
+            print("SONG ENDED")
+            self.newSong = true
+            print(self.newSong)
+        }
+        self.currSong = player.track.name
         trackLabel.text = player.track.name
         playlistLabel.text = player.contextTitle
         artistLabel.text = player.track.artist.name
         albumLabel.text = player.track.album.name
-        //albumImageView.image = player.track
-        
-        playerControl?.pause()
-        print("paused")
-        
-        isPaused = player.isPaused
-        updatePauseButton()
-        
-        self.setupPlayer()
-        
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print(error)
+        if self.newSong {
+           // Stop playing the ads
+           do {
+               try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+               try AVAudioSession.sharedInstance().setActive(true)
+               self.playerControl?.pause()
+               print("Setting up player")
+               self.setupPlayer()
+           } catch {
+               print(error)
+           }
+           print("Playing")
+           self.soundPlayer.play()
+           print("PLAYING AD")
+           self.timerPlay = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { timerPlay in
+               // Stop playing the ads
+               do {
+                    print("Ad stopping")
+                    self.soundPlayer.stop()
+                    print("Ad stopped")
+                    try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+                    self.playerControl?.playSong(with: " ")
+                    self.newSong = false
+               } catch {
+                   print(error)
+               }
+           }
         }
-        print("play sound player")
-        self.soundPlayer.play()
-        print("did play")
-        self.timerPlay = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { timerPlay in
-            // Stop playing the ads
-            self.soundPlayer.stop()
-            do {
-                try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-                self.playerControl?.playSong(with: "20I6sIOMTCkB6w7ryavxtO")
-            } catch {
-                print(error)
-            }
-        }
-        
     }
 }
 
