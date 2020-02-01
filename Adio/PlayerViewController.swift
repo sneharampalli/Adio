@@ -37,6 +37,8 @@ class PlayerViewController: UIViewController, AVAudioPlayerDelegate {
     var isPaused = true
     var newSong = false
     var currSong = ""
+    var songCounter = 0
+    var adFreq = 5
     weak var playerControl: PlayerControl? = nil
 
     override func viewDidLoad() {
@@ -109,6 +111,7 @@ extension PlayerViewController: PlayerDelegate {
         if self.currSong != "" && self.currSong != player.track.name {
             print("SONG ENDED")
             self.newSong = true
+            songCounter += 1
             print(self.newSong)
         }
         self.currSong = player.track.name

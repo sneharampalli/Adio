@@ -1,0 +1,42 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-amplifystarter-dev-174717-authRole",
+            "UnauthRoleArn": "arn:aws:iam::666855795166:role/amplify-amplifystarter-dev-174717-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::666855795166:role/amplify-amplifystarter-dev-174717-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-amplifystarter-dev-174717-deployment",
+            "UnauthRoleName": "amplify-amplifystarter-dev-174717-unauthRole",
+            "StackName": "amplify-amplifystarter-dev-174717",
+            "StackId": "arn:aws:cloudformation:us-east-1:666855795166:stack/amplify-amplifystarter-dev-174717/d55e2130-4544-11ea-8c41-0e660dd6b3d4",
+            "AmplifyAppId": "d22ek9rxwo5485"
+        }
+    },
+    "api": {
+        "amplifyDatasource": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "authConfig": {
+                    "additionalAuthenticationProviders": [],
+                    "defaultAuthentication": {
+                        "authenticationType": "API_KEY",
+                        "apiKeyConfig": {
+                            "description": "api key adio",
+                            "apiKeyExpirationDays": "180"
+                        }
+                    }
+                },
+                "GraphQLAPIIdOutput": "mkwvdd4l4nezxdjxcratqns54i",
+                "GraphQLAPIEndpointOutput": "https://zc66gycjtbg3zkoigfpyzrvhcq.appsync-api.us-east-1.amazonaws.com/graphql",
+                "GraphQLAPIKeyOutput": "da2-3lbgwhifujcybhwakd2zpuhdr4"
+            },
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplifystarter-dev-174717-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+                "logicalId": "apiamplifyDatasource"
+            },
+            "lastPushTimeStamp": "2020-02-01T23:29:24.052Z",
+            "lastPushDirHash": "FQNji1AwaAy2fQz0qnIxOIMnB6M="
+        }
+    }
+}

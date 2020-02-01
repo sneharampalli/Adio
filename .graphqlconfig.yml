@@ -1,0 +1,15 @@
+projects:
+  amplifyDatasource:
+    schemaPath: app/src/main/graphql/schema.json
+    includes:
+      - graphql/**/*.graphql
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: 'swift'
+        generatedFileName: 'API.swift'
+        docsFilePath: app/src/main/graphql/com/amazonaws/amplify/generated/graphql
+extensions:
+  amplify:
+    version: 3

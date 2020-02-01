@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		095B14E213E56A2C0516505A /* Pods_Adio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5336DA399139F87D858AFD7B /* Pods_Adio.framework */; };
+		C9B5511E23E6399500566E4C /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = C9B5511D23E6399500566E4C /* awsconfiguration.json */; };
 		FC9E3AFB23D6914700BF062A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9E3AFA23D6914700BF062A /* AppDelegate.swift */; };
 		FC9E3B0423D6914900BF062A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC9E3B0323D6914900BF062A /* Assets.xcassets */; };
 		FC9E3B0723D6914900BF062A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC9E3B0523D6914900BF062A /* LaunchScreen.storyboard */; };
@@ -17,6 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5336DA399139F87D858AFD7B /* Pods_Adio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Adio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		923E43FF0112FE6032A074F2 /* Pods-Adio.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Adio.debug.xcconfig"; path = "Target Support Files/Pods-Adio/Pods-Adio.debug.xcconfig"; sourceTree = "<group>"; };
+		B7FC27412846B61BC1A638E6 /* Pods-Adio.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Adio.release.xcconfig"; path = "Target Support Files/Pods-Adio/Pods-Adio.release.xcconfig"; sourceTree = "<group>"; };
+		C9B5511D23E6399500566E4C /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = awsconfiguration.json; path = app/src/main/res/raw/awsconfiguration.json; sourceTree = SOURCE_ROOT; };
 		FC3C51F323D7689E00E13C8F /* adio-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "adio-bridging-header.h"; sourceTree = "<group>"; };
 		FC9E3AF723D6914700BF062A /* Adio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC9E3AFA23D6914700BF062A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -35,17 +41,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC9E3B2B23D6926900BF062A /* SpotifyiOS.framework in Frameworks */,
+				095B14E213E56A2C0516505A /* Pods_Adio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D882E970B12A54AC8614766 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				923E43FF0112FE6032A074F2 /* Pods-Adio.debug.xcconfig */,
+				B7FC27412846B61BC1A638E6 /* Pods-Adio.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		EF008E01122538CED2F1A518 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5336DA399139F87D858AFD7B /* Pods_Adio.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FC9E3AEE23D6914700BF062A = {
 			isa = PBXGroup;
 			children = (
 				FC9E3AF923D6914700BF062A /* Adio */,
 				FC9E3AF823D6914700BF062A /* Products */,
+				1D882E970B12A54AC8614766 /* Pods */,
+				EF008E01122538CED2F1A518 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +86,7 @@
 		FC9E3AF923D6914700BF062A /* Adio */ = {
 			isa = PBXGroup;
 			children = (
+				C9B5511D23E6399500566E4C /* awsconfiguration.json */,
 				FC9E3B3223D6970700BF062A /* SceneDelegate.swift */,
 				FC9E3B2F23D6945A00BF062A /* Main.storyboard */,
 				FC9E3B2D23D6940000BF062A /* PlayerViewController.swift */,
@@ -80,9 +107,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FC9E3B2123D6914A00BF062A /* Build configuration list for PBXNativeTarget "Adio" */;
 			buildPhases = (
+				F2B8F585536BE2E823989930 /* [CP] Check Pods Manifest.lock */,
 				FC9E3AF323D6914700BF062A /* Sources */,
 				FC9E3AF423D6914700BF062A /* Frameworks */,
 				FC9E3AF523D6914700BF062A /* Resources */,
+				77837AD84D8465F314777EFB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -131,6 +160,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9B5511E23E6399500566E4C /* awsconfiguration.json in Resources */,
 				FC9E3B3123D6945A00BF062A /* Main.storyboard in Resources */,
 				FC9E3B0723D6914900BF062A /* LaunchScreen.storyboard in Resources */,
 				FC9E3B0423D6914900BF062A /* Assets.xcassets in Resources */,
@@ -138,6 +168,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		77837AD84D8465F314777EFB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Adio/Pods-Adio-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Adio/Pods-Adio-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Adio/Pods-Adio-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F2B8F585536BE2E823989930 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Adio-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FC9E3AF323D6914700BF062A /* Sources */ = {
@@ -288,10 +360,11 @@
 		};
 		FC9E3B2223D6914A00BF062A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 923E43FF0112FE6032A074F2 /* Pods-Adio.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 24M7S7AU4J;
+				DEVELOPMENT_TEAM = TJKQ5NWLSB;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Adio",
@@ -302,7 +375,7 @@
 					"@executable_path/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = adio.Adio;
+				PRODUCT_BUNDLE_IDENTIFIER = SA.Adio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Adio/adio-bridging-header.h";
 				SWIFT_VERSION = 5.0;
@@ -312,10 +385,11 @@
 		};
 		FC9E3B2323D6914A00BF062A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B7FC27412846B61BC1A638E6 /* Pods-Adio.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 24M7S7AU4J;
+				DEVELOPMENT_TEAM = TJKQ5NWLSB;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Adio",
@@ -326,7 +400,7 @@
 					"@executable_path/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = adio.Adio;
+				PRODUCT_BUNDLE_IDENTIFIER = SA.Adio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Adio/adio-bridging-header.h";
 				SWIFT_VERSION = 5.0;
