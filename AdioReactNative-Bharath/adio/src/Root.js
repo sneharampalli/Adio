@@ -49,9 +49,10 @@ export default class Root extends React.Component {
             }
             const response = await API.graphql(graphqlOperation(queries.listAds, { input: latLongObj }));
             this.setState({ ads: response.data.listAds.items });
-            const url = await Storage.get('BeautifulNow.m4a', { customPrefix: { public: '', protected: '', private: '' } });
+            const url = await Storage.get(this.state.ads[0].file.key, { customPrefix: { public: '', protected: '', private: '' } });
             //console.log(url);
             //const publicUrl = "https://s3.amazonaws.com/adioc492d9a3e7204c369b78b9a304571a10215215-adio/BeautifulNow.m4a";
+            await Audio.setAudioModeAsync({ playsInSilentModeIOS: true, staysActiveInBackground: true });
             const soundObject = new Audio.Sound();
             try {
                 await soundObject.loadAsync({ uri: url });
