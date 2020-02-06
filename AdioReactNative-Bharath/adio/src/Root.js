@@ -1,4 +1,6 @@
 import React from 'react';
+import { Storage } from 'aws-amplify';
+import { Audio } from "expo-av";
 import { StyleSheet, Text, View, FlatList, TextInput, Button } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from "./graphql/queries";
@@ -47,6 +49,18 @@ export default class Root extends React.Component {
             }
             const response = await API.graphql(graphqlOperation(queries.listAds, { input: latLongObj }));
             this.setState({ ads: response.data.listAds.items });
+            const url = await Storage.get('BeautifulNow.m4a', { customPrefix: { public: '', protected: '', private: '' } });
+            //console.log(url);
+            //const publicUrl = "https://s3.amazonaws.com/adioc492d9a3e7204c369b78b9a304571a10215215-adio/BeautifulNow.m4a";
+            const soundObject = new Audio.Sound();
+            try {
+                await soundObject.loadAsync({ uri: url });
+                await soundObject.playAsync();
+                // Your sound is playing!
+            } catch (error) {
+                // An error occurred!
+            }
+
         } catch (err) {
             console.error(err);
         }
@@ -96,7 +110,7 @@ export default class Root extends React.Component {
                     renderItem={({ item }) => (
                         <View key={item.id}>
                             <Text style={styles.item}>"{item.adName}"</Text>
-                            <Text style={styles.item}>- {item.owner}</Text>
+                            <Text style={styles.item}>- {item.file.key}</Text>
                             {/* <View style={{ width: 150 }}>
                                 <Button title="Delete Quote" color="#ffa500" onPress={() => this.deleteQuote(item.id)} />
                             </View> */}
