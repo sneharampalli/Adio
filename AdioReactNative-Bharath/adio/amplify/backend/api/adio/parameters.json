@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "adio",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authadio83ad3efe",
+            "Outputs.UserPoolId"
+        ]
+    }
+}
