@@ -24,6 +24,7 @@
       "**/*"
     ],
     "ios": {
+<<<<<<< HEAD
       "supportsTablet": true,
       "infoPlist": {
         "UIBackgroundModes": [
@@ -47,5 +48,9 @@
       "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.14.2-sdk36.0.0-51bb3c16-c2a5-4797-b721-4091ed00e53a.tar.gz"
     },
     "scheme": "exp4bb5cf9b7eb4491da283dfd5c7962863"
+=======
+      "supportsTablet": true
+    }
+>>>>>>> parent of 1ef5982... Added background playing
   }
 }
