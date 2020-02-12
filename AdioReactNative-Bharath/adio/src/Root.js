@@ -6,7 +6,6 @@ import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from "./graphql/queries";
 import * as mutations from "./graphql/mutations";
 import * as subscriptions from "./graphql/subscriptions";
-import { INTERRUPTION_MODE_IOS_DUCK_OTHERS } from 'expo-av/build/Audio';
 
 
 export default class Root extends React.Component {
@@ -54,9 +53,13 @@ export default class Root extends React.Component {
             //console.log(url);
             //const publicUrl = "https://s3.amazonaws.com/adioc492d9a3e7204c369b78b9a304571a10215215-adio/BeautifulNow.m4a";
 <<<<<<< HEAD
+<<<<<<< HEAD
             await Audio.setAudioModeAsync({ playsInSilentModeIOS: true, interruptionModeIOS: INTERRUPTION_MODE_IOS_DUCK_OTHERS,staysActiveInBackground: true });
 =======
 >>>>>>> parent of 1ef5982... Added background playing
+=======
+            await Audio.setAudioModeAsync({ playsInSilentModeIOS: true, staysActiveInBackground: true });
+>>>>>>> parent of 08349c4... added ducking
             const soundObject = new Audio.Sound();
             try {
                 await soundObject.loadAsync({ uri: url });
