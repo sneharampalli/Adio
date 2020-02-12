@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Adio",
+    "name": "Blank Template",
     "slug": "adio",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -30,6 +30,7 @@
         "UIBackgroundModes": [
           "audio"
         ]
+<<<<<<< HEAD
       },
       "bundleIdentifier": "com.adio.adio",
       "buildNumber": "1.0.0",
@@ -52,5 +53,9 @@
       "supportsTablet": true
     }
 >>>>>>> parent of 1ef5982... Added background playing
+=======
+      }
+    }
+>>>>>>> parent of e6c83f4... Converted to bare react native project
   }
 }
