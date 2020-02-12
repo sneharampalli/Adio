@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Blank Template",
+    "name": "Adio",
     "slug": "adio",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -24,38 +24,12 @@
       "**/*"
     ],
     "ios": {
-<<<<<<< HEAD
       "supportsTablet": true,
       "infoPlist": {
         "UIBackgroundModes": [
           "audio"
         ]
-<<<<<<< HEAD
-      },
-      "bundleIdentifier": "com.adio.adio",
-      "buildNumber": "1.0.0",
-      "publishBundlePath": "ios/adio/Supporting/shell-app.bundle",
-      "publishManifestPath": "ios/adio/Supporting/shell-app-manifest.json"
-    },
-    "android": {
-      "package": "com.adio.adio",
-      "versionCode": 1,
-      "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
-      "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
-    },
-    "isDetached": true,
-    "detach": {
-      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.14.3-sdk36.0.0-00f587c0-b8c9-4b6b-88f6-2ccd4f20dc9c.tar.gz",
-      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.14.2-sdk36.0.0-51bb3c16-c2a5-4797-b721-4091ed00e53a.tar.gz"
-    },
-    "scheme": "exp4bb5cf9b7eb4491da283dfd5c7962863"
-=======
-      "supportsTablet": true
-    }
->>>>>>> parent of 1ef5982... Added background playing
-=======
       }
     }
->>>>>>> parent of e6c83f4... Converted to bare react native project
   }
 }
