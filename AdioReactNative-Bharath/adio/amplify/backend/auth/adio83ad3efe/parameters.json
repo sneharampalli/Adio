@@ -1,6 +1,6 @@
 {
-    "identityPoolName": "adio83ad3efe_identitypool_83ad3efe",
-    "allowUnauthenticatedIdentities": false,
+    "identityPoolName": "adio014bdd98_identitypool_014bdd98",
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "adio83ad3efe",
     "userPoolName": "adio83ad3efe_userpool_83ad3efe",
     "autoVerifiedAttributes": [
@@ -12,8 +12,8 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code",
-    "emailVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Adio Driver-Partner Verification Code",
+    "emailVerificationMessage": "Thank you for driving with Adio! Your verification code is {####}.",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
@@ -23,13 +23,21 @@
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
+        "family_name",
+        "name",
+        "phone_number",
         "email"
     ],
     "userpoolClientReadAttributes": [
-        "email"
+        "email",
+        "family_name",
+        "name",
+        "phone_number",
+        "email_verified",
+        "phone_number_verified"
     ],
     "userpoolClientLambdaRole": "adio8383ad3efe_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": false,
+    "userpoolClientSetAttributes": true,
     "resourceName": "adio83ad3efe",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
@@ -44,10 +52,19 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "useDefault": "manual",
     "usernameAttributes": [
         "email"
     ],
     "userPoolGroupList": [],
-    "dependsOn": []
+    "dependsOn": [],
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "triggers": "{}",
+    "hostedUI": false,
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": [],
+    "thirdPartyAuth": false
 }
