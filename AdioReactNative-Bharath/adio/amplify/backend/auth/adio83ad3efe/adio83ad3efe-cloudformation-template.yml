@@ -91,7 +91,28 @@ Parameters:
               
   dependsOn:
     Type: CommaDelimitedList
-    
+        
+  userPoolGroups:
+    Type: String
+              
+  adminQueries:
+    Type: String
+            
+  triggers:
+    Type: String
+                
+  hostedUI:
+    Type: String
+                  
+  parentStack:
+    Type: String
+                
+  permissions:
+    Type: CommaDelimitedList
+        
+  thirdPartyAuth:
+    Type: String
+                      
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 
