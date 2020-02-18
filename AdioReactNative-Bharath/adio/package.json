@@ -12,12 +12,20 @@
     "aws-amplify-react-native": "^3.2.2",
     "expo": "~36.0.0",
     "expo-av": "~8.0.0",
+<<<<<<< HEAD
     "expo-location": "~8.0.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-native-get-location": "^1.4.2",
+=======
+    "expokit": "^36.0.1",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
+>>>>>>> 08349c4a342a246caa0844b713f45be1ee19aa73
     "react-native-swift": "^1.2.2",
+    "react-native-unimodules": "^0.7.0",
     "react-native-web": "~0.11.7"
   },
   "devDependencies": {
