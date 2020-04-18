@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "adio171a6759_identitypool_171a6759",
+    "identityPoolName": "adioa5692d1e_identitypool_a5692d1e",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "adio55b0c484",
-    "userPoolName": "adio55b0c484_userpool_55b0c484",
+    "resourceNameTruncated": "adioaua5692d1e",
+    "userPoolName": "adioa5692d1e_userpool_a5692d1e",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -26,7 +26,6 @@
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
-        "address",
         "email",
         "family_name",
         "name",
@@ -36,14 +35,22 @@
         "email",
         "family_name",
         "name",
-        "phone_number",
-        "email_verified",
-        "phone_number_verified"
+        "phone_number"
     ],
-    "userpoolClientLambdaRole": "adio5555b0c484_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "adioaua5692d1e_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
-    "resourceName": "adio55b0c484",
+    "useDefault": "manual",
     "authSelections": "identityPoolAndUserPool",
+    "resourceName": "adioauth",
+    "thirdPartyAuth": false,
+    "usernameAttributes": [
+        "email"
+    ],
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "triggers": "{}",
+    "hostedUI": false,
+    "userPoolGroupList": [],
     "authRoleArn": {
         "Fn::GetAtt": [
             "AuthRole",
@@ -56,19 +63,9 @@
             "Arn"
         ]
     },
-    "useDefault": "manual",
-    "usernameAttributes": [
-        "email"
-    ],
-    "triggers": "{}",
-    "userPoolGroupList": [],
     "parentStack": {
         "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "dependsOn": [],
-    "userPoolGroups": false,
-    "adminQueries": false,
-    "hostedUI": false,
-    "thirdPartyAuth": false
+    "dependsOn": []
 }
