@@ -40,14 +40,15 @@ var getMain = function (req, res) {
       Bucket: 'adio-1', /* required */
       Prefix: req.session.email,
     };
-    s3.listObjects(params, function(err, data) {
-      if (err) {
-        console.log(err, err.stack); // an error occurred
-      } else {
-        res.render('dashboard.ejs', {data: data});
-        console.log(data);
-      }
-    });
+    res.render('dashboard.ejs', {data: []});
+    // s3.listObjects(params, function(err, data) {
+    //   if (err) {
+    //     console.log(err, err.stack); // an error occurred
+    //   } else {
+    //     res.render('dashboard.ejs', {data: data});
+    //     console.log(data);
+    //   }
+    // });
   } else {
     res.render('login.ejs');
   }

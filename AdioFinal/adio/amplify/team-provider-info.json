@@ -1,0 +1,20 @@
+{
+    "adio": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-adio-adio-172617-authRole",
+            "UnauthRoleArn": "arn:aws:iam::527407078104:role/amplify-adio-adio-172617-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::527407078104:role/amplify-adio-adio-172617-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-adio-adio-172617-deployment",
+            "UnauthRoleName": "amplify-adio-adio-172617-unauthRole",
+            "StackName": "amplify-adio-adio-172617",
+            "StackId": "arn:aws:cloudformation:us-east-1:527407078104:stack/amplify-adio-adio-172617/160579c0-80f2-11ea-9116-0e03eb938c18",
+            "AmplifyAppId": "d1vnw2y92o9hsv"
+        },
+        "categories": {
+            "auth": {
+                "adio55b0c484": {}
+            }
+        }
+    }
+}

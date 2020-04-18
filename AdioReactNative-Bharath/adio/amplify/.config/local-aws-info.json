@@ -1,0 +1,7 @@
+{
+    "adio": {
+        "configLevel": "project",
+        "useProfile": true,
+        "profileName": "adio"
+    }
+}

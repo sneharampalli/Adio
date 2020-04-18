@@ -1,0 +1,20 @@
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+type Ad @model 
+        @key(fields: ["maxLat", "maxLng", "minLat", "minLng"])
+        @key(name: "ByUniqueID", fields: ["uniqueID"])
+        @key(name: "ByUsername", fields: ["owner"]) {
+  uniqueID: String!
+  campaignName: String!
+  adName: String!
+  owner: String!
+  maxLat: Float!
+  maxLng: Float!
+  minLat: Float!
+  minLng: Float!
+  file: S3Object!
+}
