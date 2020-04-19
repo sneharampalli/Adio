@@ -2,3 +2,6 @@ node_modules
 dist
 npm-debug.log*
 .DS_Store
+Adio-Webapp/config 2.json
+AdioReactNative-Boilerplate/
+AdioReactNative/

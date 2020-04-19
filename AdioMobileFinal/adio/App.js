@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Root from './src/Root';
 import Amplify from 'aws-amplify';
-import { Animated, Text, View } from 'react-native';
+import { Animated, Text, View, Image, ImageBackground } from 'react-native';
 import * as Font from 'expo-font';
 import awsmobile from './src/aws-exports';
-import { withAuthenticator, AmplifyTheme } from 'aws-amplify-react-native';
+import { withAuthenticator } from 'aws-amplify-react-native';
+import AmplifyTheme from './libs/AmplifyTheme'
 
 Amplify.configure(awsmobile);
 // const MyTheme = {
@@ -22,12 +23,12 @@ const signUpConfig = {
   ]
 };
 const usernameAttributes = 'email';
-const myContainer = Object.assign({}, AmplifyTheme.container, { backgroundColor: '#fff' });
+const myContainer = Object.assign({}, AmplifyTheme.container, { backgroundColor: 'rgba(0,0,0,0.01)', opacity: 1.0 });
 const myButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#000' });
 const myButtonDisabled = Object.assign({}, AmplifyTheme.buttonDisabled, { backgroundColor: '#000' });
 const mySectionFooterLink = Object.assign({}, AmplifyTheme.sectionFooterLink, { color: '#000' });
-const myInput = Object.assign({}, AmplifyTheme.input, { borderColor: '#000', borderWidth: 1, });
-const MyTheme = Object.assign({}, AmplifyTheme, { container: myContainer, input: myInput, button: myButton, buttonDisabled: myButtonDisabled, sectionFooterLink: mySectionFooterLink });
+const myInput = Object.assign({}, AmplifyTheme.input, { borderColor: '#000', borderWidth: 1});
+const MyTheme = Object.assign({}, AmplifyTheme, {container: myContainer, input: myInput, button: myButton, buttonDisabled: myButtonDisabled, sectionFooterLink: mySectionFooterLink });
 const AppWithAuth = withAuthenticator(Root, {
   signUpConfig, usernameAttributes
 }, [], null, MyTheme);
@@ -73,10 +74,11 @@ export default class App extends React.Component {
   }
 
   render() {
-
+    console.reportErrorsAsExceptions = false;
     return (
-
       <View style={{ flex: 1 }}>
+        <ImageBackground source={require('./background1.png')} style={{width: '100%', height: '100%'}} imageStyle= 
+{{opacity:0.5}}>
         {
           this.state.fontLoaded ? (
             <FadeInView duration="1500" >
@@ -85,20 +87,21 @@ export default class App extends React.Component {
                 color: '#000',
                 fontFamily: 'comfortaa',
                 fontSize: 64,
-                marginTop: 50,
-                height: 60
+                marginTop: 75,
+
               }}>adio</Text>
             </FadeInView>
           ) : <Text style={{
             textAlign: 'center',
             color: '#fff',
             fontSize: 64,
-            marginTop: 50,
+            marginTop: 75,
             height: 60
-          }}>adio</Text>
-        }<FadeInView duration="2500" delay="1000" style={{ flex: 1 }}>
+          }}></Text>
+        }<FadeInView duration="1000" delay="500" style={{ flex: 1 }}>
           <AppWithAuth />
         </FadeInView>
+        </ImageBackground>
       </View >
     )
   }
