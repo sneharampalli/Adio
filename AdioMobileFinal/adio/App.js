@@ -5,7 +5,7 @@ import { Animated, Text, View, Image, ImageBackground } from 'react-native';
 import * as Font from 'expo-font';
 import awsmobile from './src/aws-exports';
 import { withAuthenticator } from 'aws-amplify-react-native';
-import AmplifyTheme from './libs/AmplifyTheme'
+import LoginTheme from './libs/LoginTheme'
 
 Amplify.configure(awsmobile);
 // const MyTheme = {
@@ -23,12 +23,12 @@ const signUpConfig = {
   ]
 };
 const usernameAttributes = 'email';
-const myContainer = Object.assign({}, AmplifyTheme.container, { backgroundColor: 'rgba(0,0,0,0.01)', opacity: 1.0 });
-const myButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#000' });
-const myButtonDisabled = Object.assign({}, AmplifyTheme.buttonDisabled, { backgroundColor: '#000' });
-const mySectionFooterLink = Object.assign({}, AmplifyTheme.sectionFooterLink, { color: '#000' });
-const myInput = Object.assign({}, AmplifyTheme.input, { borderColor: '#000', borderWidth: 1});
-const MyTheme = Object.assign({}, AmplifyTheme, {container: myContainer, input: myInput, button: myButton, buttonDisabled: myButtonDisabled, sectionFooterLink: mySectionFooterLink });
+const myContainer = Object.assign({}, LoginTheme.container, { backgroundColor: 'rgba(0,0,0,0.01)', opacity: 1.0 });
+const myButton = Object.assign({}, LoginTheme.button, { backgroundColor: '#000' });
+const myButtonDisabled = Object.assign({}, LoginTheme.buttonDisabled, { backgroundColor: '#000' });
+const mySectionFooterLink = Object.assign({}, LoginTheme.sectionFooterLink, { color: '#000' });
+const myInput = Object.assign({}, LoginTheme.input, { borderColor: '#000', borderWidth: 1});
+const MyTheme = Object.assign({}, LoginTheme, {container: myContainer, input: myInput, button: myButton, buttonDisabled: myButtonDisabled, sectionFooterLink: mySectionFooterLink });
 const AppWithAuth = withAuthenticator(Root, {
   signUpConfig, usernameAttributes
 }, [], null, MyTheme);
