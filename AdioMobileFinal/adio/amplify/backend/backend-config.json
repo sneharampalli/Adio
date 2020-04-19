@@ -22,5 +22,11 @@
 				}
 			}
 		}
+	},
+	"storage": {
+		"adiostorage": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
 	}
 }

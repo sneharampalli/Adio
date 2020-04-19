@@ -1,6 +1,6 @@
 {
     "identityPoolName": "adio199f2d3d_identitypool_199f2d3d",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "adioau199f2d3d",
     "userPoolName": "adio199f2d3d_userpool_199f2d3d",
     "autoVerifiedAttributes": [
