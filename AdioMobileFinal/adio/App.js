@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Root from './src/Root';
 import Amplify from 'aws-amplify';
-import { Animated, Text, View, Image, ImageBackground } from 'react-native';
+import { Animated, Text, View, ImageBackground } from 'react-native';
 import * as Font from 'expo-font';
 import awsmobile from './src/aws-exports';
 import { withAuthenticator } from 'aws-amplify-react-native';
-import LoginTheme from './libs/LoginTheme'
+import LoginTheme from './libs/LoginTheme';
 
 Amplify.configure(awsmobile);
 // const MyTheme = {
 //   button: { backgroundColor: "green", borderColor: "red" },
 //   signInButtonIcon: { display: "none" }
 // };
+
 const signUpConfig = {
   hiddenDefaults: ["username"],
   signUpFields: [
@@ -75,20 +76,20 @@ export default class App extends React.Component {
 
   render() {
     console.reportErrorsAsExceptions = false;
+    console.disableYellowBox = true; 
     return (
-      <View style={{ flex: 1 }}>
-        <ImageBackground source={require('./background1.png')} style={{width: '100%', height: '100%'}} imageStyle= 
-{{opacity:0.5}}>
+      <View style={{ borderWidth: 1, flex: 1 }}>
+        <ImageBackground source={require('./assets/background1.png')} style={{width: '100%', height: '100%'}} imageStyle= 
+{{opacity:0.85}}>
         {
           this.state.fontLoaded ? (
-            <FadeInView duration="1500" >
+            <FadeInView duration="1000" delay="300" style={{position: 'absolute', left: 0, right: 0, justifyContent: 'center', alignItems: 'center'}}>
               <Text style={{
                 textAlign: 'center',
                 color: '#000',
                 fontFamily: 'comfortaa',
                 fontSize: 64,
                 marginTop: 75,
-
               }}>adio</Text>
             </FadeInView>
           ) : <Text style={{
@@ -98,7 +99,8 @@ export default class App extends React.Component {
             marginTop: 75,
             height: 60
           }}></Text>
-        }<FadeInView duration="1000" delay="500" style={{ flex: 1 }}>
+        }
+        <FadeInView duration="1000" delay="500" style={{flex: 1}}>
           <AppWithAuth />
         </FadeInView>
         </ImageBackground>
