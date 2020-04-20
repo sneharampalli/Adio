@@ -209,25 +209,11 @@ export default class Root extends React.Component {
         return (
             <View style={{flex: 1 }}>
                 <ImageBackground source={require('../assets/background2.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
-                    <Avatar containerStyle={HomeTheme.avatar} overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title="RN" />
+                    <Avatar rounded title="MD" />
                     <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
-                    <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
-                    <View>
-                        <Button
-                            style={HomeTheme.playButton}
-                            onPress={this.startPlaying}
-                            type="clear"
-                            icon={
-                                <Icon
-                                    name={this.state.sessionActive ? "pause-circle" : "play-circle"}
-                                    size={170}
-                                    color="rgb(0,0,0)"
-                                />
-                            }
-                        />
-                    </View>
-                    <TouchableOpacity style={HomeTheme.playButtonLabel} onPress={this.signOut}>
-                        <Text style={HomeTheme.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
+                  
+                    <TouchableOpacity style={HomeTheme.button} onPress={this.signOut}>
+                        <Text style={HomeTheme.buttonText}> Logout </Text>
                     </TouchableOpacity>
                     <View style={HomeTheme.sliderContainer}>
                         <Text style={HomeTheme.sliderLabel}>volume</Text>
@@ -264,10 +250,6 @@ export default class Root extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity style={HomeTheme.button} onPress={this.signOut}>
                         <Text style={HomeTheme.buttonText}> more settings </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={HomeTheme.logoutButton} onPress={this.signOut}>
-                        <Text style={HomeTheme.logoutButtonText}> Logout </Text>
                     </TouchableOpacity>
                     <Image source={require('../assets/adio-white.png')} style={HomeTheme.logo}/>
                 </ImageBackground>

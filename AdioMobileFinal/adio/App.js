@@ -8,10 +8,6 @@ import { withAuthenticator } from 'aws-amplify-react-native';
 import LoginTheme from './libs/LoginTheme';
 
 Amplify.configure(awsmobile);
-// const MyTheme = {
-//   button: { backgroundColor: "green", borderColor: "red" },
-//   signInButtonIcon: { display: "none" }
-// };
 
 const signUpConfig = {
   hiddenDefaults: ["username"],
