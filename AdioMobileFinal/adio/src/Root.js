@@ -28,12 +28,10 @@ export default class Root extends React.Component {
             currLat: null,
             currLong: null,
             ads: [],
-            adInterval: 20,
+            adInterval: 5,
             isLoaded: false,
             isPlaying: false,
-            didFinish: false
-            locationResult: null,
-            ads: [],
+            didFinish: false,
             volume: 5,
             adfreq: 2,
         }
@@ -41,7 +39,7 @@ export default class Root extends React.Component {
 
     componentDidMount() {
         this.setupAudioPlayer();
-        // window.setInterval(async () => {console.log("hi"); }, 5000);
+        window.setInterval(() => {console.log("hi"); }, 1000);
     }
 
     signOut = () => {
@@ -65,7 +63,7 @@ export default class Root extends React.Component {
 
     }
 
-    _onPlaybackStatusUpdate = async playbackStatus => {
+    _onPlaybackStatusUpdate = playbackStatus => {
           if (!playbackStatus.isLoaded) {
             // Update your UI for the unloaded state
             console.log("Player is unloaded");
@@ -94,8 +92,9 @@ export default class Root extends React.Component {
             if (playbackStatus.didJustFinish) {
               // The player has just finished playing and will stop. Maybe you want to play something else?
               console.log("Player finished playing song");
-              await this.state.soundObject.unloadAsync();
-              console.log("Player is unloaded");
+              // this.setupAudioPlayer();
+              // await this.state.soundObject.unloadAsync();
+              // console.log("Player is unloaded");
               this.setState({ didFinish: true });
             }
 
@@ -106,10 +105,10 @@ export default class Root extends React.Component {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // componentWillUnmount() {
-    //     console.log("Clearing timer");
-    //     timer.clearInterval(this);
-    // }
+    componentWillUnmount() {
+        console.log("Clearing timer");
+        timer.clearInterval(this);
+    }
 
     startPlaying = async () => {
         await this._getLocationAsync();
@@ -125,10 +124,10 @@ export default class Root extends React.Component {
             //     console.log("done playing");
             //     this.sleep(this.state.adInterval * 1000);
             // }
-            this.playAd();
-            // timer.setInterval(this, "ads", async () => { await this.playAd }, this.state.adInterval * 1000);
-            var intervalId = window.setInterval(this.playAd, this.state.adInterval * 1000);
-            this.setState({intervalId: intervalId});
+            // this.playAd();
+            timer.setInterval(this, "ads", this.playAd, this.state.adInterval * 1000);
+            // var intervalId = window.setInterval(this.playAd, this.state.adInterval * 1000);
+            // this.setState({intervalId: intervalId});
         } else {
             this.setState({sessionActive: false});
             // let state = this.state;
@@ -142,8 +141,8 @@ export default class Root extends React.Component {
                 console.log("Pausing current song");
                 await this.state.soundObject.pauseAsync();
             }
-            window.clearInterval(this.state.intervalId);
-            // timer.clearInterval("ads");
+            // window.clearInterval(this.state.intervalId);
+            timer.clearInterval(this);
         }
     }
 
@@ -285,7 +284,6 @@ export default class Root extends React.Component {
         return (
             <View style={{flex: 1 }}>
                 <ImageBackground source={require('../assets/background2.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
-                    <Avatar containerStyle={HomeTheme.avatar} overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title="RN" />
                     <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
                     <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
                     <View>
@@ -302,50 +300,6 @@ export default class Root extends React.Component {
                             }
                         />
                     </View>
-                    <TouchableOpacity style={HomeTheme.playButtonLabel} onPress={this.signOut}>
-                        <Text style={HomeTheme.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
-                    </TouchableOpacity>
-                    <View style={HomeTheme.sliderContainer}>
-                        <Text style={HomeTheme.sliderLabel}>volume</Text>
-                        <Slider
-                            style={HomeTheme.volumeSlider}
-                            step={1}
-                            minimumValue={1}
-                            maximumValue={10}
-                            value={this.state.volume}
-                            minimumTrackTintColor={'#000'}
-                            thumbTintColor={'#000'}
-                            onValueChange={value => this.setState({ volume: value })}
-                        />
-                        <Text style={HomeTheme.sliderValue}>{this.state.volume}</Text>
-                    </View>
-                    <Text style={HomeTheme.sliderDescription}>volume of ads</Text>
-                    <View style={HomeTheme.sliderContainer}>
-                        <Text style={HomeTheme.sliderLabel}>ad freq</Text>
-                        <Slider
-                            style={HomeTheme.volumeSlider}
-                            step={1}
-                            minimumValue={1}
-                            maximumValue={8}
-                            value={this.state.adfreq}
-                            minimumTrackTintColor={'#000'}
-                            thumbTintColor={'#000'}
-                            onValueChange={value => this.setState({ adfreq: value })}
-                        />
-                        <Text style={HomeTheme.sliderValue}>{this.state.adfreq}</Text>
-                    </View>
-                    <Text style={HomeTheme.sliderDescription}>mins between ads</Text>
-                    <TouchableOpacity style={HomeTheme.button} onPress={this.signOut}>
-                        <Text style={HomeTheme.buttonText}> dashboard </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={HomeTheme.button} onPress={this.signOut}>
-                        <Text style={HomeTheme.buttonText}> more settings </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={HomeTheme.logoutButton} onPress={this.signOut}>
-                        <Text style={HomeTheme.logoutButtonText}> Logout </Text>
-                    </TouchableOpacity>
-                    <Image source={require('../assets/adio-white.png')} style={HomeTheme.logo}/>
                 </ImageBackground>
             </View >
         )
