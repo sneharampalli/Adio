@@ -1,7 +1,7 @@
 import React from 'react';
 import { Auth, Storage } from 'aws-amplify';
 import { Audio } from "expo-av";
-import { StyleSheet, Text, View, FlatList, Image, ImageBackground, TouchableOpacity, Slider } from 'react-native';
+import {Text, View, Image, ImageBackground, TouchableOpacity, Slider } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -28,18 +28,21 @@ export default class Root extends React.Component {
             currLat: null,
             currLong: null,
             ads: [],
-            adInterval: 5,
+            adInterval: 15,
             isLoaded: false,
             isPlaying: false,
             didFinish: false,
             volume: 5,
-            adfreq: 2,
+            initials: '',
         }
     }
 
     componentDidMount() {
         this.setupAudioPlayer();
-        window.setInterval(() => {console.log("hi"); }, 1000);
+         Auth.currentAuthenticatedUser({}).then(user => this.setState({ initials:
+                user.attributes.name.charAt(0).toUpperCase() + 
+                    user.attributes.family_name.charAt(0).toUpperCase()}))
+            .catch(err => console.log(err));
     }
 
     signOut = () => {
@@ -60,13 +63,12 @@ export default class Root extends React.Component {
         const soundObject = new Audio.Sound();
         soundObject.setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
         this.setState({soundObject: soundObject});
-
     }
 
     _onPlaybackStatusUpdate = playbackStatus => {
           if (!playbackStatus.isLoaded) {
             // Update your UI for the unloaded state
-            console.log("Player is unloaded");
+            // console.log("Player is unloaded");
             this.setState({ isLoaded: false });
 
             if (playbackStatus.error) {
@@ -75,39 +77,33 @@ export default class Root extends React.Component {
 
           } else {
             // Update your UI for the loaded state
-            console.log("Player is loaded");
+            // console.log("Player is loaded");
             this.setState({ isLoaded: true });
+            this.state.soundObject.setVolumeAsync(this.state.volume / 10.0);
 
             if (playbackStatus.isPlaying) {
               // Update your UI for the playing state
-              console.log("Player is playing");
+              // console.log("Player is playing");
               this.setState({ isPlaying: true });
               this.setState({ didFinish: false });
             } else {
               // Update your UI for the paused state
-              console.log("Player is not playing");
+              // console.log("Player is not playing");
               this.setState({ isPlaying: false });
             }
 
             if (playbackStatus.didJustFinish) {
               // The player has just finished playing and will stop. Maybe you want to play something else?
               console.log("Player finished playing song");
-              // this.setupAudioPlayer();
-              // await this.state.soundObject.unloadAsync();
-              // console.log("Player is unloaded");
               this.setState({ didFinish: true });
             }
 
           }
     };
 
-    sleep = async (ms) => {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
     componentWillUnmount() {
         console.log("Clearing timer");
-        timer.clearInterval(this);
+        timer.clearInterval("ads");
     }
 
     startPlaying = async () => {
@@ -118,37 +114,19 @@ export default class Root extends React.Component {
         }
         if (!this.state.sessionActive) {
             this.setState({ sessionActive: true });
-            // while (this.state.sessionActive) {
-            //     console.log("play new ad");
-            //     this.playAd();
-            //     console.log("done playing");
-            //     this.sleep(this.state.adInterval * 1000);
-            // }
-            // this.playAd();
-            timer.setInterval(this, "ads", this.playAd, this.state.adInterval * 1000);
-            // var intervalId = window.setInterval(this.playAd, this.state.adInterval * 1000);
-            // this.setState({intervalId: intervalId});
+            timer.setInterval("ads", this.playAd, this.state.adInterval * 1000);
         } else {
             this.setState({sessionActive: false});
-            // let state = this.state;
-            // let shouldPause = false;
-            // await this.state.soundObject.getStatusAsync().then(function(result) {
-            //     if (result.isPlaying) {
-            //         shouldPause = true;
-            //     }
-            // });
             if (this.state.isPlaying) {
                 console.log("Pausing current song");
                 await this.state.soundObject.pauseAsync();
             }
-            // window.clearInterval(this.state.intervalId);
-            timer.clearInterval(this);
+            timer.clearInterval("ads");
         }
     }
 
     playAd = async () => {
         console.log("Time to play new ad!");
-        console.log("why does it always crash here");
         if (this.state.isLoaded) {
             console.log("Already have a loaded song because: ")
             if (this.state.isPlaying) {
@@ -184,35 +162,28 @@ export default class Root extends React.Component {
 
     getNextAd = async () => {
         var nextAdIdx = 0;
-        while (nextAdIdx < this.state.ads.length) {
-            if (!this.withinRange(this.state.ads[nextAdIdx].maxLat, this.state.ads[nextAdIdx].minLat,
-                this.state.ads[nextAdIdx].maxLong, this.state.ads[nextAdIdx].minLong)) {
-                nextAd++;
+        await this._getLocationAsync();
+        while (this.state.ads.length != 0) {
+            if (this.state.currLat <= this.state.ads[0].maxLat && this.state.currLat >= this.state.ads[0].minLat
+                && this.state.currLong <= this.state.ads[0].maxLng && this.state.currLong >= this.state.ads[0].minLng) {
+                console.log("Ad is within range");
+                break;
+            } else {
+                console.log("Ad is not within range");
+                this.state.ads.shift();
             }
         }
-        if (nextAdIdx == this.state.ads.length) {
+        if (this.state.ads.length == 0) {
+            // none of the current ads are in range, fetch more ads instead
             await this.getAdsList();
         }
         if (this.state.ads.length == 0) {
-            // no ads found!
+            // no more ads to fetch!
             return null;
         }
-
         var nextAd = this.state.ads.shift();
         console.log("Next ad to play: " + nextAd.file.key)
         return nextAd;
-    }
-
-    withinRange = async (maxLat, minLat, maxLong, minLong) => {
-        await this._getLocationAsync();
-        console.log("Current location: " + this.state.currLat + " " + this.state.currLong);
-        if (this.state.currLat <= maxLat && this.state.currLat >= minLat
-            &this.state.currLong <= maxLong && this.state.currLong >= minLong) {
-            console.log("Ad is within range");
-            return true;
-        }
-        console.log("Ad is not within range");
-        return false;
     }
 
     _getLocationAsync = async () => {
@@ -225,7 +196,8 @@ export default class Root extends React.Component {
         }
         
         let location = await Location.getCurrentPositionAsync({});
-        this.setState({ currLat: location.coords.latitude, currLong: location.coords.longitude });
+        this.setState({ currLat: 15, currLong: 15 }); // TODO: REPLACE WITH BELOW LINE
+        // this.setState({ currLat: location.coords.latitude, currLong: location.coords.longitude });
         console.log("Current location is " + this.state.currLat + " " + this.state.currLong);
     };
 
@@ -238,13 +210,13 @@ export default class Root extends React.Component {
             const response = await API.graphql(graphqlOperation(queries.listAds, {
                 filter: {
                     maxLat: {
-                        ge: 15 // TODO: later replace with this.state.currLat
+                        ge: this.state.currLat
                     }, minLat: {
-                        le: 15 // TODO: later replace with this.state.currLat
+                        le: this.state.currLat
                     }, maxLng: {
-                        ge: 15 // TODO: later replace with this.state.currLong
+                        ge: this.state.currLong
                     }, minLng: {
-                        le: 15 // TODO: later replace with this.state.currLong
+                        le: this.state.currLong
                     }
                 }
             }));
@@ -280,12 +252,53 @@ export default class Root extends React.Component {
     // }
 
     render() {
-
+        // const navigation = useNavigation();
         return (
             <View style={{flex: 1 }}>
                 <ImageBackground source={require('../assets/background2.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
+                    <Avatar containerStyle={HomeTheme.avatar} onPress={() =>
+                            this.props.navigation.navigate('Profile')
+                        } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
                     <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
                     <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
+                    <View style={HomeTheme.sliderContainer1}>
+                        <Text style={HomeTheme.sliderLabel}>volume</Text>
+                        <Slider
+                            style={HomeTheme.volumeSlider}
+                            step={1}
+                            minimumValue={1}
+                            maximumValue={10}
+                            value={this.state.volume}
+                            minimumTrackTintColor={'#000'}
+                            maximumTrackTintColor={'rgba(0,0,0,0.2)'}
+                            thumbTintColor={'#000'}
+                            onValueChange={value => { this.setState({ volume: value });
+                                    if (this.state.isLoaded) {
+                                        this.state.soundObject.setVolumeAsync(value / 10.0); 
+                                    }
+                                }
+                            }
+                        />
+                        <Text style={HomeTheme.sliderValue}>{this.state.volume}</Text>
+                    </View>
+                    <Text style={HomeTheme.sliderDescription}>volume of ads</Text>
+                    <View style={HomeTheme.sliderContainer}>
+                        <Text style={HomeTheme.sliderLabel}>ad freq</Text>
+                        <Slider
+                            style={HomeTheme.volumeSlider}
+                            step={1}
+                            minimumValue={1}
+                            maximumValue={8}
+                            value={this.state.adInterval}
+                            minimumTrackTintColor={'#000'}
+                            maximumTrackTintColor={'rgba(0,0,0,0.2)'}
+                            thumbTintColor={'#000'}
+                            onValueChange={value => this.setState({ adInterval: value })}
+                        />
+                        <Text style={HomeTheme.sliderValue}>{this.state.adInterval}</Text>
+                    </View>
+                    <Text style={HomeTheme.sliderDescription}>mins between ads</Text>
+                    
                     <View>
                         <Button
                             style={HomeTheme.playButton}
@@ -300,9 +313,23 @@ export default class Root extends React.Component {
                             }
                         />
                     </View>
+                    <TouchableOpacity style={HomeTheme.playButtonLabel} onPress={this.signOut}>
+                        <Text style={HomeTheme.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity style={HomeTheme.button1} onPress={this.signOut}>
+                        <Text style={HomeTheme.buttonText}> dashboard </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={HomeTheme.button} onPress={this.signOut}>
+                        <Text style={HomeTheme.buttonText}> more settings </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={HomeTheme.logoutButton} onPress={this.signOut}>
+                        <Text style={HomeTheme.logoutButtonText}> logout </Text>
+                    </TouchableOpacity>
+                    <Image source={require('../assets/adio-white.png')} style={HomeTheme.logo}/>
                 </ImageBackground>
             </View >
         )
-
     }
 }
