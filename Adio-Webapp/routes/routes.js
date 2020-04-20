@@ -69,6 +69,7 @@ var postCheckLogin = function (req, res) {
   });
 };
 
+
 // Post route for creating a new login
 var postCreateAccount = function (req, res) {
   var email = req.body.newEmail;
@@ -95,11 +96,13 @@ var getLogout = function (req, res) {
   res.redirect('/');
 };
 
+
+
 var routes = {
   get_main: getMain,
   post_checklogin: postCheckLogin,
   post_createaccount: postCreateAccount,
-  get_logout: getLogout,
+  get_logout: getLogout
   // get_audio: postS3Objects
 };
 
