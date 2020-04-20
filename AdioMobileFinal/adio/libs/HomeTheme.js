@@ -11,23 +11,36 @@ export default StyleSheet.create({
 		position: "absolute",
 		right: 20,
 		top: 30,
-		color: '#fff'
 	}, 
 	button: {
-		backgroundColor: 'rgba(255,255,255,0.3)',
+		backgroundColor: 'rgba(255,255,255,0.4)',
 		alignItems: 'center',
 		alignSelf: 'center',
 		marginTop: 20,
 		width: 120,
-		borderWidth: 1
+		height: 40,
+		justifyContent: "center",
+		borderRadius: 6
+		// borderWidth: 1
+	}, 
+	button1: {
+		backgroundColor: 'rgba(255,255,255,0.4)',
+		alignItems: 'center',
+		alignSelf: 'center',
+		marginTop: 110,
+		width: 120,
+		height: 40,
+		justifyContent: "center",
+		borderRadius: 6
+		// borderWidth: 1
 	},
 	buttonText: {
 		color: '#000',
-		fontSize: 16,
+		fontSize: 17,
 		fontWeight: '600'
     },
     playButton: {
-		marginTop: 50,
+		marginTop: 70,
     },
 	playButtonLabel: {
 		alignItems: 'center',
@@ -52,6 +65,13 @@ export default StyleSheet.create({
 		justifyContent: 'center',
 		height: 40,
 	},
+	sliderContainer1: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		height: 40,
+		marginTop: 50,
+		// backgroundColor: 'rgba(255,255,255,0.4)',
+	},
 	sliderLabel: {
 		alignSelf: 'center',
 		fontWeight: '500',
@@ -75,7 +95,7 @@ export default StyleSheet.create({
 		position: "absolute",
 		bottom: 20,
 		left: 10,
-		backgroundColor: 'rgba(0,0,0,0.3)',
+		// backgroundColor: 'rgba(0,0,0,0.3)',
 		height: 30,
 		width: 70,
 		alignContent: "center",

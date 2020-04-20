@@ -1,7 +1,7 @@
 import React from 'react';
 import { Auth, Storage } from 'aws-amplify';
 import { Audio } from "expo-av";
-import { StyleSheet, Text, View, FlatList, Image, ImageBackground, TouchableOpacity, Slider } from 'react-native';
+import {Text, View, Image, ImageBackground, TouchableOpacity, Slider } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -16,7 +16,7 @@ import { Avatar } from 'react-native-elements';
 
 Analytics.configure({ disabled: true })
 
-const timer = require('react-native-timer');
+// const timer = require('react-native-timer');
 
 export default class Root extends React.Component {
 
@@ -31,11 +31,10 @@ export default class Root extends React.Component {
             adInterval: 20,
             isLoaded: false,
             isPlaying: false,
-            didFinish: false
-            locationResult: null,
             ads: [],
             volume: 5,
             adfreq: 2,
+            initials: '',
         }
     }
 
@@ -69,6 +68,10 @@ export default class Root extends React.Component {
           if (!playbackStatus.isLoaded) {
             // Update your UI for the unloaded state
             console.log("Player is unloaded");
+            Auth.currentAuthenticatedUser({}).then(user => this.setState({ initials:
+                user.attributes.name.charAt(0).toUpperCase() + 
+                    user.attributes.family_name.charAt(0).toUpperCase()}))
+            .catch(err => console.log(err));
             this.setState({ isLoaded: false });
 
             if (playbackStatus.error) {
@@ -281,13 +284,48 @@ export default class Root extends React.Component {
     // }
 
     render() {
-
+        // const navigation = useNavigation();
         return (
             <View style={{flex: 1 }}>
                 <ImageBackground source={require('../assets/background2.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
-                    <Avatar containerStyle={HomeTheme.avatar} overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title="RN" />
+                    <Avatar containerStyle={HomeTheme.avatar} onPress={() =>
+                            this.props.navigation.navigate('Profile')
+                        } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
                     <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
                     <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
+                    <View style={HomeTheme.sliderContainer1}>
+                        <Text style={HomeTheme.sliderLabel}>volume</Text>
+                        <Slider
+                            style={HomeTheme.volumeSlider}
+                            step={1}
+                            minimumValue={1}
+                            maximumValue={10}
+                            value={this.state.volume}
+                            minimumTrackTintColor={'#000'}
+                            maximumTrackTintColor={'rgba(0,0,0,0.2)'}
+                            thumbTintColor={'#000'}
+                            onValueChange={value => this.setState({ volume: value })}
+                        />
+                        <Text style={HomeTheme.sliderValue}>{this.state.volume}</Text>
+                    </View>
+                    <Text style={HomeTheme.sliderDescription}>volume of ads</Text>
+                    <View style={HomeTheme.sliderContainer}>
+                        <Text style={HomeTheme.sliderLabel}>ad freq</Text>
+                        <Slider
+                            style={HomeTheme.volumeSlider}
+                            step={1}
+                            minimumValue={1}
+                            maximumValue={8}
+                            value={this.state.adfreq}
+                            minimumTrackTintColor={'#000'}
+                            maximumTrackTintColor={'rgba(0,0,0,0.2)'}
+                            thumbTintColor={'#000'}
+                            onValueChange={value => this.setState({ adfreq: value })}
+                        />
+                        <Text style={HomeTheme.sliderValue}>{this.state.adfreq}</Text>
+                    </View>
+                    <Text style={HomeTheme.sliderDescription}>mins between ads</Text>
+                    
                     <View>
                         <Button
                             style={HomeTheme.playButton}
@@ -305,37 +343,8 @@ export default class Root extends React.Component {
                     <TouchableOpacity style={HomeTheme.playButtonLabel} onPress={this.signOut}>
                         <Text style={HomeTheme.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
                     </TouchableOpacity>
-                    <View style={HomeTheme.sliderContainer}>
-                        <Text style={HomeTheme.sliderLabel}>volume</Text>
-                        <Slider
-                            style={HomeTheme.volumeSlider}
-                            step={1}
-                            minimumValue={1}
-                            maximumValue={10}
-                            value={this.state.volume}
-                            minimumTrackTintColor={'#000'}
-                            thumbTintColor={'#000'}
-                            onValueChange={value => this.setState({ volume: value })}
-                        />
-                        <Text style={HomeTheme.sliderValue}>{this.state.volume}</Text>
-                    </View>
-                    <Text style={HomeTheme.sliderDescription}>volume of ads</Text>
-                    <View style={HomeTheme.sliderContainer}>
-                        <Text style={HomeTheme.sliderLabel}>ad freq</Text>
-                        <Slider
-                            style={HomeTheme.volumeSlider}
-                            step={1}
-                            minimumValue={1}
-                            maximumValue={8}
-                            value={this.state.adfreq}
-                            minimumTrackTintColor={'#000'}
-                            thumbTintColor={'#000'}
-                            onValueChange={value => this.setState({ adfreq: value })}
-                        />
-                        <Text style={HomeTheme.sliderValue}>{this.state.adfreq}</Text>
-                    </View>
-                    <Text style={HomeTheme.sliderDescription}>mins between ads</Text>
-                    <TouchableOpacity style={HomeTheme.button} onPress={this.signOut}>
+                    
+                    <TouchableOpacity style={HomeTheme.button1} onPress={this.signOut}>
                         <Text style={HomeTheme.buttonText}> dashboard </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={HomeTheme.button} onPress={this.signOut}>
@@ -343,12 +352,11 @@ export default class Root extends React.Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={HomeTheme.logoutButton} onPress={this.signOut}>
-                        <Text style={HomeTheme.logoutButtonText}> Logout </Text>
+                        <Text style={HomeTheme.logoutButtonText}> logout </Text>
                     </TouchableOpacity>
                     <Image source={require('../assets/adio-white.png')} style={HomeTheme.logo}/>
                 </ImageBackground>
             </View >
         )
-
     }
 }
