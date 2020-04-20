@@ -37,7 +37,7 @@ export default StyleSheet.create({
 	sectionHeader: {
 		width: '100%',
 		marginBottom: 10,
-		marginTop: 10
+		marginTop: 100
 	},
 	sectionHeaderText: {
 		color: deepSquidInk,

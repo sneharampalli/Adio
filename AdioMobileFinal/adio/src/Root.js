@@ -1,7 +1,7 @@
 import React from 'react';
 import { Auth, Storage } from 'aws-amplify';
 import { Audio } from "expo-av";
-import { StyleSheet, Text, View, FlatList, TextInput } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -11,10 +11,12 @@ import * as subscriptions from "./graphql/subscriptions";
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import { Analytics } from 'aws-amplify';
-
-const timer = require('react-native-timer');
+import HomeTheme from '../libs/HomeTheme';
+import Slider from '@react-native-community/slider';
 
 Analytics.configure({ disabled: true })
+
+const timer = require('react-native-timer');
 
 export default class Root extends React.Component {
 
@@ -30,7 +32,13 @@ export default class Root extends React.Component {
             isLoaded: false,
             isPlaying: false,
             didFinish: false
+            locationResult: null,
+            ads: [],
+            volume: 0,
         }
+        // SystemSetting.getVolume().then((volume)=>{
+        //     this.state.volume = volume;
+        // });
     }
 
     componentDidMount() {
@@ -277,37 +285,33 @@ export default class Root extends React.Component {
     render() {
 
         return (
-            <View style={styles.container, { flex: 1, backgroundColor: '#96D1C7' }}>
-                <View>
-                    <Button
-                        onPress={this.startPlaying}
-                        type="clear"
-                        icon={
-                            <Icon
-                                name={this.state.sessionActive ? "pause-circle" : "play-circle"}
-                                size={200}
-                                color="white"
-                            />
-                        }
-                    />
-                </View>
-                <Button title="Log Out" onPress={this.signOut} />
+            <View style={{flex: 1 }}>
+                <ImageBackground source={require('../assets/background2.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
+                    <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
+                    <View>
+                        <Button
+                            style={HomeTheme.playButton}
+                            onPress={this.startPlaying}
+                            type="clear"
+                            icon={
+                                <Icon
+                                    name={this.state.sessionActive ? "pause-circle" : "play-circle"}
+                                    size={160}
+                                    color="rgb(0,0,0)"
+                                />
+                            }
+                        />
+                    </View>
+                    <TouchableOpacity style={HomeTheme.button} onPress={this.signOut}>
+                        <Text style={HomeTheme.buttonText}> Logout </Text>
+                    </TouchableOpacity>
+                    <Slider
+                        value={this.state.volume}
+                        onValueChange={this.sliderChange}/>
+                    <Image source={require('../assets/adio-white.png')} style={HomeTheme.logo}/>
+                </ImageBackground>
             </View >
         )
 
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 22,
-        marginLeft: 20,
-        marginRight: 20
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-    }
-})
