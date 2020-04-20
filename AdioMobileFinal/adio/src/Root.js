@@ -16,6 +16,8 @@ import { Avatar } from 'react-native-elements';
 
 Analytics.configure({ disabled: true })
 
+const timer = require('react-native-timer');
+
 export default class Root extends React.Component {
 
     constructor(props) {
@@ -23,6 +25,13 @@ export default class Root extends React.Component {
         this.state = {
             sessionActive: false,
             hasLocationPermissions: false,
+            currLat: null,
+            currLong: null,
+            ads: [],
+            adInterval: 20,
+            isLoaded: false,
+            isPlaying: false,
+            didFinish: false
             locationResult: null,
             ads: [],
             volume: 5,
@@ -32,6 +41,7 @@ export default class Root extends React.Component {
 
     componentDidMount() {
         this.setupAudioPlayer();
+        // window.setInterval(async () => {console.log("hi"); }, 5000);
     }
 
     signOut = () => {
@@ -45,10 +55,61 @@ export default class Root extends React.Component {
     }
 
     setupAudioPlayer = async () => {
-        await Audio.setAudioModeAsync({ playsInSilentModeIOS: true, interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS, staysActiveInBackground: true, interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS });
+        await Audio.setAudioModeAsync({ playsInSilentModeIOS: true,
+            interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
+            staysActiveInBackground: true,
+            interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS });
         const soundObject = new Audio.Sound();
+        soundObject.setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
         this.setState({soundObject: soundObject});
+
     }
+
+    _onPlaybackStatusUpdate = async playbackStatus => {
+          if (!playbackStatus.isLoaded) {
+            // Update your UI for the unloaded state
+            console.log("Player is unloaded");
+            this.setState({ isLoaded: false });
+
+            if (playbackStatus.error) {
+              console.log(`Encountered a fatal error during playback: ${playbackStatus.error}`);
+            }
+
+          } else {
+            // Update your UI for the loaded state
+            console.log("Player is loaded");
+            this.setState({ isLoaded: true });
+
+            if (playbackStatus.isPlaying) {
+              // Update your UI for the playing state
+              console.log("Player is playing");
+              this.setState({ isPlaying: true });
+              this.setState({ didFinish: false });
+            } else {
+              // Update your UI for the paused state
+              console.log("Player is not playing");
+              this.setState({ isPlaying: false });
+            }
+
+            if (playbackStatus.didJustFinish) {
+              // The player has just finished playing and will stop. Maybe you want to play something else?
+              console.log("Player finished playing song");
+              await this.state.soundObject.unloadAsync();
+              console.log("Player is unloaded");
+              this.setState({ didFinish: true });
+            }
+
+          }
+    };
+
+    sleep = async (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // componentWillUnmount() {
+    //     console.log("Clearing timer");
+    //     timer.clearInterval(this);
+    // }
 
     startPlaying = async () => {
         await this._getLocationAsync();
@@ -58,55 +119,52 @@ export default class Root extends React.Component {
         }
         if (!this.state.sessionActive) {
             this.setState({ sessionActive: true });
+            // while (this.state.sessionActive) {
+            //     console.log("play new ad");
+            //     this.playAd();
+            //     console.log("done playing");
+            //     this.sleep(this.state.adInterval * 1000);
+            // }
             this.playAd();
-            var intervalId = window.setInterval(this.playAd, 7000); // plays ad every 7 seconds
+            // timer.setInterval(this, "ads", async () => { await this.playAd }, this.state.adInterval * 1000);
+            var intervalId = window.setInterval(this.playAd, this.state.adInterval * 1000);
             this.setState({intervalId: intervalId});
         } else {
             this.setState({sessionActive: false});
-            let state = this.state;
-            let shouldPause = false;
-            await this.state.soundObject.getStatusAsync().then(function(result) {
-                if (result.isPlaying) {
-                    shouldPause = true;
-                }
-            });
-            if (shouldPause) {
+            // let state = this.state;
+            // let shouldPause = false;
+            // await this.state.soundObject.getStatusAsync().then(function(result) {
+            //     if (result.isPlaying) {
+            //         shouldPause = true;
+            //     }
+            // });
+            if (this.state.isPlaying) {
                 console.log("Pausing current song");
-                await state.soundObject.pauseAsync();
+                await this.state.soundObject.pauseAsync();
             }
             window.clearInterval(this.state.intervalId);
+            // timer.clearInterval("ads");
         }
     }
 
     playAd = async () => {
         console.log("Time to play new ad!");
-        let self = this;
-        let songLoaded = false;
-        let didFinish = false;
-        console.log(this.state.soundObject);
-        await this.state.soundObject.getStatusAsync().then(function (result) {
-            console.log(result);
-            if (result.isLoaded) {
-                console.log("Some song already loaded.");
-                songLoaded = true;
-                if (result.isPlaying) {
-                    didFinish = true;
-                    console.log("Song was over, playing new ad.");
-                } else {
-                    console.log("Continuing to play old ad.");
-                }
-            } else {
-                console.log("No song loaded.");
+        console.log("why does it always crash here");
+        if (this.state.isLoaded) {
+            console.log("Already have a loaded song because: ")
+            if (this.state.isPlaying) {
+                console.log("Currently playing an ad.");
+                return;
             }
-        });
-        if (songLoaded) {
-            if (didFinish) {
-                console.log("Resetting sound object");
-                self.setState({soundObject: new Audio.Sound()});
-                console.log("Reset sound object");
+            if (this.state.didFinish) {
+                console.log("Finished playing a song.")
+                await this.setupAudioPlayer();
+                console.log("Reset sound object.");
             } else {
-                console.log("Continue to play old ad.")
+                // song was paused
+                console.log("Ad has been paused.")
                 await this.state.soundObject.playAsync();
+                console.log("Continue to play old song.")
                 return;
             }
         }
@@ -148,12 +206,13 @@ export default class Root extends React.Component {
 
     withinRange = async (maxLat, minLat, maxLong, minLong) => {
         await this._getLocationAsync();
-        console.log("Current location: " + this.state.locationResult);
-        var currLoc = this.state.locationResult.coords;
-        if (currLoc.latitude <= maxLat && currLoc.latitude >= minLat
-            && currLoc.longitude <= maxLong && currLoc.longitude >= minLong) {
+        console.log("Current location: " + this.state.currLat + " " + this.state.currLong);
+        if (this.state.currLat <= maxLat && this.state.currLat >= minLat
+            &this.state.currLong <= maxLong && this.state.currLong >= minLong) {
+            console.log("Ad is within range");
             return true;
         }
+        console.log("Ad is not within range");
         return false;
     }
 
@@ -167,17 +226,34 @@ export default class Root extends React.Component {
         }
         
         let location = await Location.getCurrentPositionAsync({});
-        this.setState({ locationResult: JSON.stringify(location) });
-        console.log("Current location is " + this.state.locationResult);
+        this.setState({ currLat: location.coords.latitude, currLong: location.coords.longitude });
+        console.log("Current location is " + this.state.currLat + " " + this.state.currLong);
     };
 
     getAdsList = async () => {
+        console.log("Refresh ad list");
         await this._getLocationAsync();
         try {
             // const response = await API.graphql(graphqlOperation(queries.listAds, { maxLat: 40, minLat: 39.8, maxLong: -75, minLong: -75.2 }));
-            const response = await API.graphql(graphqlOperation(queries.listAds, { maxLat: 10, minLat: 10, maxLong: 10, minLong: 10 }));
+
+            const response = await API.graphql(graphqlOperation(queries.listAds, {
+                filter: {
+                    maxLat: {
+                        ge: 15 // TODO: later replace with this.state.currLat
+                    }, minLat: {
+                        le: 15 // TODO: later replace with this.state.currLat
+                    }, maxLng: {
+                        ge: 15 // TODO: later replace with this.state.currLong
+                    }, minLng: {
+                        le: 15 // TODO: later replace with this.state.currLong
+                    }
+                }
+            }));
             this.setState({ ads: response.data.listAds.items });
-            console.log("Got list of ads: " + this.state.ads);
+            console.log("Got list of ads: ");
+            for (var i = 0; i < this.state.ads.length; i++) {
+                console.log("[" + i + "]: " + this.state.ads[i].adName);
+            }
         } catch (err) {
             console.error(err);
         }

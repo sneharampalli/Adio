@@ -7,7 +7,7 @@ export const createAd = /* GraphQL */ `
       uniqueID
       campaignName
       adName
-      owner
+      email
       maxLat
       maxLng
       minLat
@@ -17,6 +17,8 @@ export const createAd = /* GraphQL */ `
         region
         key
       }
+      description
+      numImpressions
     }
   }
 `;
@@ -26,7 +28,7 @@ export const updateAd = /* GraphQL */ `
       uniqueID
       campaignName
       adName
-      owner
+      email
       maxLat
       maxLng
       minLat
@@ -36,6 +38,8 @@ export const updateAd = /* GraphQL */ `
         region
         key
       }
+      description
+      numImpressions
     }
   }
 `;
@@ -45,7 +49,7 @@ export const deleteAd = /* GraphQL */ `
       uniqueID
       campaignName
       adName
-      owner
+      email
       maxLat
       maxLng
       minLat
@@ -55,6 +59,8 @@ export const deleteAd = /* GraphQL */ `
         region
         key
       }
+      description
+      numImpressions
     }
   }
 `;
