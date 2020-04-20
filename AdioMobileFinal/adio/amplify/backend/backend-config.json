@@ -7,7 +7,7 @@
 		}
 	},
 	"api": {
-		"adio": {
+		"adioads": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {
