@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="/css/account.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.forms["deleteAudio"].addEventListener('submit', deleteAudio);
+  });
+
+  var deleteAudio = function (e) {
+    e.preventDefault();
+    $.ajax({
+      url: "/deleteFiles",
+      type: "POST",
+      dataType: 'json',
+      data: {
+        'file': e.target.elements[0].value
+      },
+      success: function (data) {
+        window.location = data.redirectUrl;
+      }
+    });
+  };
+</script>
+
+<div class="bigHeader">
+  <img class="adio-black" src="/images/adio-black.png"/>
+  <div class="header">
+    <a class="account" href="/account">My Account</a>
+    <a class="submit-ads" href="/">Submit my Ads</a>
+    <a class="logout" href="/logout">Logout</a>
+  </div>
+</div>
+  
+  <div class="body">
+      <!-- Add Audio Button -->
+
+      <h1>Hey, <%= username %>!</h1>
+      <h2>Here are all of your campaigns.</h2>
+      <h2 class="play">You can play, delete, and view stats for each of your ads.</h2>
+  </div>
+
+  <% Object.keys(campaigns).forEach(function(key) { %> 
+      <div class="campaigns">
+          <h2 class="campaignName"><%= key %> campaign: <span class="campaignDescription"><%= campaigns[key][0].description %></span></h2>
+      </div>  
+      <div class="adsOuter">
+        <h2 class="campaignLatLng">Min. Latitude &amp; Longitude Coordinates: <span class="campaignDescription">(<%= campaigns[key][0].minLat %>, <%= campaigns[key][0].minLng %>)</span></h2>
+        <h2 class="campaignLatLng"><span> | </span></h2>
+        <h2 class="campaignLatLng">Max. Latitude &amp; Longitude Coordinates: <span class="campaignDescription">(<%= campaigns[key][0].maxLat %>, <%= campaigns[key][0].maxLng %>)</span></h2>
+        <div class="ads">
+        <% for(i = 0; i < campaigns[key].length; i++) {%>
+            <div class="card" style="width: 20rem">
+                <div class="card-block">
+                    <h4 class="card-title"><%= campaigns[key][i].adName %></h4>
+                    <p class="card-text">Number of impressions: <%= campaigns[key][i].numImpressions %></p>
+                    
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#deleteModal<%= i %>">
+                      Delete Ad
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal<%= i %>">
+                      Edit Ad
+                    </button>
+                </div>
+            </div>
+            <div class="modal fade" id="deleteModal<%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle<%= i %>">Delete Ad</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <form name="deleteAudio" type="submit" method="post">
+                          <p>Are you sure you want to delete <%= campaigns[key][i].adName  %>? You will permanently lose all data.</p>
+                          <div class="deleteButtons">
+                              <button type="submit" class="btn btn-outline-danger" name="deleteButton" data-toggle="modal"
+                              value="<%= campaigns[key][i].currKey %>">Delete</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+        <% } %>
+        </div>
+      </div>
+  <% }) %>
+        
+  </div>
+    
+</body>
+
+</html>
