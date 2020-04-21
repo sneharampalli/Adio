@@ -37,7 +37,7 @@ export default class Root extends React.Component {
             initials: '',
             email: null,
             date: {
-                month: today.getMonth(),
+                month: today.getMonth() + 1,
                 day: today.getDate(),
                 year: today.getFullYear()
             },
@@ -51,18 +51,18 @@ export default class Root extends React.Component {
     }
 
     setupUserInfo = async () => {
-         Auth.currentAuthenticatedUser({}).then(user => this.setState({ initials:
+         await Auth.currentAuthenticatedUser({}).then(user => this.setState({ initials:
                 user.attributes.name.charAt(0).toUpperCase() + 
                     user.attributes.family_name.charAt(0).toUpperCase(),
                     email: user.attributes.email }))
             .catch(err => console.log(err));
         try {
-            const response = await API.graphql(graphqlOperation(queries.listImpressions, { uniqueID: this.state.email + '-' + this.state.date.month + '-' + this.state.date.day + '-' + this.state.date.year }));
-            if (typeof response.data.items == "undefined") {
+            const response = await API.graphql(graphqlOperation(queries.getImpression, { uniqueID: this.state.email + '-' + this.state.date.month + '-' + this.state.date.day + '-' + this.state.date.year }));
+            if (response.data.getImpression == null) {
                 await this.createImpressionLog();
             } else {
-                this.setState({ numImpressions: response.data.items[0].numImpressions });
-                console.log("Num impressions so far today is: " + response.data.items[0].numImpressions)
+                this.setState({ numImpressions: response.data.getImpression.numImpressions });
+                console.log("Num impressions so far today is: " + response.data.getImpression.numImpressions)
             }
         } catch (err) {
             console.error(err);
@@ -275,14 +275,13 @@ export default class Root extends React.Component {
             }
             await API.graphql(graphqlOperation(mutations.updateAd, {input: ad }));
 
-            var today = new Date();
             this.setState({ numImpressions: this.state.numImpressions + 1 });
             const impression = {
-                uniqueID: this.state.email + '-' + today.getMonth() + '-' + today.getDate() + '-' + today.getFullYear(),
+                uniqueID: this.state.email + '-' + this.state.date.month + '-' + this.state.date.day + '-' + this.state.date.year,
                 driver: this.state.email,
-                year: today.getFullYear(),
-                month: today.getMonth(),
-                date: today.getDate(),
+                year: this.state.date.year,
+                month: this.state.date.month,
+                date: this.state.date.day,
                 numImpressions: this.state.numImpressions
             }
             await API.graphql(graphqlOperation(mutations.createImpression, { input: impression }));
