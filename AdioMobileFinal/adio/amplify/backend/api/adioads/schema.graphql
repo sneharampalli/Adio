@@ -20,3 +20,14 @@ type Ad @model
   description: String!
   numImpressions: Float!
 }
+
+type Impression @model
+        @key(fields: ["uniqueID"])
+        @key(name: "ByDriver", fields: ["driver"]) {
+  uniqueID: String!
+  driver: String!
+  year: Float!
+  month: Float!
+  date: Float!
+  numImpressions: Float!
+}

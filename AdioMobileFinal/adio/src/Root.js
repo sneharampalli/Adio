@@ -22,27 +22,68 @@ export default class Root extends React.Component {
 
     constructor(props) {
         super(props);
+        var today = new Date();
         this.state = {
             sessionActive: false,
             hasLocationPermissions: false,
             currLat: null,
             currLong: null,
             ads: [],
-            adInterval: 15,
+            adInterval: 5,
             isLoaded: false,
             isPlaying: false,
             didFinish: false,
             volume: 5,
             initials: '',
+            email: null,
+            date: {
+                month: today.getMonth(),
+                day: today.getDate(),
+                year: today.getFullYear()
+            },
+            numImpressions: 0
         }
     }
 
     componentDidMount() {
         this.setupAudioPlayer();
+        this.setupUserInfo();
+    }
+
+    setupUserInfo = async () => {
          Auth.currentAuthenticatedUser({}).then(user => this.setState({ initials:
                 user.attributes.name.charAt(0).toUpperCase() + 
-                    user.attributes.family_name.charAt(0).toUpperCase()}))
+                    user.attributes.family_name.charAt(0).toUpperCase(),
+                    email: user.attributes.email }))
             .catch(err => console.log(err));
+        try {
+            const response = await API.graphql(graphqlOperation(queries.listImpressions, { uniqueID: this.state.email + '-' + this.state.date.month + '-' + this.state.date.day + '-' + this.state.date.year }));
+            if (typeof response.data.items == "undefined") {
+                await this.createImpressionLog();
+            } else {
+                this.setState({ numImpressions: response.data.items[0].numImpressions });
+                console.log("Num impressions so far today is: " + response.data.items[0].numImpressions)
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    createImpressionLog = async () => {
+        try {
+            const impression = {
+                uniqueID: this.state.email + '-' + this.state.date.month + '-' + this.state.date.day + '-' + this.state.date.year,
+                driver: this.state.email,
+                year: this.state.date.year,
+                month: this.state.date.month,
+                date: this.state.date.day,
+                numImpressions: 0
+            }
+            await API.graphql(graphqlOperation(mutations.createImpression, { input: impression }));
+            console.log("Created impression log");
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     signOut = () => {
@@ -68,7 +109,6 @@ export default class Root extends React.Component {
     _onPlaybackStatusUpdate = playbackStatus => {
           if (!playbackStatus.isLoaded) {
             // Update your UI for the unloaded state
-            // console.log("Player is unloaded");
             this.setState({ isLoaded: false });
 
             if (playbackStatus.error) {
@@ -77,24 +117,22 @@ export default class Root extends React.Component {
 
           } else {
             // Update your UI for the loaded state
-            // console.log("Player is loaded");
             this.setState({ isLoaded: true });
-            this.state.soundObject.setVolumeAsync(this.state.volume / 10.0);
 
             if (playbackStatus.isPlaying) {
               // Update your UI for the playing state
-              // console.log("Player is playing");
+              this.state.soundObject.setVolumeAsync(this.state.volume / 10.0);
               this.setState({ isPlaying: true });
               this.setState({ didFinish: false });
             } else {
               // Update your UI for the paused state
-              // console.log("Player is not playing");
               this.setState({ isPlaying: false });
             }
 
             if (playbackStatus.didJustFinish) {
               // The player has just finished playing and will stop. Maybe you want to play something else?
               console.log("Player finished playing song");
+              this.addImpression();
               this.setState({ didFinish: true });
             }
 
@@ -182,6 +220,7 @@ export default class Root extends React.Component {
             return null;
         }
         var nextAd = this.state.ads.shift();
+        this.setState({currAd: nextAd});
         console.log("Next ad to play: " + nextAd.file.key)
         return nextAd;
     }
@@ -196,7 +235,7 @@ export default class Root extends React.Component {
         }
         
         let location = await Location.getCurrentPositionAsync({});
-        this.setState({ currLat: 15, currLong: 15 }); // TODO: REPLACE WITH BELOW LINE
+        this.setState({ currLat: 15, currLong: 30 }); // TODO: REPLACE WITH BELOW LINE
         // this.setState({ currLat: location.coords.latitude, currLong: location.coords.longitude });
         console.log("Current location is " + this.state.currLat + " " + this.state.currLong);
     };
@@ -205,8 +244,6 @@ export default class Root extends React.Component {
         console.log("Refresh ad list");
         await this._getLocationAsync();
         try {
-            // const response = await API.graphql(graphqlOperation(queries.listAds, { maxLat: 40, minLat: 39.8, maxLong: -75, minLong: -75.2 }));
-
             const response = await API.graphql(graphqlOperation(queries.listAds, {
                 filter: {
                     maxLat: {
@@ -230,26 +267,31 @@ export default class Root extends React.Component {
         }
     }
 
-    // addPost = async () => {
-    //     try {
-    //         const postObj = {
-    //             uniqueID: "doug@walmart.com-10:02",
-    //             campaignName: "walmartC",
-    //             adName: "make money quick",
-    //             owner: "doug@walmart.com",
-    //             maxLat: 40,
-    //             minLat: 39.8,
-    //             maxLng: -75,
-    //             minLng: -75.2,
-    //             file: { bucket: "adio-1", region: "us-east-1", key: "BeautifulNow.m4a" }
+    addImpression = async () => {
+        try {
+            const ad = {
+                uniqueID: this.state.currAd.uniqueID,
+                numImpressions: this.state.currAd.numImpressions + 1
+            }
+            await API.graphql(graphqlOperation(mutations.updateAd, {input: ad }));
 
-    //         }
-    //         await API.graphql(graphqlOperation(mutations.createAd, { input: postObj }))
-    //         this.setState({ input: "" });
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // }
+            var today = new Date();
+            this.setState({ numImpressions: this.state.numImpressions + 1 });
+            const impression = {
+                uniqueID: this.state.email + '-' + today.getMonth() + '-' + today.getDate() + '-' + today.getFullYear(),
+                driver: this.state.email,
+                year: today.getFullYear(),
+                month: today.getMonth(),
+                date: today.getDate(),
+                numImpressions: this.state.numImpressions
+            }
+            await API.graphql(graphqlOperation(mutations.createImpression, { input: impression }));
+            
+            console.log("Logged impression");
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     render() {
         // const navigation = useNavigation();
