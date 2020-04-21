@@ -3,56 +3,105 @@ var dynamo = require('dynamodb');
 dynamo.AWS.config.loadFromPath('config.json');
 
 const aws = require('aws-sdk')
-const s3 = new aws.S3({ /* ... */ })
+const docClient = new aws.DynamoDB.DocumentClient();
 
-// var postS3Objects = function (req, res) {
-//   var params = {
-//     Bucket: "adio-1",
-//     Prefix: req.session.email + '/',
-//   };
-//   var objs = [];
-//   s3.listObjectsV2(params, function (err, data) {
-//     if (err) {
-//       console.log(err, err.stack); // an error occurred
-//     }
-//     else {
-//       for (let i = 0; i < data.Contents.length; i++) {
-//         var getParams = {
-//           Bucket: "adio-1",
-//           Key: data.Contents[i].Key
-//         };
-//         s3.getObject(getParams, function (err2, data2) {
-//           if (err2) {
-//             console.log(err2, err2.stack); // an error occurred
-//           } else {
-//             res.send({ data: data2 });
-//           }
-//         });
-//       }
-//     }
-//   });
-// }
+const s3 = new aws.S3();
+const S3_BUCKET = 'adio-1131216-adio';
 
 // Get route for main / home / login page
 var getMain = function (req, res) {
   if (req.session.loginsuccess) {
-    var params = {
-      Bucket: 'adio-1', /* required */
-      Prefix: req.session.email,
-    };
-    res.render('dashboard.ejs', {data: []});
-    // s3.listObjects(params, function(err, data) {
-    //   if (err) {
-    //     console.log(err, err.stack); // an error occurred
-    //   } else {
-    //     res.render('dashboard.ejs', {data: data});
-    //     console.log(data);
-    //   }
-    // });
+    res.render('dashboard.ejs');
+    
   } else {
     res.render('login.ejs');
   }
 };
+
+var deleteAudio = function (req, res) {
+  console.log(req.body);
+  var params = {  
+    Bucket: S3_BUCKET, 
+    Key: req.body.file 
+  };
+
+  s3.deleteObject(params, function(err, data) {
+    if (err) {
+      console.log(err, err.stack);  
+    }
+    else {
+      console.log('File has been deleted');
+    }
+  });
+  var params = {
+    TableName: 'Ad-hlqdhevr3jbxlifobmcnha2vxu-adio',
+    Key:{
+        "uniqueID": req.body.file,
+    },
+  };
+  console.log("Attempting a conditional delete...");
+  docClient.delete(params, function(err, data) {
+      if (err) {
+          console.error("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
+      } else {
+          console.log("DeleteItem succeeded:", JSON.stringify(data, null, 2));
+      }
+  });
+  res.send({redirectUrl: "/account"});
+}
+
+var getAccount = function (req, res) {
+  console.log(req.session.loginsuccess);
+  if (req.session.loginsuccess) {
+
+    var params = {
+        TableName: 'Ad-hlqdhevr3jbxlifobmcnha2vxu-adio',
+        IndexName: 'ByUsername',
+        KeyConditionExpression: 'email = :person',
+        ExpressionAttributeValues: {
+            ':person': req.session.email
+        },
+    };
+  
+    docClient.query(params, function(err, data) {
+        if (err) {
+            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Query succeeded.");
+            data.Items.forEach(function(item) {
+              console.log(" -", item);
+            });
+            const username = req.session.email.split('@')[0];
+            const campaigns = {};
+            if (data.Items.length > 0) {
+              for (i = 0; i < data.Items.length; i++) {
+                const campaignName = data.Items[i].campaignName;
+                const adName = data.Items[i].adName.split('.')[0];
+                const currData = {
+                  campaignName : campaignName,
+                  adName : adName,
+                  description : data.Items[i].description,
+                  numImpressions : data.Items[i].numImpressions,
+                  minLat : data.Items[i].minLat,
+                  minLng : data.Items[i].minLng,
+                  maxLat : data.Items[i].maxLat,
+                  maxLng : data.Items[i].maxLng,
+                  currKey: data.Items[i].file.key
+                };
+                if (campaignName in campaigns) {
+                  campaigns[campaignName].push(currData);
+                } else {                
+                  campaigns[campaignName] = [currData];
+                }
+              }
+            } 
+            res.render('account.ejs', {username: username, campaigns: campaigns});
+        }
+    });
+  } else {
+    res.render('login.ejs');
+  }
+}
 
 // Post route for verifying login
 var postCheckLogin = function (req, res) {
@@ -100,7 +149,8 @@ var routes = {
   post_checklogin: postCheckLogin,
   post_createaccount: postCreateAccount,
   get_logout: getLogout,
-  // get_audio: postS3Objects
+  get_account: getAccount,
+  delete_audio: deleteAudio
 };
 
 module.exports = routes;
