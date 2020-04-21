@@ -118,6 +118,7 @@ var postCheckLogin = function (req, res) {
   });
 };
 
+
 // Post route for creating a new login
 var postCreateAccount = function (req, res) {
   var email = req.body.newEmail;
@@ -143,6 +144,8 @@ var getLogout = function (req, res) {
   req.session.companyname = null;
   res.redirect('/');
 };
+
+
 
 var routes = {
   get_main: getMain,
