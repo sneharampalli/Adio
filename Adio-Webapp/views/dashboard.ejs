@@ -90,7 +90,6 @@
 
     var submitAudio = function (e) {
       e.preventDefault();
-      console.log(e);
       const minLat = Number(e.target.elements[1].value);
       const maxLat = Number(e.target.elements[3].value);
       const minLng = Number(e.target.elements[2].value);
@@ -98,6 +97,7 @@
       if (minLat > maxLat || minLng > maxLng) {
         alert('Please enter valid min and max lat/lng coordinates!');
       } else {
+        console.log(new FormData(document.forms["addAudio"]));
         $.ajax({
           url: "/audio",
           type: "POST",
@@ -225,42 +225,36 @@
           <h2 class="form">Submit your ads here!</h2>
           <h3>You can submit multiple audio files for your company's advertisement campaign (limit to 5 files).
           <br/><br/>Limit your description to 100 characters.</h3>
-          <div id="error-ncn">
-            <input type="text" id="campaign-name" class="fadeIn first" name="campaignName" placeholder="Campaign Name"
+          <input type="text" id="campaign-name" class="fadeIn first" name="campaignName" placeholder="Campaign Name"
               required onfocus="this.placeholder = ''" onblur="this.placeholder = 'Campaign Name'">
-          </div>
           <div id="name-wrapper">
             <div id="error-fn">
-              <input type="text" id="min-latitude" class="fadeIn second" name="minLat" placeholder="Min. Latitude"
+              <input type="number" id="min-latitude" class="fadeIn second" name="minLat" placeholder="Min. Latitude"
               required min="-90" max="90" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'">
             </div>
             <div id="error-ln">
-              <input type="text" id="min-longitude" class="fadeIn second" name="minLng" placeholder="Min. Longitude"
+              <input type="number" id="min-longitude" class="fadeIn second" name="minLng" placeholder="Min. Longitude"
               required min="-180" max="180" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Longitude'">
             </div>
           </div>
           <div id="name-wrapper">
             <div id="error-fn">
-              <input type="text" id="max-latitude" class="fadeIn second" name="maxLat" placeholder="Max. Latitude"
+              <input type="number" id="max-latitude" class="fadeIn second" name="maxLat" placeholder="Max. Latitude"
               required min="-90" max="90" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Latitude'">
             </div>
             <div id="error-ln">
-              <input type="text" id="max-longitude" class="fadeIn second" name="maxLng" placeholder="Max. Longitude"
-              required onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Longitude'">
+              <input type="number" id="max-longitude" class="fadeIn second" name="maxLng" placeholder="Max. Longitude"
+              required min="-180" max="180" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Longitude'">
             </div>
           </div>
           <div id="error-ncn">
             <input type="text" id="description" class="fadeIn third" name="description" placeholder="Description of Ad"
-            required maxlength="100" min="-180" max="180" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description of Ad'">
+            required maxlength="100" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description of Ad'">
           </div>
           <input type="file" style="margin: 10px 0px;" name="ad" multiple id="ad" required />
           <input type="submit" />
         </form>
     </div>
-  
-    
-    
-    <!-- </div> -->
     <br/>
     <br/>
     <br/>
