@@ -17,11 +17,52 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    document.forms["deleteAudio"].addEventListener('submit', deleteAudio);
+    for (i = 0; i < document.forms.length; i++) {
+      if (document.forms[i].name == "deleteAudio") {
+        document.forms[i].addEventListener('submit', deleteAudio);
+      } else if (document.forms[i].name == "editCampaign") {
+        document.forms[i].addEventListener('submit', function(e) {
+          e.preventDefault();
+          console.log(e.target.elements);
+          const minLat = e.target.elements[1].value;
+          const maxLat = e.target.elements[3].value;
+          const minLng = e.target.elements[2].value;
+          const maxLng = e.target.elements[4].value;
+
+          if (minLat && maxLat && minLng && maxLng &&
+              minLat > maxLat || minLng > maxLng) {
+            alert('Please enter valid min and max lat/lng coordinates!');
+          }
+          else {
+            const formData = new FormData(document.getElementById(e.target.id));
+            const keys = [];
+            const campaignData = JSON.parse(e.target.elements[7].value);
+            for (i = 0; i < campaignData.length; i++) {
+              keys.push(campaignData[i].currKey);
+            }
+            formData.append('campaignData', keys);
+            $.ajax({
+              url: "/editCampaign",
+              type: "POST",
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function(response) {
+                window.location = response.redirectUrl;
+              },
+              error: function(errResponse) {
+                  console.log(errResponse);
+              }
+            });
+          }
+        });
+      }
+    }    
   });
 
   var deleteAudio = function (e) {
     e.preventDefault();
+    console.log(e);
     $.ajax({
       url: "/deleteFiles",
       type: "POST",
@@ -34,13 +75,17 @@
       }
     });
   };
+
+  var editCampaign = function (e) {
+        
+  };
 </script>
 
 <div class="bigHeader">
   <img class="adio-black" src="/images/adio-black.png"/>
   <div class="header">
     <a class="account" href="/account">My Account</a>
-    <a class="submit-ads" href="/">Submit my Ads</a>
+    <a class="submit-ads" href="/submitads">Submit my Ads</a>
     <a class="logout" href="/logout">Logout</a>
   </div>
 </div>
@@ -53,40 +98,88 @@
       <h2 class="play">You can play, delete, and view stats for each of your ads.</h2>
   </div>
 
-  <% Object.keys(campaigns).forEach(function(key) { %> 
+  <% var count = 0; var modalCount = 0; %> 
+  <% Object.keys(campaigns).forEach(function(key) { var num = key.replace(/\s+/g, '');%> 
       <div class="campaigns">
-          <h2 class="campaignName"><%= key %> campaign: <span class="campaignDescription"><%= campaigns[key][0].description %></span></h2>
+          <h2 class="campaignName"><%= key %>: <span class="campaignDescription"><%= campaigns[key][0].description %></span></h2>
+          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#editModal<%= modalCount %>">
+            Edit Campaign
+          </button>
+          <div class="modal fade" id="editModal<%=modalCount%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle<%= modalCount %>">Edit <%= key %> Campaign</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p>You can edit existing information about your campaign or add new ads! Please only change desired fields.</p>
+                    <form class="signup" enctype="multipart/form-data" name="editCampaign" id="editCampaign<%=modalCount%>" type="submit">
+                    <input type="text" required id="campaign-name" class="fadeIn third" name="campaign-name" placeholder="Campaign Name"
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Campaign Name'" value="<%= campaigns[key][0].campaignName %>">
+                    <div id="name-wrapper">
+                      <div id="error-fn">
+                        <input type="number" required id="min-latitude" class="fadeIn second" name="minLat" placeholder="Min. Latitude"
+                        min="-90" max="90" value=<%= campaigns[key][0].minLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'">
+                      </div>
+                      <div id="error-ln">
+                        <input type="number" required id="min-longitude" class="fadeIn second" name="minLng" placeholder="Min. Longitude"
+                        min="-180" max="180" value=<%= campaigns[key][0].minLng %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Longitude'">
+                      </div>
+                    </div>
+                    <div id="name-wrapper">
+                      <div id="error-fn">
+                        <input type="number" required id="max-latitude" class="fadeIn second" name="maxLat" placeholder="Max. Latitude"
+                        min="-90" max="90" value=<%= campaigns[key][0].maxLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Latitude'">
+                      </div>
+                      <div id="error-ln">
+                        <input type="number" required id="max-longitude" class="fadeIn second" name="maxLng" placeholder="Max. Longitude"
+                        min="-180" max="180" onfocus="this.placeholder = ''" value=<%= campaigns[key][0].maxLng %> onblur="this.placeholder = 'Max. Longitude'">
+                      </div>
+                    </div>
+                      <input type="text" required id="description" class="fadeIn third" name="description" placeholder="Description of Ad"
+                      maxlength="100" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description of Ad'" value="<%= campaigns[key][0].description %>">
+                      <input type="file" name="ad" multiple />
+                      <button type="submit" class="btn btn-dark" name="editButton" data-toggle="modal"
+                      value="<%= JSON.stringify(campaigns[key]) %>">Edit Now</button>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>  
       <div class="adsOuter">
         <h2 class="campaignLatLng">Min. Latitude &amp; Longitude Coordinates: <span class="campaignDescription">(<%= campaigns[key][0].minLat %>, <%= campaigns[key][0].minLng %>)</span></h2>
         <h2 class="campaignLatLng"><span> | </span></h2>
         <h2 class="campaignLatLng">Max. Latitude &amp; Longitude Coordinates: <span class="campaignDescription">(<%= campaigns[key][0].maxLat %>, <%= campaigns[key][0].maxLng %>)</span></h2>
         <div class="ads">
-        <% for(i = 0; i < campaigns[key].length; i++) {%>
+        <% for(i = 0; i < campaigns[key].length; i++) { %>
             <div class="card" style="width: 20rem">
                 <div class="card-block">
                     <h4 class="card-title"><%= campaigns[key][i].adName %></h4>
                     <p class="card-text">Number of impressions: <%= campaigns[key][i].numImpressions %></p>
                     
-                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#deleteModal<%= i %>">
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#deleteModal<%= count %>">
                       Delete Ad
                     </button>
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal<%= i %>">
+                    <button type="button" class="btn btn-secondary" data-toggle="modal">
                       Edit Ad
                     </button>
                 </div>
             </div>
-            <div class="modal fade" id="deleteModal<%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="deleteModal<%= count %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle<%= i %>">Delete Ad</h5>
+                      <h5 class="modal-title" id="exampleModalLongTitle<%= count %>">Delete Ad</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body">
-                        <form name="deleteAudio" type="submit" method="post">
+                        <form name="deleteAudio" type="submit">
                           <p>Are you sure you want to delete <%= campaigns[key][i].adName  %>? You will permanently lose all data.</p>
                           <div class="deleteButtons">
                               <button type="submit" class="btn btn-outline-danger" name="deleteButton" data-toggle="modal"
@@ -99,10 +192,10 @@
                 </div>
               </div>
             
-        <% } %>
+        <% console.log(key); console.log(count); count = count + 1; }%>
         </div>
       </div>
-  <% }) %>
+  <% modalCount = modalCount + 1;}) %>
         
   </div>
     

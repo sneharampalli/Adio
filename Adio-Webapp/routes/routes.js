@@ -17,6 +17,10 @@ var getMain = function (req, res) {
   }
 };
 
+var editCampaign = function (req, res) {
+  console.log(req.body);
+}
+
 var deleteAudio = function (req, res) {
   console.log(req.body);
   var params = {  
@@ -44,9 +48,10 @@ var deleteAudio = function (req, res) {
           console.error("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
       } else {
           console.log("DeleteItem succeeded:", JSON.stringify(data, null, 2));
+          res.send({redirectUrl: "/account"});
       }
   });
-  res.send({redirectUrl: "/account"});
+  
 }
 
 var getAccount = function (req, res) {
@@ -145,6 +150,14 @@ var getLogout = function (req, res) {
   res.redirect('/');
 };
 
+var getSubmitAds = function (req, res) {
+  if (req.session.loginsuccess) {
+    res.render('dashboard.ejs');
+  } else {
+    res.render('login.ejs');
+  }
+};
+
 
 
 var routes = {
@@ -153,7 +166,9 @@ var routes = {
   post_createaccount: postCreateAccount,
   get_logout: getLogout,
   get_account: getAccount,
-  delete_audio: deleteAudio
+  delete_audio: deleteAudio,
+  edit_campaign: editCampaign,
+  get_submitads: getSubmitAds
 };
 
 module.exports = routes;

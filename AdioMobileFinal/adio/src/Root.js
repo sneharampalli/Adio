@@ -51,7 +51,7 @@ export default class Root extends React.Component {
     }
 
     setupUserInfo = async () => {
-         await Auth.currentAuthenticatedUser({}).then(user => this.setState({ initials:
+        await Auth.currentAuthenticatedUser({}).then(user => this.setState({ initials:
                 user.attributes.name.charAt(0).toUpperCase() + 
                     user.attributes.family_name.charAt(0).toUpperCase(),
                     email: user.attributes.email }))
@@ -194,10 +194,14 @@ export default class Root extends React.Component {
         console.log("Playing " + nextAd.file.key);
         const url = await Storage.get(nextAd.file.key, { customPrefix: { public: '', protected: '', private: '' } });
 
-        await this.state.soundObject.loadAsync({ uri: url });
-        await this.state.soundObject.playAsync();
+        try {
+            await this.state.soundObject.loadAsync({ uri: url });
+            await this.state.soundObject.playAsync();
+        } catch {
+            await this.playAd();
+        }
     }
-
+    
     getNextAd = async () => {
         var nextAdIdx = 0;
         await this._getLocationAsync();
@@ -235,7 +239,7 @@ export default class Root extends React.Component {
         }
         
         let location = await Location.getCurrentPositionAsync({});
-        this.setState({ currLat: 15, currLong: 30 }); // TODO: REPLACE WITH BELOW LINE
+        this.setState({ currLat: 0, currLong: 100 }); // TODO: REPLACE WITH BELOW LINE
         // this.setState({ currLat: location.coords.latitude, currLong: location.coords.longitude });
         console.log("Current location is " + this.state.currLat + " " + this.state.currLong);
     };

@@ -127,7 +127,8 @@ h2 {
 .campaigns {
     display: flex;
     align-items: flex-start;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
     width: 100%;
     padding-top: 40px;
 }
@@ -177,7 +178,7 @@ h2 {
     margin-left: 5px;
 }
 
-#signin, #signup {
+#signin, .signup {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -202,7 +203,7 @@ h2 {
 input[type=button],
 input[type=submit],
 input[type=reset] {
-    background-color: #941751;
+    background-color: #262626;
     /*background-color: #56baed;*/
     border: none;
     color: white;
@@ -210,7 +211,7 @@ input[type=reset] {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    text-transform: lowercase;
+    text-transform: capitalize;
     font-size: 16px;
     -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
     box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
@@ -227,7 +228,7 @@ input[type=reset] {
 input[type=button]:hover,
 input[type=submit]:hover,
 input[type=reset]:hover {
-    background-color:#6e113d;
+    background-color: black;
     /*background-color: #39ace7;*/
     /*background-color: #19D3EF;*/
 }
@@ -243,6 +244,7 @@ input[type=reset]:active {
 }
 
 input[type=text],
+input[type=number],
 input[type=password] {
     background-color: #f6f6f6;
     border: none;
@@ -268,8 +270,12 @@ input[type=password] {
     width: 85%;
 }
 
-#campaign-name, #broadcast-radius {
+#campaign-name, #description {
     width: 85%;
+}
+
+#description {
+    height: 100px;
 }
 
 #min-latitude, #min-longitude, #max-latitude, #max-longitude {
@@ -278,21 +284,24 @@ input[type=password] {
     margin-left:0;
 }
 
-#latitude.error, #longitude.error, #campaign-name.error, #broadcast-radius.error {
+#latitude.error, #longitude.error, #campaign-name.error, #description.error {
     border-color: red;
     border-radius: 4px;
 }
 
 input[type=text]:focus,
+input[type=number]:focus,
 input[type=password]:focus {
     background-color: #fff;
-    border-bottom: 2px solid #941751;
+    border-bottom: 2px solid gray;
 }
 
 input[type=text]:placeholder,
+input[type=number]:placeholder,
 input[type=password]:placeholder {
     color: #cccccc;
 }
+
 
 
 /* ANIMATIONS */
