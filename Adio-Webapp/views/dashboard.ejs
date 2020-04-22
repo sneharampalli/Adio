@@ -41,15 +41,37 @@
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           backgroundColor: '#F5F5F5'
         };
+        var bounds = {
+          north: position.coords.latitude + 0.008,
+          south: position.coords.latitude - 0.008,
+          east: position.coords.longitude + 0.013,
+          west: position.coords.longitude - 0.013
+        };
       } else {
         var myOptions = {
           center: new google.maps.LatLng(39.952335, -75.163789),
-          zoom: 11,
+          zoom: 12,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           backgroundColor: '#F5F5F5'
         };
+        var bounds = {
+          north: 39.952335 + 0.01,
+          south: 39.952335 - 0.01,
+          east: -75.163789 + 0.015,
+          west: -75.163789 - 0.015,
+        };
       }
       map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+      rectangle = new google.maps.Rectangle({
+          bounds: bounds,
+          editable: true,
+          draggable: true
+        });
+      updateLongLat();
+      rectangle.setMap(map);
+
+      rectangle.addListener('bounds_changed', updateLongLat);
       // google.maps.event.addListener(map, 'click', function (event) {
       //   document.getElementsByName('latitude')[0].value = event.latLng.lat()
       //   document.getElementsByName('longitude')[0].value = event.latLng.lng();
@@ -89,6 +111,16 @@
       }
       
     };
+
+    function updateLongLat(event) {
+      console.log('hi')
+      var ne = rectangle.getBounds().getNorthEast();
+      var sw = rectangle.getBounds().getSouthWest();
+      document.getElementById("max-longitude").setAttribute("value", ne.lng())
+      document.getElementById("min-longitude").setAttribute("value", sw.lng())
+      document.getElementById("max-latitude").setAttribute("value", ne.lat())
+      document.getElementById("min-latitude").setAttribute("value", sw.lat())
+    }
 
     // window.setInterval(function () { loadGeoData(); }, 5000);
 
@@ -221,7 +253,7 @@
             <input type="text" id="description" class="fadeIn third" name="description" placeholder="Description of Ad"
             required maxlength="100" min="-180" max="180" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description of Ad'">
           </div>
-          <input type="file" name="ad" multiple id="ad" required />
+          <input type="file" style="margin: 10px 0px;" name="ad" multiple id="ad" required />
           <input type="submit" />
         </form>
     </div>
