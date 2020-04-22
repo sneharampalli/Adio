@@ -216,6 +216,7 @@ input[type=reset]:active {
 }
 
 input[type=text],
+input[type=number],
 input[type=password] {
     background-color: #f6f6f6;
     border: none;
@@ -261,12 +262,14 @@ input[type=password] {
 }
 
 input[type=text]:focus,
+input[type=number]:focus,
 input[type=password]:focus {
     background-color: #fff;
     border-bottom: 2px solid gray;
 }
 
 input[type=text]:placeholder,
+input[type=number]:placeholder,
 input[type=password]:placeholder {
     color: #cccccc;
 }
