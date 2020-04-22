@@ -64,3 +64,39 @@ export const onDeleteAd = /* GraphQL */ `
     }
   }
 `;
+export const onCreateImpression = /* GraphQL */ `
+  subscription OnCreateImpression {
+    onCreateImpression {
+      uniqueID
+      driver
+      year
+      month
+      date
+      numImpressions
+    }
+  }
+`;
+export const onUpdateImpression = /* GraphQL */ `
+  subscription OnUpdateImpression {
+    onUpdateImpression {
+      uniqueID
+      driver
+      year
+      month
+      date
+      numImpressions
+    }
+  }
+`;
+export const onDeleteImpression = /* GraphQL */ `
+  subscription OnDeleteImpression {
+    onDeleteImpression {
+      uniqueID
+      driver
+      year
+      month
+      date
+      numImpressions
+    }
+  }
+`;

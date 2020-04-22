@@ -64,3 +64,48 @@ export const deleteAd = /* GraphQL */ `
     }
   }
 `;
+export const createImpression = /* GraphQL */ `
+  mutation CreateImpression(
+    $input: CreateImpressionInput!
+    $condition: ModelImpressionConditionInput
+  ) {
+    createImpression(input: $input, condition: $condition) {
+      uniqueID
+      driver
+      year
+      month
+      date
+      numImpressions
+    }
+  }
+`;
+export const updateImpression = /* GraphQL */ `
+  mutation UpdateImpression(
+    $input: UpdateImpressionInput!
+    $condition: ModelImpressionConditionInput
+  ) {
+    updateImpression(input: $input, condition: $condition) {
+      uniqueID
+      driver
+      year
+      month
+      date
+      numImpressions
+    }
+  }
+`;
+export const deleteImpression = /* GraphQL */ `
+  mutation DeleteImpression(
+    $input: DeleteImpressionInput!
+    $condition: ModelImpressionConditionInput
+  ) {
+    deleteImpression(input: $input, condition: $condition) {
+      uniqueID
+      driver
+      year
+      month
+      date
+      numImpressions
+    }
+  }
+`;

@@ -58,3 +58,42 @@ export const listAds = /* GraphQL */ `
     }
   }
 `;
+export const getImpression = /* GraphQL */ `
+  query GetImpression($uniqueID: String!) {
+    getImpression(uniqueID: $uniqueID) {
+      uniqueID
+      driver
+      year
+      month
+      date
+      numImpressions
+    }
+  }
+`;
+export const listImpressions = /* GraphQL */ `
+  query ListImpressions(
+    $uniqueID: String
+    $filter: ModelImpressionFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listImpressions(
+      uniqueID: $uniqueID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        uniqueID
+        driver
+        year
+        month
+        date
+        numImpressions
+      }
+      nextToken
+    }
+  }
+`;
