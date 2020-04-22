@@ -94,6 +94,7 @@
       const maxLat = Number(e.target.elements[3].value);
       const minLng = Number(e.target.elements[2].value);
       const maxLng = Number(e.target.elements[4].value);
+      console.log(Date.now());
       if (minLat > maxLat || minLng > maxLng) {
         alert('Please enter valid min and max lat/lng coordinates!');
       } else {
@@ -106,6 +107,7 @@
           contentType: false,
           success: function (data) {
             $("#ad").val('');
+            console.log(Date.now());
           }
         });
       }
@@ -211,7 +213,7 @@
       <img class="adio-black" href="/account" src="/images/adio-black.png"/>
       <div class="header">
         <a class="account" href="/account">My Account</a>
-        <a class="submit-ads" href="/">Submit my Ads</a>
+        <a class="submit-ads" href="/submitads">Submit my Ads</a>
         <a class="logout" href="/logout">Logout</a>
       </div>
   </div>

@@ -11,8 +11,7 @@ const S3_BUCKET = 'adio-1131216-adio';
 // Get route for main / home / login page
 var getMain = function (req, res) {
   if (req.session.loginsuccess) {
-    res.render('dashboard.ejs');
-    
+    res.redirect('/account');
   } else {
     res.render('login.ejs');
   }
@@ -72,7 +71,10 @@ var getAccount = function (req, res) {
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
         } else {
-            const username = req.session.email.split('@')[0];
+            console.log("Query succeeded.");
+            data.Items.forEach(function(item) {
+              console.log(" -", item);
+            });
             const campaigns = {};
             if (data.Items.length > 0) {
               for (i = 0; i < data.Items.length; i++) {
@@ -96,7 +98,7 @@ var getAccount = function (req, res) {
                 }
               }
             } 
-            res.render('account.ejs', {username: username, campaigns: campaigns});
+            res.render('account.ejs', {firstname: req.session.firstname, campaigns: campaigns});
         }
     });
   } else {
@@ -108,10 +110,11 @@ var getAccount = function (req, res) {
 var postCheckLogin = function (req, res) {
   var email = req.body.email;
   var password = req.body.password;
-  db.dbCheckLogin(email, password, function (success, err) {
+  db.dbCheckLogin(email, password, function (success, name, err) {
     if (success) {
       req.session.loginsuccess = true;
       req.session.email = email;
+      req.session.firstname = name;
     }
     res.send({
       err: success ? null : err,
@@ -131,6 +134,7 @@ var postCreateAccount = function (req, res) {
     if (success) {
       req.session.loginsuccess = true;
       req.session.email = email;
+      req.session.firstname = firstName;
     }
     res.send({
       err: success ? null : err,
@@ -146,6 +150,14 @@ var getLogout = function (req, res) {
   res.redirect('/');
 };
 
+var getSubmitAds = function (req, res) {
+  if (req.session.loginsuccess) {
+    res.render('dashboard.ejs');
+  } else {
+    res.render('login.ejs');
+  }
+};
+
 
 
 var routes = {
@@ -155,7 +167,8 @@ var routes = {
   get_logout: getLogout,
   get_account: getAccount,
   delete_audio: deleteAudio,
-  edit_campaign: editCampaign
+  edit_campaign: editCampaign,
+  get_submitads: getSubmitAds
 };
 
 module.exports = routes;

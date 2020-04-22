@@ -20,6 +20,7 @@ app.get('/', routes.get_main);
 app.post('/checklogin', routes.post_checklogin);
 app.post('/createaccount', routes.post_createaccount);
 app.get('/logout', routes.get_logout);
+app.get('/submitads', routes.get_submitads);
 
 const aws = require('aws-sdk')
 const multer = require('multer')
@@ -45,6 +46,7 @@ app.use(upload.array());
 app.post('/audio', upload.array('ad', 5), function (req, res, next) {
   if (req.files) {
     console.log('Successfully uploaded ad to s3!');
+    console.log(Date.now());
     for (i = 0; i < req.files.length; i++) {
       var params = {
         Item: {
