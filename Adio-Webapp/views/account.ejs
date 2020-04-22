@@ -66,6 +66,22 @@
     document.getElementsByName("minLat-" + mapName)[0].setAttribute("value", sw.lat())
   }
 
+  function updateMaxLong(event) {
+    console.log(rectangle.getBounds())
+  }
+
+  function updateMinLong(event) {
+    
+  }
+
+  function updateMaxLat(event) {
+    
+  }
+
+  function updateMinLat(event) {
+    
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     for (i = 0; i < document.forms.length; i++) {
       if (document.forms[i].name == "deleteAudio") {
@@ -165,7 +181,7 @@
                         <div id="name-wrapper">
                           <div id="error-fn">
                             <input type="number" step="any" required id="min-latitude" class="fadeIn second" name="minLat-<%= num %>" placeholder="Min. Latitude"
-                            min="-90" max="90" value=<%= campaigns[key][0].minLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'">
+                            min="-90" max="90"  onchange="updateMaxLong()" value=<%= campaigns[key][0].minLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'">
                           </div>
                           <div id="error-ln">
                             <input type="number" step="any" required id="min-longitude" class="fadeIn second" name="minLng-<%= num %>" placeholder="Min. Longitude"
