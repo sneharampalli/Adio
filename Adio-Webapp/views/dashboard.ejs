@@ -98,7 +98,7 @@
         contentType: false,
         success: function (data) {
           $("#ad").val('');
-          console.log(Date.now());
+          window.location.href = data.redirectUrl;
         }
       });
     };

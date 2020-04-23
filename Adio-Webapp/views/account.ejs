@@ -144,8 +144,8 @@
             data: formData,
             processData: false,
             contentType: false,
-            success: function(response) {
-              window.location = response.redirectUrl;
+            success: function(data) {
+              window.location.href = data.redirectUrl;
             },
             error: function(errResponse) {
                 console.log(errResponse);
@@ -166,7 +166,7 @@
         'file': e.target.elements[0].value
       },
       success: function (data) {
-        window.location = data.redirectUrl;
+        window.location.href = data.redirectUrl;
       }
     });
   };
