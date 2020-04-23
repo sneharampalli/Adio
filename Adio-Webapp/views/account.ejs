@@ -152,6 +152,8 @@
 
   var editCampaign = function (e) {
     e.preventDefault();
+    $('#submit-changes-btn').hide();
+    $('#spinner').show();
     const formData = new FormData(document.getElementById(e.target.id));
     const keys = [];
     const campaignData = JSON.parse(e.target.elements[7].value);
@@ -166,10 +168,12 @@
       processData: false,
       contentType: false,
       success: function(data) {
-        window.location.href = data.redirectUrl;
+          window.location.href = data.redirectUrl;
       },
       error: function(errResponse) {
           console.log(errResponse);
+          $('#submit-changes-btn').show();
+          $('#spinner').hide();
       }
     });
   };
@@ -222,28 +226,31 @@
                         <div id="name-wrapper">
                           <div id="error-fn">
                             <input type="number" step="any" required id="min-latitude" class="fadeIn second" name="minLat-<%= num %>" placeholder="Min. Latitude"
-                            min="-90" max="90"  onchange="updateMinLat(this)" value=<%= campaigns[key][0].minLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'" disabled>
+                            min="-90" max="90"  onchange="updateMinLat(this)" value=<%= campaigns[key][0].minLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'">
                           </div>
                           <div id="error-ln">
                             <input type="number" step="any" required id="min-longitude" class="fadeIn second" name="minLng-<%= num %>" placeholder="Min. Longitude"
-                            min="-180" max="180" onchange="updateMinLong(this)" value=<%= campaigns[key][0].minLng %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Longitude'" disabled>
+                            min="-180" max="180" onchange="updateMinLong(this)" value=<%= campaigns[key][0].minLng %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Longitude'">
                           </div>
                         </div>
                         <div id="name-wrapper">
                           <div id="error-fn">
                             <input type="number" step="any" required id="max-latitude" class="fadeIn second" name="maxLat-<%= num %>" placeholder="Max. Latitude"
-                            min="-90" max="90" onchange="updateMaxLat(this)" value=<%= campaigns[key][0].maxLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Latitude'" disabled>
+                            min="-90" max="90" onchange="updateMaxLat(this)" value=<%= campaigns[key][0].maxLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Latitude'">
                           </div>
                           <div id="error-ln">
                             <input type="number" step="any" required id="max-longitude" class="fadeIn second" name="maxLng-<%= num %>" placeholder="Max. Longitude"
-                            min="-180" max="180" onchange="updateMaxLong(this)" onfocus="this.placeholder = ''" value=<%= campaigns[key][0].maxLng %> onblur="this.placeholder = 'Max. Longitude'" disabled>
+                            min="-180" max="180" onchange="updateMaxLong(this)" onfocus="this.placeholder = ''" value=<%= campaigns[key][0].maxLng %> onblur="this.placeholder = 'Max. Longitude'">
                           </div>
                         </div>
                           <input type="text" required id="description" class="fadeIn third"  style="height: 50px" name="description" placeholder="Description of Ad"
                           maxlength="100" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description of Ad'" value="<%= campaigns[key][0].description %>">
                           <!-- <input type="file" name="ad" multiple /> -->
                           <input type="file" style="margin: 5px 0px; font-size: 13px;" name="ad" multiple id="ad"/>
-                          <button type="submit" class="btn btn-dark" name="editButton" data-toggle="modal"
+                          <div id="spinner" style="display: none;" class="spinner-border" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                          <button id="submit-changes-btn" type="submit" class="btn btn-dark" name="editButton" data-toggle="modal"
                           value="<%= JSON.stringify(campaigns[key]) %>">Submit changes</button>
                         </form>
                     </div>
