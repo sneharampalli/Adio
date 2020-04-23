@@ -129,31 +129,9 @@
       if (document.forms[i].name == "deleteAudio") {
         document.forms[i].addEventListener('submit', deleteAudio);
       } else if (document.forms[i].name == "editCampaign") {
-        document.forms[i].addEventListener('submit', function(e) {
-          e.preventDefault();
-          const formData = new FormData(document.getElementById(e.target.id));
-          const keys = [];
-          const campaignData = JSON.parse(e.target.elements[7].value);
-          for (i = 0; i < campaignData.length; i++) {
-            keys.push(campaignData[i].currKey);
-          }
-          formData.append('campaignData', keys);
-          $.ajax({
-            url: "/editCampaign",
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(data) {
-              window.location.href = data.redirectUrl;
-            },
-            error: function(errResponse) {
-                console.log(errResponse);
-            }
-          });
-        });
-      }
-    }    
+        document.forms[i].addEventListener('submit', editCampaign);
+      }  
+    }  
   });
 
   var deleteAudio = function (e) {
@@ -172,7 +150,27 @@
   };
 
   var editCampaign = function (e) {
-        
+    e.preventDefault();
+    const formData = new FormData(document.getElementById(e.target.id));
+    const keys = [];
+    const campaignData = JSON.parse(e.target.elements[7].value);
+    for (i = 0; i < campaignData.length; i++) {
+      keys.push(campaignData[i].currKey);
+    }
+    formData.append('campaignData', keys);
+    $.ajax({
+      url: "/editCampaign",
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+        window.location.href = data.redirectUrl;
+      },
+      error: function(errResponse) {
+          console.log(errResponse);
+      }
+    });
   };
 </script>
 
@@ -216,7 +214,7 @@
                   <div class="col-xs-5" style="margin: 0px;">
                     <div class="modal-body">
                         <p style="font-size: 15px;">You can edit existing information about your campaign or add new ads! Please only change desired fields.</p>
-                        <p style="font-size: 15px;">Edit your campaign's geographic reach using the box on the map</p>
+                        <p style="font-size: 15px;">Edit your campaign's geographic reach using the box on the map.</p>
                         <form class="signup" enctype="multipart/form-data" name="editCampaign" id="editCampaign<%=modalCount%>" type="submit">
                         <input type="text" required id="campaign-name" class="fadeIn third" name="campaign-name" placeholder="Campaign Name"
                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Campaign Name'" value="<%= campaigns[key][0].campaignName %>">

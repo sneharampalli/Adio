@@ -81,8 +81,10 @@ app.post('/audio', upload.array('ad', 5), function (req, res, next) {
 
 app.post('/deleteFiles', routes.delete_audio);
 app.post('/editCampaign', upload.array('ad', 5), function (req, res) {
+  console.log(req.files);
   if (req.files) {
     console.log('Successfully uploaded ad to s3!');
+    console.log(req.body);
     const campaignName = req.body['campaign-name'];
     const maxLat = req.body['maxLat-'.concat(campaignName.replace(/\s+/g, ''))];
     const maxLng = req.body['maxLng-'.concat(campaignName.replace(/\s+/g, ''))];
