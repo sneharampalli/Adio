@@ -152,7 +152,7 @@ export default class Profile extends React.Component {
             <View style={{flex: 1 }}>
                 <ImageBackground source={require('../assets/background3.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
                     <Avatar size={200} containerStyle={ProfileTheme.avatar} onPress={() =>
-                                this.props.navigation.navigate('Home')
+                                this.props.navigation.goBack()
                             } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
                     <Text style={ProfileTheme.text}>{this.state.name}</Text>
                     <Text style={ProfileTheme.text}>{this.state.email}</Text>

@@ -96,7 +96,7 @@ export default class App extends React.Component {
           }}></Text>
         }
         <FadeInView duration="1000" delay="500" style={{flex: 1}}>
-          <AppWithAuth navigation={this.props.navigation} />
+          <AppWithAuth navigation={this.props.navigation}/>
         </FadeInView>
         </ImageBackground>
       </View >

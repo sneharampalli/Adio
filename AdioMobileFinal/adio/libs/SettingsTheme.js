@@ -8,46 +8,40 @@ export const errorIconColor = '#DD3F5B';
 // Theme
 export default StyleSheet.create({
 	avatar: {
-		position: "absolute",
-		right: 20,
-		top: 30,
-	}, 
-	button: {
-		backgroundColor: 'rgba(255,255,255,0.4)',
-		alignItems: 'center',
-		alignSelf: 'center',
-		marginTop: 120,
-		width: 120,
-		height: 40,
-		justifyContent: "center",
-		borderRadius: 6
-		// borderWidth: 1
-	},
-	buttonText: {
-		color: '#000',
-		fontSize: 17,
-		fontWeight: '600'
+        marginTop: 150,
+        alignSelf: "center"
+    }, 
+    text: {
+        alignSelf: "center",
+        marginTop: 50,
+        fontSize: 24,
+        backgroundColor: 'rgba(255,255,255,0.4)',
+        borderRadius: 6,
+        fontWeight: '600',
+
     },
-    playButton: {
-		marginTop: 70,
-    },
-	playButtonLabel: {
-		alignItems: 'center',
-		alignSelf: 'center',
-		justifyContent: 'center',
-		width: 120,
-		height: 30,
-		marginTop: -10,
-	},
-	playButtonLabelText: {
-		fontSize: 24
-	},
     logo: {
         position: "absolute",
         bottom: 25,
         right: 25,
         height: 30,
         width: 32,
+	},
+	logoutButton: {
+		position: "absolute",
+		bottom: 20,
+		left: 10,
+		height: 30,
+		width: 70,
+		alignContent: "center",
+		justifyContent: "center",
+		borderRadius: 4,
+	},
+	logoutButtonText: {
+		color: '#fff',
+		fontSize: 16,
+		alignSelf: "center",
+		fontWeight: '600'
 	},
 	sliderContainer: {
 		flexDirection: 'row',
@@ -79,22 +73,20 @@ export default StyleSheet.create({
 		marginTop: -5,
 		marginLeft: 15,
 		color: 'rgba(0,0,0,0.6)'
-	},
-	logoutButton: {
-		position: "absolute",
-		bottom: 20,
-		left: 10,
-		// backgroundColor: 'rgba(0,0,0,0.3)',
-		height: 30,
-		width: 70,
-		alignContent: "center",
-		justifyContent: "center",
-		borderRadius: 4,
-	},
-	logoutButtonText: {
-		color: '#fff',
-		fontSize: 16,
-		alignSelf: "center",
-		fontWeight: '600'
-	}
+    },
+    darkModeContainer: {
+        flexDirection: 'row',
+		justifyContent: 'center',
+		height: 40,
+		marginTop: 50,
+    },
+    darkModeSwitch: {
+        alignSelf: "center",
+		marginHorizontal: 10,
+    },
+    darkModeLabel: {
+        alignSelf: 'center',
+        fontWeight: '500',
+        color: "#000"
+    }
 });
