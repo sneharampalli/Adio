@@ -38,7 +38,7 @@ export default StyleSheet.create({
 		borderRadius: 4,
 	},
 	logoutButtonText: {
-		color: '#000',
+		color: '#fff',
 		fontSize: 16,
 		alignSelf: "center",
 		fontWeight: '600'
@@ -46,7 +46,7 @@ export default StyleSheet.create({
 	sliderContainer: {
 		flexDirection: 'row',
 		justifyContent: 'center',
-		height: 40,
+        height: 40,
         marginTop: 40,
 	},
 	sliderContainer1: {
@@ -57,11 +57,13 @@ export default StyleSheet.create({
 	},
 	sliderLabel: {
 		alignSelf: 'center',
-		fontWeight: '500',
+        fontWeight: '500',
+        color: '#fff'
 	},
 	sliderValue: {
 		alignSelf: 'center',
-		fontWeight: '600',
+        fontWeight: '600',
+        color: '#fff',
 	},
 	slider: {
 		width: '40%',
@@ -72,8 +74,8 @@ export default StyleSheet.create({
 		marginBottom: 5,
 		marginTop: -5,
 		marginLeft: 15,
-		color: 'rgba(0,0,0,0.6)'
-    },
+		color: 'rgba(255,255,255,0.6)'
+	},
     darkModeContainer: {
         flexDirection: 'row',
 		justifyContent: 'center',
@@ -87,6 +89,6 @@ export default StyleSheet.create({
     darkModeLabel: {
         alignSelf: 'center',
         fontWeight: '500',
-        color: "#000"
+        color: "#fff"
     }
 });

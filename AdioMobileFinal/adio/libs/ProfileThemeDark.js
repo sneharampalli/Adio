@@ -11,7 +11,8 @@ export default StyleSheet.create({
         marginTop: 80,
         alignSelf: "center",
 		marginBottom: 10,
-		backgroundColor: "#000",
+        backgroundColor: "#fff",
+        color: "#000",
     }, 
     text: {
         alignSelf: "center",
@@ -22,7 +23,7 @@ export default StyleSheet.create({
         fontSize: 20,
         borderRadius: 6,
         fontWeight: '600',
-        color: 'rgba(0, 0, 0, 1.0)'
+        color: 'rgba(255, 255, 255, 1.0)'
     },
     chartHeader: {
     	alignSelf: "center",
@@ -33,7 +34,7 @@ export default StyleSheet.create({
         fontSize: 28,
         borderRadius: 6,
         fontWeight: '600',
-        color: 'rgba(0, 0, 0, 1)',
+        color: 'rgba(255, 255, 255, 1)',
     },
     revenueHeader: {
     	alignSelf: "center",
@@ -41,7 +42,7 @@ export default StyleSheet.create({
         textAlign: "center",
         fontSize: 16,
         fontWeight: '600',
-        color: 'rgba(255, 255, 255, 1.0)',
+        color: 'rgba(0, 0, 0, 1.0)',
     },
     revenueVal: {
     	alignSelf: "center",
@@ -50,11 +51,11 @@ export default StyleSheet.create({
         marginTop: 10,
         fontSize: 28,
         fontWeight: '600',
-        color: 'rgba(255, 255, 255, 1)',
+        color: 'rgba(0, 0, 0, 1)',
     },
     chart: {
     	alignSelf: "center",
-        marginTop: 5
+        marginTop: 5,
     },
     selector: {
     	width: 200,
@@ -70,7 +71,7 @@ export default StyleSheet.create({
     	borderRadius: 10
     },
     bubble: {
-    	backgroundColor: 'rgba(0, 0, 0, 0.40)',
+    	backgroundColor: 'rgba(255, 255, 255, 0.40)',
     	alignItems: "center",
     	justifyContent: "center",
     	marginLeft: 40,
@@ -111,7 +112,7 @@ export default StyleSheet.create({
 		borderRadius: 4,
 	},
 	logoutButtonText: {
-		color: '#000',
+		color: '#fff',
 		fontSize: 16,
 		alignSelf: "center",
 		fontWeight: '600'

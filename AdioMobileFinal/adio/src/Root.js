@@ -13,7 +13,7 @@ import * as Location from 'expo-location';
 import { Analytics } from 'aws-amplify';
 import HomeTheme from '../libs/HomeTheme';
 import HomeThemeDark from '../libs/HomeThemeDark';
-import { Avatar } from 'react-native-elements';
+import { Avatar } from 'react-native-paper';
 
 Analytics.configure({ disabled: true })
 
@@ -306,18 +306,18 @@ export default class Root extends React.Component {
             return (
                 <View style={{flex: 1 }}>
                     <ImageBackground source={require('../assets/background2Dark.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
-                        <Avatar containerStyle={HomeThemeDark.avatar} onPress={() =>
-                            this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})
-                        } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
+                        <TouchableOpacity style={HomeThemeDark.avatarContainer} onPress={() => this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})} >
+                            <Avatar.Text color={'#000'} style={HomeThemeDark.avatar} size={30} label={this.state.initials} />
+                        </TouchableOpacity>
                         <Button
-                            style={HomeTheme.settings}
+                            style={HomeThemeDark.settings}
                             onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}
                             type="clear"
                             icon={
                                 <Icon
                                     name="gear"
-                                    size={40}
-                                    color="rgb(0,0,0)"
+                                    size={30}
+                                    color="rgb(255,255,255)"
                                 />
                             }
                         />
@@ -378,10 +378,6 @@ export default class Root extends React.Component {
                         <TouchableOpacity style={HomeThemeDark.playButtonLabel} onPress={this.signOut}>
                             <Text style={HomeThemeDark.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={HomeThemeDark.button} onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}>
-                            <Text style={HomeThemeDark.buttonText}> more settings </Text>
-                        </TouchableOpacity>
-
                         <TouchableOpacity style={HomeThemeDark.logoutButton} onPress={this.signOut}>
                             <Text style={HomeThemeDark.logoutButtonText}> logout </Text>
                         </TouchableOpacity>
@@ -393,9 +389,9 @@ export default class Root extends React.Component {
             return (
                 <View style={{flex: 1 }}>
                     <ImageBackground source={require('../assets/background2Light.jpg')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
-                        <Avatar containerStyle={HomeTheme.avatar} onPress={() =>
-                            this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})
-                        } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
+                        <TouchableOpacity style={HomeTheme.avatarContainer} onPress={() => this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})} >
+                            <Avatar.Text color={'#fff'}  style={HomeTheme.avatar} size={30} label={this.state.initials} />
+                        </TouchableOpacity>
                         <Button
                                 style={HomeTheme.settings}
                                 onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}
@@ -403,7 +399,7 @@ export default class Root extends React.Component {
                                 icon={
                                     <Icon
                                         name="gear"
-                                        size={40}
+                                        size={30}
                                         color="rgb(0,0,0)"
                                     />
                                 }
@@ -465,10 +461,6 @@ export default class Root extends React.Component {
                         <TouchableOpacity style={HomeTheme.playButtonLabel}>
                             <Text style={HomeTheme.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={HomeTheme.button} onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}>
-                            <Text style={HomeTheme.buttonText}> more settings </Text>
-                        </TouchableOpacity>
-
                         <TouchableOpacity style={HomeTheme.logoutButton} onPress={this.signOut}>
                             <Text style={HomeTheme.logoutButtonText}> logout </Text>
                         </TouchableOpacity>

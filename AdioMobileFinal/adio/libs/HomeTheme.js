@@ -7,15 +7,20 @@ export const errorIconColor = '#DD3F5B';
 
 // Theme
 export default StyleSheet.create({
-	avatar: {
+	avatarContainer: {
+		width: 30,
+		height: 30,
 		position: "absolute",
 		right: 20,
-		top: 35,
+		top: 40,
+	},
+	avatar: {
+		backgroundColor: "#000",
 	}, 
 	settings: {
 		position: "absolute",
-		right: 10,
-		top: 70
+		left: 5,
+		top: 30,
 	}, 
 	button: {
 		position: "absolute",
