@@ -8,17 +8,91 @@ export const errorIconColor = '#DD3F5B';
 // Theme
 export default StyleSheet.create({
 	avatar: {
-        marginTop: 150,
-        alignSelf: "center"
+        marginTop: 80,
+        alignSelf: "center",
+        marginBottom: 10
     }, 
     text: {
         alignSelf: "center",
-        marginTop: 50,
-        fontSize: 24,
-        backgroundColor: 'rgba(255,255,255,0.4)',
+        justifyContent: "center",
+        textAlign: "center",
+        // marginLeft: 20,
+        marginTop: 5,
+        marginBottom: 5,
+        fontSize: 20,
+        // backgroundColor: 'rgba(255,255,255,0.4)',
         borderRadius: 6,
         fontWeight: '600',
+        color: 'rgba(0, 0, 0, 0.8)'
+    },
+    chartHeader: {
+    	alignSelf: "center",
+    	marginLeft: 10,
+    	marginRight: 10,
+        marginTop: 60,
+        marginBottom: 2,
+        fontSize: 28,
+        borderRadius: 6,
+        fontWeight: '600',
+        color: 'rgba(255, 255, 255, 1)',
+    },
+    revenueHeader: {
+    	alignSelf: "center",
+    	justifyContent: "center",
+        textAlign: "center",
+        fontSize: 16,
+        fontWeight: '600',
+        color: 'rgba(0, 0, 0, 0.8)',
+    },
+    revenueVal: {
+    	alignSelf: "center",
+    	justifyContent: "center",
+        textAlign: "center",
+        marginTop: 10,
+        fontSize: 28,
+        fontWeight: '600',
+        color: 'rgba(255, 255, 255, 1)',
+    },
+    chart: {
+    	alignSelf: "center",
+        marginTop: 5
+    },
+    selector: {
+    	width: 200,
+    	alignSelf: "center",
+    	color: 'rgba(255,255,255,1)',
+    	marginTop: 10
+    },
+    profileContainer: {
+    	marginLeft: 40,
+    	marginRight:30,
+    	marginTop: 10,
+    	marginBottom: 0,
+    	borderRadius: 10
+    },
+    bubble: {
+    	backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    	alignItems: "center",
+    	justifyContent: "center",
+    	marginLeft: 40,
+    	marginBottom: 0,
+    	borderRadius: 120,
+    	height: 150,
+    	width: 150,
+    	shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 12,
+		},
+		shadowOpacity: 0.58,
+		shadowRadius: 16.00,
 
+		elevation: 24
+    },
+    revenueRow: {
+    	flexDirection: 'row',
+    	alignItems: 'center',
+    	marginTop: 50
     },
     logo: {
         position: "absolute",
