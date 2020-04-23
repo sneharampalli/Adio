@@ -277,7 +277,7 @@ export default class Profile extends React.Component {
                         <SwitchSelector
                             initial={0}
                             onPress={value => this.setState({ graphOption: value })}
-                            textColor={'rbga(255, 255, 255, 1)'}
+                            textColor={'#000'}
                             selectedColor={'rgba(255,255,255, 1)'}
                             
                             buttonColor={'rgba(0, 0, 0, 0.6)'}

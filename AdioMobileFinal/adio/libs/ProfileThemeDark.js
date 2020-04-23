@@ -79,7 +79,7 @@ export default StyleSheet.create({
     	borderRadius: 120,
     	height: 150,
     	width: 150,
-    	shadowColor: "#000",
+    	shadowColor: "#fff",
 		shadowOffset: {
 			width: 0,
 			height: 12,
