@@ -60,26 +60,68 @@
     var mapName = rectangle.name;
     var ne = rectangle.getBounds().getNorthEast();
     var sw = rectangle.getBounds().getSouthWest();
+    console.log(sw.lng() + ' ' + sw.lat())
+    console.log(document.getElementsByName("minLng-" + mapName)[0])
     document.getElementsByName("maxLng-" + mapName)[0].setAttribute("value", ne.lng())
     document.getElementsByName("minLng-" + mapName)[0].setAttribute("value", sw.lng())
     document.getElementsByName("maxLat-" + mapName)[0].setAttribute("value", ne.lat())
     document.getElementsByName("minLat-" + mapName)[0].setAttribute("value", sw.lat())
   }
 
-  function updateMaxLong(event) {
-    console.log(rectangle.getBounds())
+  function updateMaxLong(input) {
+    var ne = rectangle.getBounds().getNorthEast();
+    var sw = rectangle.getBounds().getSouthWest();
+    var difLng = (ne.lng() - sw.lng()) / 2.0
+    var difLat = (parseFloat(input.value) - sw.lat()) / 2.0
+    var NE = new google.maps.LatLng(parseFloat(input.value), ne.lng());
+    var SW = new google.maps.LatLng(sw.lat(), sw.lng());
+    var newRect = new google.maps.LatLngBounds(SW,NE);
+    rectangle.setBounds(newRect);    
+    rectangle.addListener('bounds_changed', updateLongLat);
+    map.fitBounds(newRect);
+    map.setCenter(new google.maps.LatLng(parseFloat(input.value) - difLat, ne.lng() - difLng));
   }
 
-  function updateMinLong(event) {
-    
+  function updateMinLong(input) {
+    var ne = rectangle.getBounds().getNorthEast();
+    var sw = rectangle.getBounds().getSouthWest();
+    var difLng = (ne.lng() - parseFloat(input.value)) / 2.0
+    var difLat = (ne.lat() - sw.lat()) / 2.0
+    var NE = new google.maps.LatLng(ne.lat(), ne.lng());
+    var SW = new google.maps.LatLng(sw.lat(), parseFloat(input.value));
+    var newRect = new google.maps.LatLngBounds(SW,NE);
+    rectangle.setBounds(newRect);
+    rectangle.addListener('bounds_changed', updateLongLat);
+    map.fitBounds(newRect);
+    map.setCenter(new google.maps.LatLng(ne.lat() - difLat, ne.lng() - difLng));
   }
 
-  function updateMaxLat(event) {
-    
+  function updateMaxLat(input) {
+    var ne = rectangle.getBounds().getNorthEast();
+    var sw = rectangle.getBounds().getSouthWest();
+    var difLng = (ne.lng() - sw.lng()) / 2.0
+    var difLat = (parseFloat(input.value) - sw.lat()) / 2.0
+    var NE = new google.maps.LatLng(parseFloat(input.value), ne.lng());
+    var SW = new google.maps.LatLng(sw.lat(), sw.lng());
+    var newRect = new google.maps.LatLngBounds(SW,NE);
+    rectangle.setBounds(newRect);
+    rectangle.addListener('bounds_changed', updateLongLat);
+    map.fitBounds(newRect);
+    map.setCenter(new google.maps.LatLng(parseFloat(input.value) - difLat, ne.lng() - difLng));
   }
 
-  function updateMinLat(event) {
-    
+  function updateMinLat(input) {
+    var ne = rectangle.getBounds().getNorthEast();
+    var sw = rectangle.getBounds().getSouthWest();
+    var difLng = (ne.lng() - sw.lng()) / 2.0
+    var difLat = (ne.lat() - parseFloat(input.value)) / 2.0
+    var NE = new google.maps.LatLng(ne.lat(), ne.lng());
+    var SW = new google.maps.LatLng(parseFloat(input.value), sw.lng());
+    var newRect = new google.maps.LatLngBounds(SW,NE);
+    rectangle.setBounds(newRect);
+    rectangle.addListener('bounds_changed', updateLongLat);
+    map.fitBounds(newRect);
+    map.setCenter(new google.maps.LatLng(ne.lat() - difLat, ne.lng() - difLng));
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -180,22 +222,22 @@
                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Campaign Name'" value="<%= campaigns[key][0].campaignName %>">
                         <div id="name-wrapper">
                           <div id="error-fn">
-                            <input type="number" step="any" required id="min-latitude" class="fadeIn second" name="minLat-<%= num %>" placeholder="Min. Latitude"
-                            min="-90" max="90"  onchange="updateMaxLong()" value=<%= campaigns[key][0].minLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'">
+                            <input type="number" step="0.00000000000001" required id="min-latitude" class="fadeIn second" name="minLat-<%= num %>" placeholder="Min. Latitude"
+                            min="-90" max="90"  onchange="updateMinLat(this)" value=<%= campaigns[key][0].minLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'">
                           </div>
                           <div id="error-ln">
-                            <input type="number" step="any" required id="min-longitude" class="fadeIn second" name="minLng-<%= num %>" placeholder="Min. Longitude"
-                            min="-180" max="180" value=<%= campaigns[key][0].minLng %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Longitude'">
+                            <input type="number" step="0.00000000000001" required id="min-longitude" class="fadeIn second" name="minLng-<%= num %>" placeholder="Min. Longitude"
+                            min="-180" max="180" onchange="updateMinLong(this)" value=<%= campaigns[key][0].minLng %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Longitude'">
                           </div>
                         </div>
                         <div id="name-wrapper">
                           <div id="error-fn">
-                            <input type="number" step="any" required id="max-latitude" class="fadeIn second" name="maxLat-<%= num %>" placeholder="Max. Latitude"
-                            min="-90" max="90" value=<%= campaigns[key][0].maxLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Latitude'">
+                            <input type="number" step="0.00000000000001" required id="max-latitude" class="fadeIn second" name="maxLat-<%= num %>" placeholder="Max. Latitude"
+                            min="-90" max="90" onchange="updateMaxLat(this)" value=<%= campaigns[key][0].maxLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Latitude'">
                           </div>
                           <div id="error-ln">
-                            <input type="number" step="any" required id="max-longitude" class="fadeIn second" name="maxLng-<%= num %>" placeholder="Max. Longitude"
-                            min="-180" max="180" onfocus="this.placeholder = ''" value=<%= campaigns[key][0].maxLng %> onblur="this.placeholder = 'Max. Longitude'">
+                            <input type="number" step="0.00000000000001" required id="max-longitude" class="fadeIn second" name="maxLng-<%= num %>" placeholder="Max. Longitude"
+                            min="-180" max="180" onchange="updateMaxLong(this)" onfocus="this.placeholder = ''" value=<%= campaigns[key][0].maxLng %> onblur="this.placeholder = 'Max. Longitude'">
                           </div>
                         </div>
                           <input type="text" required id="description" class="fadeIn third"  style="height: 50px" name="description" placeholder="Description of Ad"
