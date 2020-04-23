@@ -277,6 +277,14 @@ export default class Root extends React.Component {
         this.setState({darkModeEnabled: darkMode});
     }
 
+    changeVolume(value) {
+        this.setState({volume: value});
+    }
+
+    changeFreq(value) {
+        this.setState({adInterval: value});
+    }
+
     addImpression = async () => {
         try {
             const ad = {
@@ -311,7 +319,9 @@ export default class Root extends React.Component {
                         </TouchableOpacity>
                         <Button
                             style={HomeThemeDark.settings}
-                            onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}
+                            onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled,
+                                changeVolume: this.changeVolume.bind(this), volume: this.state.volume,
+                                changeFreq: this.changeFreq.bind(this), adInterval: this.state.adInterval })}
                             type="clear"
                             icon={
                                 <Icon
@@ -328,7 +338,7 @@ export default class Root extends React.Component {
                             <Slider
                                 style={HomeThemeDark.slider}
                                 step={1}
-                                minimumValue={1}
+                                minimumValue={2}
                                 maximumValue={10}
                                 value={this.state.volume}
                                 minimumTrackTintColor={'#fff'}
@@ -394,7 +404,7 @@ export default class Root extends React.Component {
                         </TouchableOpacity>
                         <Button
                                 style={HomeTheme.settings}
-                                onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}
+                                onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled, changeVolume: this.changeVolume.bind(this), volume: this.state.volume, changeFreq: this.changeFreq.bind(this), adInterval: this.state.adInterval })}
                                 type="clear"
                                 icon={
                                     <Icon
@@ -411,7 +421,7 @@ export default class Root extends React.Component {
                             <Slider
                                 style={HomeTheme.slider}
                                 step={1}
-                                minimumValue={1}
+                                minimumValue={2}
                                 maximumValue={10}
                                 value={this.state.volume}
                                 minimumTrackTintColor={'#000'}
