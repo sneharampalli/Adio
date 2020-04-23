@@ -17,7 +17,7 @@ const AppStack = createStackNavigator({
     Profile: { 
         screen: ProfileScreen, 
         navigationOptions: {headerShown: false}
-    },
+    }
 });
 
 const AppNavigator = createAppContainer(AppStack);

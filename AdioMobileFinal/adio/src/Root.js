@@ -365,7 +365,7 @@ export default class Root extends React.Component {
                     <TouchableOpacity style={HomeTheme.button1} onPress={this.signOut}>
                         <Text style={HomeTheme.buttonText}> dashboard </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={HomeTheme.button} onPress={this.signOut}>
+                    <TouchableOpacity style={HomeTheme.button} onPress={this.props.navigation.navigate('Dashboard')}>
                         <Text style={HomeTheme.buttonText}> more settings </Text>
                     </TouchableOpacity>
 
