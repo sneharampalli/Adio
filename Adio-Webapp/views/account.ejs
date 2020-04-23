@@ -66,6 +66,7 @@
     document.getElementsByName("minLng-" + mapName)[0].setAttribute("value", sw.lng())
     document.getElementsByName("maxLat-" + mapName)[0].setAttribute("value", ne.lat())
     document.getElementsByName("minLat-" + mapName)[0].setAttribute("value", sw.lat())
+    map.fitBounds(rectangle.getBounds());
   }
 
   function updateMaxLong(input) {
@@ -222,22 +223,22 @@
                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Campaign Name'" value="<%= campaigns[key][0].campaignName %>">
                         <div id="name-wrapper">
                           <div id="error-fn">
-                            <input type="number" step="0.00000000000001" required id="min-latitude" class="fadeIn second" name="minLat-<%= num %>" placeholder="Min. Latitude"
-                            min="-90" max="90"  onchange="updateMinLat(this)" value=<%= campaigns[key][0].minLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'">
+                            <input type="number" step="any" required id="min-latitude" class="fadeIn second" name="minLat-<%= num %>" placeholder="Min. Latitude"
+                            min="-90" max="90"  onchange="updateMinLat(this)" value=<%= campaigns[key][0].minLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'" disabled>
                           </div>
                           <div id="error-ln">
-                            <input type="number" step="0.00000000000001" required id="min-longitude" class="fadeIn second" name="minLng-<%= num %>" placeholder="Min. Longitude"
-                            min="-180" max="180" onchange="updateMinLong(this)" value=<%= campaigns[key][0].minLng %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Longitude'">
+                            <input type="number" step="any" required id="min-longitude" class="fadeIn second" name="minLng-<%= num %>" placeholder="Min. Longitude"
+                            min="-180" max="180" onchange="updateMinLong(this)" value=<%= campaigns[key][0].minLng %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Longitude'" disabled>
                           </div>
                         </div>
                         <div id="name-wrapper">
                           <div id="error-fn">
-                            <input type="number" step="0.00000000000001" required id="max-latitude" class="fadeIn second" name="maxLat-<%= num %>" placeholder="Max. Latitude"
-                            min="-90" max="90" onchange="updateMaxLat(this)" value=<%= campaigns[key][0].maxLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Latitude'">
+                            <input type="number" step="any" required id="max-latitude" class="fadeIn second" name="maxLat-<%= num %>" placeholder="Max. Latitude"
+                            min="-90" max="90" onchange="updateMaxLat(this)" value=<%= campaigns[key][0].maxLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Latitude'" disabled>
                           </div>
                           <div id="error-ln">
-                            <input type="number" step="0.00000000000001" required id="max-longitude" class="fadeIn second" name="maxLng-<%= num %>" placeholder="Max. Longitude"
-                            min="-180" max="180" onchange="updateMaxLong(this)" onfocus="this.placeholder = ''" value=<%= campaigns[key][0].maxLng %> onblur="this.placeholder = 'Max. Longitude'">
+                            <input type="number" step="any" required id="max-longitude" class="fadeIn second" name="maxLng-<%= num %>" placeholder="Max. Longitude"
+                            min="-180" max="180" onchange="updateMaxLong(this)" onfocus="this.placeholder = ''" value=<%= campaigns[key][0].maxLng %> onblur="this.placeholder = 'Max. Longitude'" disabled>
                           </div>
                         </div>
                           <input type="text" required id="description" class="fadeIn third"  style="height: 50px" name="description" placeholder="Description of Ad"
