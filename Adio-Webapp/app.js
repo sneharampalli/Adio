@@ -70,10 +70,10 @@ app.post('/audio', upload.array('ad', 5), function (req, res, next) {
         } else {
           console.log('Successfully put into Ads dynamodb!')
           console.log(data);
-          res.send({redirectUrl: '/account'});
         } 
       });
     }
+    res.send({redirectUrl: '/account'});
   } else {
     console.log('Error!');
   }  
@@ -143,10 +143,10 @@ app.post('/editCampaign', upload.array('ad', 5), function (req, res) {
         } else {
           console.log('Successfully updated dynamodb!')
           console.log(data);
-          res.send({redirectUrl: "/account"});
         } 
       });
     }
+    res.send({redirectUrl: "/account"});
   } else {
     console.log(req.body);
   }
