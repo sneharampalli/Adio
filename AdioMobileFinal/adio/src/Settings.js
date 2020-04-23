@@ -35,6 +35,16 @@ export default class Settings extends React.Component {
         this.props.navigation.state.params.isDarkMode = value;
     }
 
+    changeVolume = async (value) => {
+        this.setState(({volume: value }));
+        this.props.navigation.state.params.volume = value;
+    }
+
+    changeFreq = async (value) => {
+        this.setState(({adInterval: value }));
+        this.props.navigation.state.params.adInterval = value;
+    }
+
     render() {
         if (this.props.navigation.state.params.isDarkMode) {
             return (
@@ -46,20 +56,15 @@ export default class Settings extends React.Component {
                             <Slider
                                 style={SettingsTheme.slider}
                                 step={1}
-                                minimumValue={1}
+                                minimumValue={2}
                                 maximumValue={10}
-                                value={this.state.volume}
+                                value={this.props.navigation.state.params.volume}
                                 minimumTrackTintColor={'#000'}
                                 maximumTrackTintColor={'rgba(0,0,0,0.2)'}
                                 thumbTintColor={'#000'}
-                                onValueChange={value => { this.setState({ volume: value });
-                                        if (this.state.isLoaded) {
-                                            this.state.soundObject.setVolumeAsync(value / 10.0); 
-                                        }
-                                    }
-                                }
+                                onValueChange={this.changeVolume}
                             />
-                            <Text style={SettingsTheme.sliderValue}>{this.state.volume}</Text>
+                            <Text style={SettingsTheme.sliderValue}>{this.props.navigation.state.params.volume}</Text>
                         </View>
                         <Text style={SettingsTheme.sliderDescription}>volume of ads</Text>
                         <View style={SettingsTheme.sliderContainer}>
@@ -69,13 +74,13 @@ export default class Settings extends React.Component {
                                 step={1}
                                 minimumValue={1}
                                 maximumValue={8}
-                                value={this.state.adInterval}
+                                value={this.props.navigation.state.params.adInterval}
                                 minimumTrackTintColor={'#000'}
                                 maximumTrackTintColor={'rgba(0,0,0,0.2)'}
                                 thumbTintColor={'#000'}
-                                onValueChange={value => this.setState({ adInterval: value })}
+                                onValueChange={this.changeFreq}
                             />
-                            <Text style={SettingsTheme.sliderValue}>{this.state.adInterval}</Text>
+                            <Text style={SettingsTheme.sliderValue}>{this.props.navigation.state.params.adInterval}</Text>
                         </View>
                         <Text style={SettingsTheme.sliderDescription}>mins between ads</Text>
                         <View style={SettingsTheme.darkModeContainer}>
@@ -89,7 +94,10 @@ export default class Settings extends React.Component {
                                 value={this.props.navigation.state.params.isDarkMode}
                             />
                         </View>
-                        <TouchableOpacity style={SettingsTheme.logoutButton} onPress={() => {this.props.navigation.state.params.changeDarkMode(this.props.navigation.state.params.isDarkMode); this.props.navigation.goBack()}} >
+                        <TouchableOpacity style={SettingsTheme.logoutButton} onPress={() => {this.props.navigation.state.params.changeDarkMode(this.props.navigation.state.params.isDarkMode);
+                            this.props.navigation.state.params.changeVolume(this.props.navigation.state.params.volume);
+                            this.props.navigation.state.params.changeFreq(this.props.navigation.state.params.adInterval);
+                            this.props.navigation.goBack()}} >
                             <Text style={SettingsTheme.logoutButtonText}> back </Text>
                         </TouchableOpacity>
                         <Image source={require('../assets/adio-white.png')} style={SettingsTheme.logo}/>
@@ -106,20 +114,15 @@ export default class Settings extends React.Component {
                             <Slider
                                 style={SettingsTheme.slider}
                                 step={1}
-                                minimumValue={1}
+                                minimumValue={2}
                                 maximumValue={10}
-                                value={this.state.volume}
+                                value={this.props.navigation.state.params.volume}
                                 minimumTrackTintColor={'#000'}
                                 maximumTrackTintColor={'rgba(0,0,0,0.2)'}
                                 thumbTintColor={'#000'}
-                                onValueChange={value => { this.setState({ volume: value });
-                                        if (this.state.isLoaded) {
-                                            this.state.soundObject.setVolumeAsync(value / 10.0); 
-                                        }
-                                    }
-                                }
+                                onValueChange={this.changeVolume}
                             />
-                            <Text style={SettingsTheme.sliderValue}>{this.state.volume}</Text>
+                            <Text style={SettingsTheme.sliderValue}>{this.props.navigation.state.params.volume}</Text>
                         </View>
                         <Text style={SettingsTheme.sliderDescription}>volume of ads</Text>
                         <View style={SettingsTheme.sliderContainer}>
@@ -127,15 +130,15 @@ export default class Settings extends React.Component {
                             <Slider
                                 style={SettingsTheme.slider}
                                 step={1}
-                                minimumValue={1}
+                                minimumValue={2}
                                 maximumValue={8}
-                                value={this.state.adInterval}
+                                value={this.props.navigation.state.params.adInterval}
                                 minimumTrackTintColor={'#000'}
                                 maximumTrackTintColor={'rgba(0,0,0,0.2)'}
                                 thumbTintColor={'#000'}
-                                onValueChange={value => this.setState({ adInterval: value })}
+                                onValueChange={this.changeFreq}
                             />
-                            <Text style={SettingsTheme.sliderValue}>{this.state.adInterval}</Text>
+                            <Text style={SettingsTheme.sliderValue}>{this.props.navigation.state.params.adInterval}</Text>
                         </View>
                         <Text style={SettingsTheme.sliderDescription}>mins between ads</Text>
                         <View style={SettingsTheme.darkModeContainer}>
@@ -150,7 +153,11 @@ export default class Settings extends React.Component {
                             />
                         </View>
                         
-                        <TouchableOpacity style={SettingsTheme.logoutButton} onPress={() => {this.state.useIncomingDarkMode = true; this.props.navigation.state.params.changeDarkMode(this.props.navigation.state.params.isDarkMode); this.props.navigation.goBack()}} >
+                        <TouchableOpacity style={SettingsTheme.logoutButton} onPress={() => {this.state.useIncomingDarkMode = true;
+                            this.props.navigation.state.params.changeDarkMode(this.props.navigation.state.params.isDarkMode);
+                            this.props.navigation.state.params.changeVolume(this.props.navigation.state.params.volume);
+                            this.props.navigation.state.params.changeFreq(this.props.navigation.state.params.adInterval);
+                            this.props.navigation.goBack()}} >
                             <Text style={SettingsTheme.logoutButtonText}> back </Text>
                         </TouchableOpacity>
                         <Image source={require('../assets/adio-white.png')} style={SettingsTheme.logo}/>

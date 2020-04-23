@@ -276,6 +276,14 @@ export default class Root extends React.Component {
         this.setState({darkModeEnabled: darkMode});
     }
 
+    changeVolume(value) {
+        this.setState({volume: value});
+    }
+
+    changeFreq(value) {
+        this.setState({adInterval: value});
+    }
+
     addImpression = async () => {
         try {
             const ad = {
@@ -310,7 +318,9 @@ export default class Root extends React.Component {
                         } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
                         <Button
                                 style={HomeTheme.settings}
-                                onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}
+                                onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled,
+                                    changeVolume: this.changeVolume.bind(this), volume: this.state.volume,
+                                    changeFreq: this.changeFreq.bind(this), adInterval: this.state.adInterval })}
                                 type="clear"
                                 icon={
                                     <Icon
@@ -327,7 +337,7 @@ export default class Root extends React.Component {
                             <Slider
                                 style={HomeTheme.slider}
                                 step={1}
-                                minimumValue={1}
+                                minimumValue={2}
                                 maximumValue={10}
                                 value={this.state.volume}
                                 minimumTrackTintColor={'#000'}
@@ -395,18 +405,20 @@ export default class Root extends React.Component {
                         <Avatar containerStyle={HomeTheme.avatar} onPress={() =>
                             this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})
                         } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
-                        <Button
-                                style={HomeTheme.settings}
-                                onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}
-                                type="clear"
-                                icon={
-                                    <Icon
-                                        name="gear"
-                                        size={40}
-                                        color="rgb(0,0,0)"
-                                    />
-                                }
-                        />
+                        <View>
+                            <Button
+                                    style={HomeTheme.settings}
+                                    onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled, changeVolume: this.changeVolume.bind(this), volume: this.state.volume, changeFreq: this.changeFreq.bind(this), adInterval: this.state.adInterval })}
+                                    type="clear"
+                                    icon={
+                                        <Icon
+                                            name="gear"
+                                            size={40}
+                                            color="rgba(0,0,0, 0.9)"
+                                        />
+                                    }
+                            />
+                        </View>
                         <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
                         <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
                         <View style={HomeTheme.sliderContainer1}>
@@ -414,7 +426,7 @@ export default class Root extends React.Component {
                             <Slider
                                 style={HomeTheme.slider}
                                 step={1}
-                                minimumValue={1}
+                                minimumValue={2}
                                 maximumValue={10}
                                 value={this.state.volume}
                                 minimumTrackTintColor={'#000'}
