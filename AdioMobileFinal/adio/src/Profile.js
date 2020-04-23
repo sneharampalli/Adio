@@ -240,7 +240,7 @@ export default class Profile extends React.Component {
         } else {
             return (
                 <View style={{flex: 1}}>
-                    <ImageBackground source={require('../assets/background3Light.jpg')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
+                    <ImageBackground source={require('../assets/background3Light.jpg')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
                         <Avatar.Text color={"#fff"} style={ProfileTheme.avatar} size={70} label={this.state.initials} />
                         <View style={ProfileTheme.profileContainer}>
                             <Text style={ProfileTheme.text}>{this.state.name}</Text>
