@@ -309,6 +309,18 @@ export default class Root extends React.Component {
                         <Avatar containerStyle={HomeThemeDark.avatar} onPress={() =>
                             this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})
                         } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
+                        <Button
+                            style={HomeTheme.settings}
+                            onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}
+                            type="clear"
+                            icon={
+                                <Icon
+                                    name="gear"
+                                    size={40}
+                                    color="rgb(0,0,0)"
+                                />
+                            }
+                        />
                         <Text style={{textAlign: 'center', color: '#fff', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
                         <Text style={{textAlign: 'center', color: '#fff', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
                         <View style={HomeThemeDark.sliderContainer1}>
@@ -384,6 +396,18 @@ export default class Root extends React.Component {
                         <Avatar containerStyle={HomeTheme.avatar} onPress={() =>
                             this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})
                         } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
+                        <Button
+                                style={HomeTheme.settings}
+                                onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}
+                                type="clear"
+                                icon={
+                                    <Icon
+                                        name="gear"
+                                        size={40}
+                                        color="rgb(0,0,0)"
+                                    />
+                                }
+                        />
                         <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
                         <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
                         <View style={HomeTheme.sliderContainer1}>
@@ -438,7 +462,7 @@ export default class Root extends React.Component {
                                 }
                             />
                         </View>
-                        <TouchableOpacity style={HomeTheme.playButtonLabel} onPress={this.signOut}>
+                        <TouchableOpacity style={HomeTheme.playButtonLabel}>
                             <Text style={HomeTheme.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={HomeTheme.button} onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}>

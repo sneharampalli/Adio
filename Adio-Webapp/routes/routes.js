@@ -98,7 +98,7 @@ var getAccount = function (req, res) {
                 }
               }
             } 
-            res.render('account.ejs', {firstname: req.session.firstname, campaigns: campaigns});
+            res.render('account.ejs', {firstname: req.session.firstname, company: req.session.company, campaigns: campaigns});
         }
     });
   } else {
@@ -110,11 +110,12 @@ var getAccount = function (req, res) {
 var postCheckLogin = function (req, res) {
   var email = req.body.email;
   var password = req.body.password;
-  db.dbCheckLogin(email, password, function (success, name, err) {
+  db.dbCheckLogin(email, password, function (success, name, company, err) {
     if (success) {
       req.session.loginsuccess = true;
       req.session.email = email;
       req.session.firstname = name;
+      req.session.company = company;
     }
     res.send({
       err: success ? null : err,
