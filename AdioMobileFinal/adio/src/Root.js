@@ -12,6 +12,7 @@ import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import { Analytics } from 'aws-amplify';
 import HomeTheme from '../libs/HomeTheme';
+import HomeThemeDark from '../libs/HomeThemeDark';
 import { Avatar } from 'react-native-elements';
 
 Analytics.configure({ disabled: true })
@@ -305,22 +306,22 @@ export default class Root extends React.Component {
             return (
                 <View style={{flex: 1 }}>
                     <ImageBackground source={require('../assets/background2Dark.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
-                        <Avatar containerStyle={HomeTheme.avatar} onPress={() =>
+                        <Avatar containerStyle={HomeThemeDark.avatar} onPress={() =>
                             this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})
                         } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
-                        <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
-                        <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
-                        <View style={HomeTheme.sliderContainer1}>
-                            <Text style={HomeTheme.sliderLabel}>volume</Text>
+                        <Text style={{textAlign: 'center', color: '#fff', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
+                        <Text style={{textAlign: 'center', color: '#fff', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
+                        <View style={HomeThemeDark.sliderContainer1}>
+                            <Text style={HomeThemeDark.sliderLabel}>volume</Text>
                             <Slider
-                                style={HomeTheme.slider}
+                                style={HomeThemeDark.slider}
                                 step={1}
                                 minimumValue={1}
                                 maximumValue={10}
                                 value={this.state.volume}
-                                minimumTrackTintColor={'#000'}
-                                maximumTrackTintColor={'rgba(0,0,0,0.2)'}
-                                thumbTintColor={'#000'}
+                                minimumTrackTintColor={'#fff'}
+                                maximumTrackTintColor={'rgba(255,255,255,0.3)'}
+                                thumbTintColor={'#fff'}
                                 onValueChange={value => { this.setState({ volume: value });
                                         if (this.state.isLoaded) {
                                             this.state.soundObject.setVolumeAsync(value / 10.0); 
@@ -328,51 +329,51 @@ export default class Root extends React.Component {
                                     }
                                 }
                             />
-                            <Text style={HomeTheme.sliderValue}>{this.state.volume}</Text>
+                            <Text style={HomeThemeDark.sliderValue}>{this.state.volume}</Text>
                         </View>
-                        <Text style={HomeTheme.sliderDescription}>volume of ads</Text>
-                        <View style={HomeTheme.sliderContainer}>
-                            <Text style={HomeTheme.sliderLabel}>ad freq</Text>
+                        <Text style={HomeThemeDark.sliderDescription}>volume of ads</Text>
+                        <View style={HomeThemeDark.sliderContainer}>
+                            <Text style={HomeThemeDark.sliderLabel}>ad freq</Text>
                             <Slider
-                                style={HomeTheme.slider}
+                                style={HomeThemeDark.slider}
                                 step={1}
                                 minimumValue={1}
                                 maximumValue={8}
                                 value={this.state.adInterval}
-                                minimumTrackTintColor={'#000'}
-                                maximumTrackTintColor={'rgba(0,0,0,0.2)'}
-                                thumbTintColor={'#000'}
+                                minimumTrackTintColor={'#ffff'}
+                                maximumTrackTintColor={'rgba(255,255,255,0.3)'}
+                                thumbTintColor={'#ffff'}
                                 onValueChange={value => this.setState({ adInterval: value })}
                             />
-                            <Text style={HomeTheme.sliderValue}>{this.state.adInterval}</Text>
+                            <Text style={HomeThemeDark.sliderValue}>{this.state.adInterval}</Text>
                         </View>
-                        <Text style={HomeTheme.sliderDescription}>mins between ads</Text>
+                        <Text style={HomeThemeDark.sliderDescription}>mins between ads</Text>
                         
                         <View>
                             <Button
-                                style={HomeTheme.playButton}
+                                style={HomeThemeDark.playButton}
                                 onPress={this.startPlaying}
                                 type="clear"
                                 icon={
                                     <Icon
                                         name={this.state.sessionActive ? "pause-circle" : "play-circle"}
                                         size={170}
-                                        color="rgb(0,0,0)"
+                                        color="rgb(255,255,255)"
                                     />
                                 }
                             />
                         </View>
-                        <TouchableOpacity style={HomeTheme.playButtonLabel} onPress={this.signOut}>
-                            <Text style={HomeTheme.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
+                        <TouchableOpacity style={HomeThemeDark.playButtonLabel} onPress={this.signOut}>
+                            <Text style={HomeThemeDark.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={HomeTheme.button} onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}>
-                            <Text style={HomeTheme.buttonText}> more settings </Text>
+                        <TouchableOpacity style={HomeThemeDark.button} onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}>
+                            <Text style={HomeThemeDark.buttonText}> more settings </Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={HomeTheme.logoutButton} onPress={this.signOut}>
-                            <Text style={HomeTheme.logoutButtonText}> logout </Text>
+                        <TouchableOpacity style={HomeThemeDark.logoutButton} onPress={this.signOut}>
+                            <Text style={HomeThemeDark.logoutButtonText}> logout </Text>
                         </TouchableOpacity>
-                        <Image source={require('../assets/adio-white.png')} style={HomeTheme.logo}/>
+                        <Image source={require('../assets/adio-black.png')} style={HomeThemeDark.logo}/>
                     </ImageBackground>
                 </View >
             )

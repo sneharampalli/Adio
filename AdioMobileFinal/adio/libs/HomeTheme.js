@@ -10,7 +10,7 @@ export default StyleSheet.create({
 	avatar: {
 		position: "absolute",
 		right: 20,
-		top: 30,
+		top: 35,
 	}, 
 	button: {
 		position: "absolute",
@@ -28,7 +28,7 @@ export default StyleSheet.create({
 		fontWeight: '600'
     },
     playButton: {
-		marginTop: 70,
+		marginTop: 30,
     },
 	playButtonLabel: {
 		alignItems: 'center',
@@ -57,7 +57,7 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'center',
 		height: 40,
-		marginTop: 50,
+		marginTop: 60,
 		// backgroundColor: 'rgba(255,255,255,0.4)',
 	},
 	sliderLabel: {
