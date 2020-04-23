@@ -33,14 +33,13 @@ export default class Settings extends React.Component {
     toggleSwitch = (value) => {
         this.setState({darkModeEnabled: value})
         this.props.navigation.state.params.isDarkMode = value;
-        console.log('Switch 1 is: ' + value)
     }
 
     render() {
-        if (this.props.darkModeEnabled) {
+        if (this.props.navigation.state.params.isDarkMode) {
             return (
                 <View style={{flex: 1 }}>
-                    <ImageBackground source={require('../assets/background3.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
+                    <ImageBackground source={require('../assets/background3Dark.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
                         
                     <View style={SettingsTheme.sliderContainer1}>
                             <Text style={SettingsTheme.sliderLabel}>volume</Text>
@@ -90,8 +89,7 @@ export default class Settings extends React.Component {
                                 value={this.props.navigation.state.params.isDarkMode}
                             />
                         </View>
-                        
-                        <TouchableOpacity style={SettingsTheme.logoutButton} onPress={() => {this.state.useIncomingDarkMode = true; this.props.navigation.state.params.changeDarkMode(this.state.darkModeEnabled); this.props.navigation.goBack()}} >
+                        <TouchableOpacity style={SettingsTheme.logoutButton} onPress={() => {this.props.navigation.state.params.changeDarkMode(this.props.navigation.state.params.isDarkMode); this.props.navigation.goBack()}} >
                             <Text style={SettingsTheme.logoutButtonText}> back </Text>
                         </TouchableOpacity>
                         <Image source={require('../assets/adio-white.png')} style={SettingsTheme.logo}/>
@@ -101,7 +99,7 @@ export default class Settings extends React.Component {
         } else {
             return (
                 <View style={{flex: 1 }}>
-                    <ImageBackground source={require('../assets/background3.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
+                    <ImageBackground source={require('../assets/background3Light.jpg')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
                         
                     <View style={SettingsTheme.sliderContainer1}>
                             <Text style={SettingsTheme.sliderLabel}>volume</Text>
@@ -152,7 +150,7 @@ export default class Settings extends React.Component {
                             />
                         </View>
                         
-                        <TouchableOpacity style={SettingsTheme.logoutButton} onPress={() => {this.state.useIncomingDarkMode = true; this.props.navigation.state.params.changeDarkMode(this.state.darkModeEnabled); this.props.navigation.goBack()}} >
+                        <TouchableOpacity style={SettingsTheme.logoutButton} onPress={() => {this.state.useIncomingDarkMode = true; this.props.navigation.state.params.changeDarkMode(this.props.navigation.state.params.isDarkMode); this.props.navigation.goBack()}} >
                             <Text style={SettingsTheme.logoutButtonText}> back </Text>
                         </TouchableOpacity>
                         <Image source={require('../assets/adio-white.png')} style={SettingsTheme.logo}/>

@@ -306,7 +306,7 @@ export default class Root extends React.Component {
                 <View style={{flex: 1 }}>
                     <ImageBackground source={require('../assets/background2Dark.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
                         <Avatar containerStyle={HomeTheme.avatar} onPress={() =>
-                            this.props.navigation.navigate('Profile')
+                            this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})
                         } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
                         <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
                         <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
@@ -365,7 +365,7 @@ export default class Root extends React.Component {
                         <TouchableOpacity style={HomeTheme.playButtonLabel} onPress={this.signOut}>
                             <Text style={HomeTheme.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={HomeTheme.button} onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.darkModeEnabled})}>
+                        <TouchableOpacity style={HomeTheme.button} onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}>
                             <Text style={HomeTheme.buttonText}> more settings </Text>
                         </TouchableOpacity>
 
@@ -381,7 +381,7 @@ export default class Root extends React.Component {
                 <View style={{flex: 1 }}>
                     <ImageBackground source={require('../assets/background2Light.jpg')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
                         <Avatar containerStyle={HomeTheme.avatar} onPress={() =>
-                            this.props.navigation.navigate('Profile')
+                            this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})
                         } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
                         <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
                         <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
@@ -440,7 +440,7 @@ export default class Root extends React.Component {
                         <TouchableOpacity style={HomeTheme.playButtonLabel} onPress={this.signOut}>
                             <Text style={HomeTheme.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={HomeTheme.button} onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.props.darkModeEnabled})}>
+                        <TouchableOpacity style={HomeTheme.button} onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled})}>
                             <Text style={HomeTheme.buttonText}> more settings </Text>
                         </TouchableOpacity>
 

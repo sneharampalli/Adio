@@ -173,70 +173,134 @@ export default class Profile extends React.Component {
             data = this.state.weeklyData;
             map = this.state.weekMap;
         }
-        console.log(data);
-        console.log(map);
-        return (
-            <View style={{flex: 1}}>
-                <ImageBackground source={require('../assets/background3.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
-                    <Avatar size={80} containerStyle={ProfileTheme.avatar} onPress={() =>
-                                this.props.navigation.goBack()
-                            } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
-                    <View style={ProfileTheme.profileContainer}>
-                        <Text style={ProfileTheme.text}>{this.state.name}</Text>
-                        <Text style={ProfileTheme.text}>{this.state.email}</Text>
-                    </View>
-                    <View style={ProfileTheme.revenueRow}>
-                        <View style={ProfileTheme.bubble}>
-                            <Text style={ProfileTheme.revenueHeader}>Year-to-Date Revenue:</Text><Text style={ProfileTheme.revenueVal}>${this.state.yearRevenue}</Text>
+        if (this.props.navigation.state.params.isDarkMode) {
+            return (
+                <View style={{flex: 1}}>
+                    <ImageBackground source={require('../assets/background3Dark.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
+                        <Avatar size={80} containerStyle={ProfileTheme.avatar} onPress={() =>
+                                    this.props.navigation.goBack()
+                                } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
+                        <View style={ProfileTheme.profileContainer}>
+                            <Text style={ProfileTheme.text}>{this.state.name}</Text>
+                            <Text style={ProfileTheme.text}>{this.state.email}</Text>
                         </View>
-                        <View style={ProfileTheme.bubble}>
-                            <Text style={ProfileTheme.revenueHeader}>Month-to-Date Revenue:</Text><Text style={ProfileTheme.revenueVal}>${this.state.monthRevenue}</Text>
+                        <View style={ProfileTheme.revenueRow}>
+                            <View style={ProfileTheme.bubble}>
+                                <Text style={ProfileTheme.revenueHeader}>Year-to-Date Revenue:</Text><Text style={ProfileTheme.revenueVal}>${this.state.yearRevenue}</Text>
+                            </View>
+                            <View style={ProfileTheme.bubble}>
+                                <Text style={ProfileTheme.revenueHeader}>Month-to-Date Revenue:</Text><Text style={ProfileTheme.revenueVal}>${this.state.monthRevenue}</Text>
+                            </View>
                         </View>
-                    </View>
-                    <Text style={ProfileTheme.chartHeader}>Revenue History</Text>
-                    <LineChart
-                      data={{
-                          labels: map,
-                          datasets: [
-                            {
-                              data: data,
-                              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                              strokeWidth: 2 // optional
-                            }
-                          ]
-                        }}
-                      width={width}
-                      height={220}
-                      yAxisLabel="$"
-                      yAxisInterval={2}
-                      borderRadius={'1px'}
-                      chartConfig={chartConfigBlackBackground}
-                      style={ProfileTheme.chart}
-                    />
-                    <SwitchSelector
-                      initial={0}
-                      onPress={value => this.setState({ graphOption: value })}
-                      textColor={'rbga(255, 255, 255, 1)'}
-                      selectedColor={'rgba(255,255,255, 1)'}
-                      buttonColor={'rgba(0, 0, 0, 0.6)'}
-                      borderColor={'rgba(0, 0, 0, 0.8)'}
-                      backgroundColor={'rgba(255, 255, 255, 0.3)'}
-                      borderWidth={0.1}
-                      height={30}
-                      hasPadding={true}
-                      style={ProfileTheme.selector}
-                      options={[
-                        { label: "7D", value: "week" },
-                        { label: "30D", value: "month" },
-                        { label: "1Y", value: "year" }
-                      ]}
-                    />
-                    <TouchableOpacity style={ProfileTheme.logoutButton} onPress={() => this.props.navigation.navigate('Home')} >
-                        <Text style={ProfileTheme.logoutButtonText}> back </Text>
-                    </TouchableOpacity>
-                    <Image source={require('../assets/adio-white.png')} style={ProfileTheme.logo}/>
-                </ImageBackground>
-            </View >
-        );
+                        <Text style={ProfileTheme.chartHeader}>Revenue History</Text>
+                        <LineChart
+                        data={{
+                            labels: map,
+                            datasets: [
+                                {
+                                data: data,
+                                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                strokeWidth: 2 // optional
+                                }
+                            ]
+                            }}
+                        width={width}
+                        height={220}
+                        yAxisLabel="$"
+                        yAxisInterval={2}
+                        borderRadius={'1px'}
+                        chartConfig={chartConfigBlackBackground}
+                        style={ProfileTheme.chart}
+                        />
+                        <SwitchSelector
+                        initial={0}
+                        onPress={value => this.setState({ graphOption: value })}
+                        textColor={'rbga(255, 255, 255, 1)'}
+                        selectedColor={'rgba(255,255,255, 1)'}
+                        buttonColor={'rgba(0, 0, 0, 0.6)'}
+                        borderColor={'rgba(0, 0, 0, 0.8)'}
+                        backgroundColor={'rgba(255, 255, 255, 0.3)'}
+                        borderWidth={0.1}
+                        height={30}
+                        hasPadding={true}
+                        style={ProfileTheme.selector}
+                        options={[
+                            { label: "7D", value: "week" },
+                            { label: "30D", value: "month" },
+                            { label: "1Y", value: "year" }
+                        ]}
+                        />
+                        <TouchableOpacity style={ProfileTheme.logoutButton} onPress={() => this.props.navigation.navigate('Home')} >
+                            <Text style={ProfileTheme.logoutButtonText}> back </Text>
+                        </TouchableOpacity>
+                        <Image source={require('../assets/adio-white.png')} style={ProfileTheme.logo}/>
+                    </ImageBackground>
+                </View >
+            );
+        } else {
+            return (
+                <View style={{flex: 1}}>
+                    <ImageBackground source={require('../assets/background3Light.jpg')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
+                        <Avatar size={80} containerStyle={ProfileTheme.avatar} onPress={() =>
+                                    this.props.navigation.goBack()
+                                } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
+                        <View style={ProfileTheme.profileContainer}>
+                            <Text style={ProfileTheme.text}>{this.state.name}</Text>
+                            <Text style={ProfileTheme.text}>{this.state.email}</Text>
+                        </View>
+                        <View style={ProfileTheme.revenueRow}>
+                            <View style={ProfileTheme.bubble}>
+                                <Text style={ProfileTheme.revenueHeader}>Year-to-Date Revenue:</Text><Text style={ProfileTheme.revenueVal}>${this.state.yearRevenue}</Text>
+                            </View>
+                            <View style={ProfileTheme.bubble}>
+                                <Text style={ProfileTheme.revenueHeader}>Month-to-Date Revenue:</Text><Text style={ProfileTheme.revenueVal}>${this.state.monthRevenue}</Text>
+                            </View>
+                        </View>
+                        <Text style={ProfileTheme.chartHeader}>Revenue History</Text>
+                        <LineChart
+                        data={{
+                            labels: map,
+                            datasets: [
+                                {
+                                data: data,
+                                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                strokeWidth: 2 // optional
+                                }
+                            ]
+                            }}
+                        width={width}
+                        height={220}
+                        yAxisLabel="$"
+                        yAxisInterval={2}
+                        borderRadius={'1px'}
+                        chartConfig={chartConfigBlackBackground}
+                        style={ProfileTheme.chart}
+                        />
+                        <SwitchSelector
+                        initial={0}
+                        onPress={value => this.setState({ graphOption: value })}
+                        textColor={'rbga(255, 255, 255, 1)'}
+                        selectedColor={'rgba(255,255,255, 1)'}
+                        buttonColor={'rgba(0, 0, 0, 0.6)'}
+                        borderColor={'rgba(0, 0, 0, 0.8)'}
+                        backgroundColor={'rgba(255, 255, 255, 0.3)'}
+                        borderWidth={0.1}
+                        height={30}
+                        hasPadding={true}
+                        style={ProfileTheme.selector}
+                        options={[
+                            { label: "7D", value: "week" },
+                            { label: "30D", value: "month" },
+                            { label: "1Y", value: "year" }
+                        ]}
+                        />
+                        <TouchableOpacity style={ProfileTheme.logoutButton} onPress={() => this.props.navigation.navigate('Home')} >
+                            <Text style={ProfileTheme.logoutButtonText}> back </Text>
+                        </TouchableOpacity>
+                        <Image source={require('../assets/adio-white.png')} style={ProfileTheme.logo}/>
+                    </ImageBackground>
+                </View >
+            );
+        }
     }
 }

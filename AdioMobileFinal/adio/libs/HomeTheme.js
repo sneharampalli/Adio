@@ -13,18 +13,17 @@ export default StyleSheet.create({
 		top: 30,
 	}, 
 	button: {
-		backgroundColor: 'rgba(255,255,255,0.4)',
+		position: "absolute",
+		bottom:15,
 		alignItems: 'center',
 		alignSelf: 'center',
-		marginTop: 120,
 		width: 120,
 		height: 40,
 		justifyContent: "center",
 		borderRadius: 6
-		// borderWidth: 1
 	},
 	buttonText: {
-		color: '#000',
+		color: '#fff',
 		fontSize: 17,
 		fontWeight: '600'
     },
