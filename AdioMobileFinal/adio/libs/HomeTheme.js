@@ -12,6 +12,11 @@ export default StyleSheet.create({
 		right: 20,
 		top: 30,
 	}, 
+	settings: {
+		position: "absolute",
+		right: 10,
+		top: 70
+	}, 
 	button: {
 		position: "absolute",
 		bottom:15,
