@@ -8,7 +8,7 @@ import { Analytics } from 'aws-amplify';
 import ProfileTheme from '../libs/ProfileTheme.js';
 import { Avatar } from 'react-native-elements';
 import { Dimensions } from "react-native";
-import { LineChart } from "react-native-chart-kit";
+import { BarChart } from "react-native-chart-kit";
 import * as queries from "./graphql/queries";
 import SwitchSelector from "react-native-switch-selector";
 
@@ -110,9 +110,14 @@ export default class Profile extends React.Component {
             }
         }
 
+        var finalMonthMap = [];
+        for (var i = 0; i < 30; i+=3) {
+            finalMonthMap.push(monthMap[i]);
+        }
+
         this.setState({yearlyData: yearlyData, yearMap: yearMap,
             weeklyData: weeklyData, weekMap: weekMap,
-            monthMap: monthMap, monthlyData: monthlyData });
+            monthMap: finalMonthMap, monthlyData: monthlyData });
 
     }
 
@@ -162,7 +167,7 @@ export default class Profile extends React.Component {
                         { label: "7 days", value: "week" }
                       ]}
                     />
-                    <LineChart
+                    <BarChart
                       data={{
                           labels: map,
                           datasets: [
@@ -175,6 +180,8 @@ export default class Profile extends React.Component {
                         }}
                       width={width}
                       height={220}
+                      yAxisLabel="$"
+                      yAxisInterval={2}
                       chartConfig={chartConfig}
                     />
                     <TouchableOpacity style={ProfileTheme.logoutButton} onPress={() => this.props.navigation.navigate('Home')} >

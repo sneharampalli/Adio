@@ -239,7 +239,7 @@ export default class Root extends React.Component {
         }
         
         let location = await Location.getCurrentPositionAsync({});
-        this.setState({ currLat: 0, currLong: 100 }); // TODO: REPLACE WITH BELOW LINE
+        this.setState({ currLat: 39.952586, currLong: -75.165219 }); // TODO: REPLACE WITH BELOW LINE
         // this.setState({ currLat: location.coords.latitude, currLong: location.coords.longitude });
         console.log("Current location is " + this.state.currLat + " " + this.state.currLong);
     };
