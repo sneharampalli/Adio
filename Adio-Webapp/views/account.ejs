@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,26 +62,69 @@
     var mapName = rectangle.name;
     var ne = rectangle.getBounds().getNorthEast();
     var sw = rectangle.getBounds().getSouthWest();
+    console.log(sw.lng() + ' ' + sw.lat())
+    console.log(document.getElementsByName("minLng-" + mapName)[0])
     document.getElementsByName("maxLng-" + mapName)[0].setAttribute("value", ne.lng())
     document.getElementsByName("minLng-" + mapName)[0].setAttribute("value", sw.lng())
     document.getElementsByName("maxLat-" + mapName)[0].setAttribute("value", ne.lat())
     document.getElementsByName("minLat-" + mapName)[0].setAttribute("value", sw.lat())
+    // map.fitBounds(rectangle.getBounds());
   }
 
-  function updateMaxLong(event) {
-    console.log(rectangle.getBounds())
+  function updateMaxLong(input) {
+    var ne = rectangle.getBounds().getNorthEast();
+    var sw = rectangle.getBounds().getSouthWest();
+    var difLng = (ne.lng() - sw.lng()) / 2.0
+    var difLat = (parseFloat(input.value) - sw.lat()) / 2.0
+    var NE = new google.maps.LatLng(parseFloat(input.value), ne.lng());
+    var SW = new google.maps.LatLng(sw.lat(), sw.lng());
+    var newRect = new google.maps.LatLngBounds(SW,NE);
+    rectangle.setBounds(newRect);    
+    rectangle.addListener('bounds_changed', updateLongLat);
+    map.fitBounds(newRect);
+    map.setCenter(new google.maps.LatLng(parseFloat(input.value) - difLat, ne.lng() - difLng));
   }
 
-  function updateMinLong(event) {
-    
+  function updateMinLong(input) {
+    var ne = rectangle.getBounds().getNorthEast();
+    var sw = rectangle.getBounds().getSouthWest();
+    var difLng = (ne.lng() - parseFloat(input.value)) / 2.0
+    var difLat = (ne.lat() - sw.lat()) / 2.0
+    var NE = new google.maps.LatLng(ne.lat(), ne.lng());
+    var SW = new google.maps.LatLng(sw.lat(), parseFloat(input.value));
+    var newRect = new google.maps.LatLngBounds(SW,NE);
+    rectangle.setBounds(newRect);
+    rectangle.addListener('bounds_changed', updateLongLat);
+    map.fitBounds(newRect);
+    map.setCenter(new google.maps.LatLng(ne.lat() - difLat, ne.lng() - difLng));
   }
 
-  function updateMaxLat(event) {
-    
+  function updateMaxLat(input) {
+    var ne = rectangle.getBounds().getNorthEast();
+    var sw = rectangle.getBounds().getSouthWest();
+    var difLng = (ne.lng() - sw.lng()) / 2.0
+    var difLat = (parseFloat(input.value) - sw.lat()) / 2.0
+    var NE = new google.maps.LatLng(parseFloat(input.value), ne.lng());
+    var SW = new google.maps.LatLng(sw.lat(), sw.lng());
+    var newRect = new google.maps.LatLngBounds(SW,NE);
+    rectangle.setBounds(newRect);
+    rectangle.addListener('bounds_changed', updateLongLat);
+    map.fitBounds(newRect);
+    map.setCenter(new google.maps.LatLng(parseFloat(input.value) - difLat, ne.lng() - difLng));
   }
 
-  function updateMinLat(event) {
-    
+  function updateMinLat(input) {
+    var ne = rectangle.getBounds().getNorthEast();
+    var sw = rectangle.getBounds().getSouthWest();
+    var difLng = (ne.lng() - sw.lng()) / 2.0
+    var difLat = (ne.lat() - parseFloat(input.value)) / 2.0
+    var NE = new google.maps.LatLng(ne.lat(), ne.lng());
+    var SW = new google.maps.LatLng(parseFloat(input.value), sw.lng());
+    var newRect = new google.maps.LatLngBounds(SW,NE);
+    rectangle.setBounds(newRect);
+    rectangle.addListener('bounds_changed', updateLongLat);
+    map.fitBounds(newRect);
+    map.setCenter(new google.maps.LatLng(ne.lat() - difLat, ne.lng() - difLng));
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -87,31 +132,9 @@
       if (document.forms[i].name == "deleteAudio") {
         document.forms[i].addEventListener('submit', deleteAudio);
       } else if (document.forms[i].name == "editCampaign") {
-        document.forms[i].addEventListener('submit', function(e) {
-          e.preventDefault();
-          const formData = new FormData(document.getElementById(e.target.id));
-          const keys = [];
-          const campaignData = JSON.parse(e.target.elements[7].value);
-          for (i = 0; i < campaignData.length; i++) {
-            keys.push(campaignData[i].currKey);
-          }
-          formData.append('campaignData', keys);
-          $.ajax({
-            url: "/editCampaign",
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-              window.location = response.redirectUrl;
-            },
-            error: function(errResponse) {
-                console.log(errResponse);
-            }
-          });
-        });
-      }
-    }    
+        document.forms[i].addEventListener('submit', editCampaign);
+      }  
+    }  
   });
 
   var deleteAudio = function (e) {
@@ -124,13 +147,37 @@
         'file': e.target.elements[0].value
       },
       success: function (data) {
-        window.location = data.redirectUrl;
+        window.location.href = data.redirectUrl;
       }
     });
   };
 
   var editCampaign = function (e) {
-        
+    e.preventDefault();
+    $('#submit-changes-btn').hide();
+    $('#spinner').show();
+    const formData = new FormData(document.getElementById(e.target.id));
+    const keys = [];
+    const campaignData = JSON.parse(e.target.elements[7].value);
+    for (i = 0; i < campaignData.length; i++) {
+      keys.push(campaignData[i].currKey);
+    }
+    formData.append('campaignData', keys);
+    $.ajax({
+      url: "/editCampaign",
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+          window.location.href = data.redirectUrl;
+      },
+      error: function(errResponse) {
+          console.log(errResponse);
+          $('#submit-changes-btn').show();
+          $('#spinner').hide();
+      }
+    });
   };
 </script>
 
@@ -174,35 +221,38 @@
                   <div class="col-xs-5" style="margin: 0px;">
                     <div class="modal-body">
                         <p style="font-size: 15px;">You can edit existing information about your campaign or add new ads! Please only change desired fields.</p>
-                        <p style="font-size: 15px;">Edit your campaign's geographic reach using the box on the map</p>
+                        <p style="font-size: 15px;">Edit your campaign's geographic reach using the box on the map.</p>
                         <form class="signup" enctype="multipart/form-data" name="editCampaign" id="editCampaign<%=modalCount%>" type="submit">
                         <input type="text" required id="campaign-name" class="fadeIn third" name="campaign-name" placeholder="Campaign Name"
                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Campaign Name'" value="<%= campaigns[key][0].campaignName %>">
                         <div id="name-wrapper">
                           <div id="error-fn">
                             <input type="number" step="any" required id="min-latitude" class="fadeIn second" name="minLat-<%= num %>" placeholder="Min. Latitude"
-                            min="-90" max="90"  onchange="updateMaxLong()" value=<%= campaigns[key][0].minLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'">
+                            min="-90" max="90"  onchange="updateMinLat(this)" value=<%= campaigns[key][0].minLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Latitude'">
                           </div>
                           <div id="error-ln">
                             <input type="number" step="any" required id="min-longitude" class="fadeIn second" name="minLng-<%= num %>" placeholder="Min. Longitude"
-                            min="-180" max="180" value=<%= campaigns[key][0].minLng %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Longitude'">
+                            min="-180" max="180" onchange="updateMinLong(this)" value=<%= campaigns[key][0].minLng %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min. Longitude'">
                           </div>
                         </div>
                         <div id="name-wrapper">
                           <div id="error-fn">
                             <input type="number" step="any" required id="max-latitude" class="fadeIn second" name="maxLat-<%= num %>" placeholder="Max. Latitude"
-                            min="-90" max="90" value=<%= campaigns[key][0].maxLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Latitude'">
+                            min="-90" max="90" onchange="updateMaxLat(this)" value=<%= campaigns[key][0].maxLat %> onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max. Latitude'">
                           </div>
                           <div id="error-ln">
                             <input type="number" step="any" required id="max-longitude" class="fadeIn second" name="maxLng-<%= num %>" placeholder="Max. Longitude"
-                            min="-180" max="180" onfocus="this.placeholder = ''" value=<%= campaigns[key][0].maxLng %> onblur="this.placeholder = 'Max. Longitude'">
+                            min="-180" max="180" onchange="updateMaxLong(this)" onfocus="this.placeholder = ''" value=<%= campaigns[key][0].maxLng %> onblur="this.placeholder = 'Max. Longitude'">
                           </div>
                         </div>
                           <input type="text" required id="description" class="fadeIn third"  style="height: 50px" name="description" placeholder="Description of Ad"
                           maxlength="100" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description of Ad'" value="<%= campaigns[key][0].description %>">
                           <!-- <input type="file" name="ad" multiple /> -->
                           <input type="file" style="margin: 5px 0px; font-size: 13px;" name="ad" multiple id="ad"/>
-                          <button type="submit" class="btn btn-dark" name="editButton" data-toggle="modal"
+                          <div id="spinner" style="display: none;" class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                          <button id="submit-changes-btn" type="submit" class="btn btn-dark" name="editButton" data-toggle="modal"
                           value="<%= JSON.stringify(campaigns[key]) %>">Submit changes</button>
                         </form>
                     </div>

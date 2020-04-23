@@ -46,7 +46,7 @@ app.use(upload.array());
 app.post('/audio', upload.array('ad', 5), function (req, res, next) {
   if (req.files) {
     console.log('Successfully uploaded ad to s3!');
-    console.log(Date.now());
+    
     for (i = 0; i < req.files.length; i++) {
       var params = {
         Item: {
@@ -54,10 +54,10 @@ app.post('/audio', upload.array('ad', 5), function (req, res, next) {
           'campaignName': req.body.campaignName,
           'adName': req.files[i].originalname,
           'email': req.session.email,
-          'maxLat': Number(req.body.maxLat),
-          'maxLng': Number(req.body.maxLng),
-          'minLat': Number(req.body.minLat),
-          'minLng': Number(req.body.minLng),
+          'maxLat': Number.parseFloat(req.body.maxLat),
+          'maxLng': Number.parseFloat(req.body.maxLng),
+          'minLat': Number.parseFloat(req.body.minLat),
+          'minLng': Number.parseFloat(req.body.minLng),
           'description': req.body.description,
           'numImpressions': '0',
           'file': {'bucket': req.files[i].bucket, 'key': req.files[i].key, 'region': 'us-east-1' }
@@ -73,6 +73,7 @@ app.post('/audio', upload.array('ad', 5), function (req, res, next) {
         } 
       });
     }
+    res.send({redirectUrl: '/account'});
   } else {
     console.log('Error!');
   }  
@@ -83,17 +84,24 @@ app.post('/editCampaign', upload.array('ad', 5), function (req, res) {
   console.log(req.files);
   if (req.files) {
     console.log('Successfully uploaded ad to s3!');
+    console.log(req.body);
+    const campaignName = req.body['campaign-name'];
+    const maxLat = req.body['maxLat-'.concat(campaignName.replace(/\s+/g, ''))];
+    const maxLng = req.body['maxLng-'.concat(campaignName.replace(/\s+/g, ''))];
+    const minLat = req.body['minLat-'.concat(campaignName.replace(/\s+/g, ''))];
+    const minLng = req.body['minLng-'.concat(campaignName.replace(/\s+/g, ''))];
+
     for (i = 0; i < req.files.length; i++) {
       var params = {
         Item: {
           'uniqueID': req.files[i].key,
-          'campaignName': req.body['campaign-name'],
+          'campaignName': campaignName,
           'adName': req.files[i].originalname,
           'email': req.session.email,
-          'maxLat': Number(req.body.maxLat),
-          'maxLng': Number(req.body.maxLng),
-          'minLat': Number(req.body.minLat),
-          'minLng': Number(req.body.minLng),
+          'maxLat': Number.parseFloat(maxLat),
+          'maxLng': Number.parseFloat(maxLng),
+          'minLat': Number.parseFloat(minLat),
+          'minLng': Number.parseFloat(minLng),
           'description': req.body.description,
           'numImpressions': '0',
           'file': {'bucket': req.files[i].bucket, 'key': req.files[i].key, 'region': 'us-east-1'} 
@@ -120,11 +128,11 @@ app.post('/editCampaign', upload.array('ad', 5), function (req, res) {
         },
         UpdateExpression: "set campaignName =:campaignName, maxLat =:maxLat, maxLng =:maxLng, minLat =:minLat, minLng =:minLng, description =:description",
         ExpressionAttributeValues:{
-            ":campaignName": req.body['campaign-name'],
-            ":maxLat" : Number(req.body.maxLat),
-            ":maxLng": Number(req.body.maxLng),
-            ":minLat": Number(req.body.minLat),
-            ":minLng": Number(req.body.minLng),
+            ":campaignName": campaignName,
+            ":maxLat" : Number.parseFloat(maxLat),
+            ":maxLng": Number.parseFloat(maxLng),
+            ":minLat": Number.parseFloat(minLat),
+            ":minLng": Number.parseFloat(minLng),
             ":description": req.body.description
         },
         ReturnValues: "UPDATED_OLD"
@@ -135,10 +143,10 @@ app.post('/editCampaign', upload.array('ad', 5), function (req, res) {
         } else {
           console.log('Successfully updated dynamodb!')
           console.log(data);
-          res.send({redirectUrl: "/account"});
         } 
       });
     }
+    res.send({redirectUrl: "/account"});
   } else {
     console.log(req.body);
   }
