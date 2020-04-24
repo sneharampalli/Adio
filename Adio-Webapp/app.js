@@ -153,5 +153,6 @@ app.post('/editCampaign', upload.array('ad', 5), function (req, res) {
   
 });
 
-http.listen(8080);
-console.log('Server running on port 8080.');
+http.listen(process.env.PORT);
+// http.listen(8080);
+// console.log('Server running on port 8080.');

@@ -194,7 +194,7 @@
       <!-- Add Audio Button -->
 
       <h1>Hey, <%= firstname %>!</h1>
-      <h2>Here are all of your campaigns for <%= company %>.</h2>
+      <h2>Here are all of your campaigns for <b><%= company %></b>.</h2>
       <h2 class="play">You can edit, delete, and view stats for each of your ad campaigns.</h2>
   </div>
 
@@ -272,7 +272,7 @@
                 <div class="card-block">
                     <h4 class="card-title"><%= campaigns[key][i].adName %></h4>
                     <p class="card-text">Number of impressions: <%= Number(campaigns[key][i].numImpressions) %></p>
-                    <p class="card-text">Cost of impressions: <%= (40 * Number(campaigns[key][i].numImpressions)) / 1000 %></p>
+                    <p class="card-text">Cost of impressions: $<%= (40 * Number(campaigns[key][i].numImpressions)) / 1000 %></p>
                     
                     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#deleteModal<%= count %>">
                       Delete Ad
