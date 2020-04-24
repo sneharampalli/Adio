@@ -271,7 +271,8 @@
             <div class="card" style="width: 20rem">
                 <div class="card-block">
                     <h4 class="card-title"><%= campaigns[key][i].adName %></h4>
-                    <p class="card-text">Number of impressions: <%= campaigns[key][i].numImpressions %></p>
+                    <p class="card-text">Number of impressions: <%= Number(campaigns[key][i].numImpressions) %></p>
+                    <p class="card-text">Cost of impressions: <%= (40 * Number(campaigns[key][i].numImpressions)) / 1000 %></p>
                     
                     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#deleteModal<%= count %>">
                       Delete Ad
