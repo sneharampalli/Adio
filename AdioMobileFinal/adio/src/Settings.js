@@ -70,7 +70,7 @@ export default class Settings extends React.Component {
                                 thumbTintColor={'#fff'}
                                 onValueChange={this.changeVolume}
                             />
-                            <Text style={SettingsTheme.sliderValue}>{this.props.navigation.state.params.volume}</Text>
+                            <Text style={SettingsThemeDark.sliderValue}>{this.props.navigation.state.params.volume}</Text>
                         </View>
                         <Text style={SettingsThemeDark.sliderDescription}>volume of ads</Text>
                         <View style={SettingsThemeDark.sliderContainer}>
@@ -86,7 +86,7 @@ export default class Settings extends React.Component {
                                 thumbTintColor={'#fff'}
                                 onValueChange={this.changeFreq}
                             />
-                            <Text style={SettingsTheme.sliderValue}>{this.props.navigation.state.params.adInterval}</Text>
+                            <Text style={SettingsThemeDark.sliderValue}>{this.props.navigation.state.params.adInterval}</Text>
                         </View>
                         <Text style={SettingsThemeDark.sliderDescription}>mins between ads</Text>
                         <TouchableOpacity style={SettingsThemeDark.logoutButton} onPress={() => {this.state.useIncomingDarkMode = true;
