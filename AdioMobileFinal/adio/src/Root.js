@@ -12,7 +12,8 @@ import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import { Analytics } from 'aws-amplify';
 import HomeTheme from '../libs/HomeTheme';
-import { Avatar } from 'react-native-elements';
+import HomeThemeDark from '../libs/HomeThemeDark';
+import { Avatar } from 'react-native-paper';
 
 Analytics.configure({ disabled: true })
 
@@ -41,7 +42,8 @@ export default class Root extends React.Component {
                 day: today.getDate(),
                 year: today.getFullYear()
             },
-            numImpressions: 0
+            numImpressions: 0,
+            darkModeEnabled: false,
         }
     }
 
@@ -152,7 +154,7 @@ export default class Root extends React.Component {
         }
         if (!this.state.sessionActive) {
             this.setState({ sessionActive: true });
-            timer.setInterval("ads", this.playAd, this.state.adInterval * 1000);
+            timer.setInterval("ads", this.playAd, this.state.adInterval * 60000);
         } else {
             this.setState({sessionActive: false});
             if (this.state.isPlaying) {
@@ -239,8 +241,7 @@ export default class Root extends React.Component {
         }
         
         let location = await Location.getCurrentPositionAsync({});
-        this.setState({ currLat: 39.952586, currLong: -75.165219 }); // TODO: REPLACE WITH BELOW LINE
-        // this.setState({ currLat: location.coords.latitude, currLong: location.coords.longitude });
+        this.setState({ currLat: location.coords.latitude, currLong: location.coords.longitude });
         console.log("Current location is " + this.state.currLat + " " + this.state.currLong);
     };
 
@@ -271,6 +272,18 @@ export default class Root extends React.Component {
         }
     }
 
+    changeDarkMode(darkMode) {
+        this.setState({darkModeEnabled: darkMode});
+    }
+
+    changeVolume(value) {
+        this.setState({volume: value});
+    }
+
+    changeFreq(value) {
+        this.setState({adInterval: value});
+    }
+
     addImpression = async () => {
         try {
             const ad = {
@@ -295,86 +308,175 @@ export default class Root extends React.Component {
             console.error(err);
         }
     }
-
     render() {
-        // const navigation = useNavigation();
-        return (
-            <View style={{flex: 1 }}>
-                <ImageBackground source={require('../assets/background2.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.85}}>
-                    <Avatar containerStyle={HomeTheme.avatar} onPress={() =>
-                            this.props.navigation.navigate('Profile')
-                        } overlayContainerStyle={{backgroundColor: 'rgba(50,50,50,0.9)'}} rounded title={this.state.initials} />
-                    <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
-                    <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
-                    <View style={HomeTheme.sliderContainer1}>
-                        <Text style={HomeTheme.sliderLabel}>volume</Text>
-                        <Slider
-                            style={HomeTheme.volumeSlider}
-                            step={1}
-                            minimumValue={1}
-                            maximumValue={10}
-                            value={this.state.volume}
-                            minimumTrackTintColor={'#000'}
-                            maximumTrackTintColor={'rgba(0,0,0,0.2)'}
-                            thumbTintColor={'#000'}
-                            onValueChange={value => { this.setState({ volume: value });
-                                    if (this.state.isLoaded) {
-                                        this.state.soundObject.setVolumeAsync(value / 10.0); 
-                                    }
-                                }
-                            }
-                        />
-                        <Text style={HomeTheme.sliderValue}>{this.state.volume}</Text>
-                    </View>
-                    <Text style={HomeTheme.sliderDescription}>volume of ads</Text>
-                    <View style={HomeTheme.sliderContainer}>
-                        <Text style={HomeTheme.sliderLabel}>ad freq</Text>
-                        <Slider
-                            style={HomeTheme.volumeSlider}
-                            step={1}
-                            minimumValue={1}
-                            maximumValue={8}
-                            value={this.state.adInterval}
-                            minimumTrackTintColor={'#000'}
-                            maximumTrackTintColor={'rgba(0,0,0,0.2)'}
-                            thumbTintColor={'#000'}
-                            onValueChange={value => this.setState({ adInterval: value })}
-                        />
-                        <Text style={HomeTheme.sliderValue}>{this.state.adInterval}</Text>
-                    </View>
-                    <Text style={HomeTheme.sliderDescription}>mins between ads</Text>
-                    
-                    <View>
+        if (this.state.darkModeEnabled) {
+            return (
+                <View style={{flex: 1 }}>
+                    <ImageBackground source={require('../assets/background2Dark.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
+                        <TouchableOpacity style={HomeThemeDark.avatarContainer} onPress={() => this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})} >
+                            <Avatar.Text color={'#000'} style={HomeThemeDark.avatar} size={30} label={this.state.initials} />
+                        </TouchableOpacity>
                         <Button
-                            style={HomeTheme.playButton}
-                            onPress={this.startPlaying}
+                            style={HomeThemeDark.settings}
+                            onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled,
+                                changeVolume: this.changeVolume.bind(this), volume: this.state.volume,
+                                changeFreq: this.changeFreq.bind(this), adInterval: this.state.adInterval })}
                             type="clear"
                             icon={
                                 <Icon
-                                    name={this.state.sessionActive ? "pause-circle" : "play-circle"}
-                                    size={170}
-                                    color="rgb(0,0,0)"
+                                    name="gear"
+                                    size={30}
+                                    color="rgb(255,255,255)"
                                 />
                             }
                         />
-                    </View>
-                    <TouchableOpacity style={HomeTheme.playButtonLabel} onPress={this.signOut}>
-                        <Text style={HomeTheme.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
-                    </TouchableOpacity>
-                    
-                    <TouchableOpacity style={HomeTheme.button1} onPress={this.signOut}>
-                        <Text style={HomeTheme.buttonText}> dashboard </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={HomeTheme.button} onPress={this.props.navigation.navigate('Dashboard')}>
-                        <Text style={HomeTheme.buttonText}> more settings </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={HomeTheme.logoutButton} onPress={this.signOut}>
-                        <Text style={HomeTheme.logoutButtonText}> logout </Text>
-                    </TouchableOpacity>
-                    <Image source={require('../assets/adio-white.png')} style={HomeTheme.logo}/>
-                </ImageBackground>
-            </View >
-        )
+                        <Text style={{textAlign: 'center', color: '#fff', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
+                        <Text style={{textAlign: 'center', color: '#fff', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
+                        <View style={HomeThemeDark.sliderContainer1}>
+                            <Text style={HomeThemeDark.sliderLabel}>volume</Text>
+                            <Slider
+                                style={HomeThemeDark.slider}
+                                step={1}
+                                minimumValue={2}
+                                maximumValue={10}
+                                value={this.state.volume}
+                                minimumTrackTintColor={'#fff'}
+                                maximumTrackTintColor={'rgba(255,255,255,0.3)'}
+                                thumbTintColor={'#fff'}
+                                onValueChange={value => { this.setState({ volume: value });
+                                        if (this.state.isLoaded) {
+                                            this.state.soundObject.setVolumeAsync(value / 10.0); 
+                                        }
+                                    }
+                                }
+                            />
+                            <Text style={HomeThemeDark.sliderValue}>{this.state.volume}</Text>
+                        </View>
+                        <Text style={HomeThemeDark.sliderDescription}>volume of ads</Text>
+                        <View style={HomeThemeDark.sliderContainer}>
+                            <Text style={HomeThemeDark.sliderLabel}>ad freq</Text>
+                            <Slider
+                                style={HomeThemeDark.slider}
+                                step={1}
+                                minimumValue={1}
+                                maximumValue={8}
+                                value={this.state.adInterval}
+                                minimumTrackTintColor={'#ffff'}
+                                maximumTrackTintColor={'rgba(255,255,255,0.3)'}
+                                thumbTintColor={'#ffff'}
+                                onValueChange={value => this.setState({ adInterval: value })}
+                            />
+                            <Text style={HomeThemeDark.sliderValue}>{this.state.adInterval}</Text>
+                        </View>
+                        <Text style={HomeThemeDark.sliderDescription}>mins between ads</Text>
+                        
+                        <View>
+                            <Button
+                                style={HomeThemeDark.playButton}
+                                onPress={this.startPlaying}
+                                type="clear"
+                                icon={
+                                    <Icon
+                                        name={this.state.sessionActive ? "pause-circle" : "play-circle"}
+                                        size={170}
+                                        color="rgb(255,255,255)"
+                                    />
+                                }
+                            />
+                        </View>
+                        <TouchableOpacity style={HomeThemeDark.playButtonLabel} onPress={this.signOut}>
+                            <Text style={HomeThemeDark.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={HomeThemeDark.logoutButton} onPress={this.signOut}>
+                            <Text style={HomeThemeDark.logoutButtonText}> logout </Text>
+                        </TouchableOpacity>
+                        <Image source={require('../assets/adio-black.png')} style={HomeThemeDark.logo}/>
+                    </ImageBackground>
+                </View >
+            )
+        } else {
+            return (
+                <View style={{flex: 1 }}>
+                    <ImageBackground source={require('../assets/background2Light.jpg')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
+                        <TouchableOpacity style={HomeTheme.avatarContainer} onPress={() => this.props.navigation.navigate('Profile', {isDarkMode: this.state.darkModeEnabled})} >
+                            <Avatar.Text color={'#fff'}  style={HomeTheme.avatar} size={30} label={this.state.initials} />
+                        </TouchableOpacity>
+                        <Button
+                                style={HomeTheme.settings}
+                                onPress={() => this.props.navigation.navigate('Settings', {changeDarkMode: this.changeDarkMode.bind(this), isDarkMode: this.state.darkModeEnabled, changeVolume: this.changeVolume.bind(this), volume: this.state.volume, changeFreq: this.changeFreq.bind(this), adInterval: this.state.adInterval })}
+                                type="clear"
+                                icon={
+                                    <Icon
+                                        name="gear"
+                                        size={30}
+                                        color="rgb(0,0,0)"
+                                    />
+                                }
+                        />
+                        <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 64, marginTop: 75}}>adio</Text>
+                        <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 20, marginTop: 0}}>audio ads for rideshare</Text>
+                        <View style={HomeTheme.sliderContainer1}>
+                            <Text style={HomeTheme.sliderLabel}>volume</Text>
+                            <Slider
+                                style={HomeTheme.slider}
+                                step={1}
+                                minimumValue={2}
+                                maximumValue={10}
+                                value={this.state.volume}
+                                minimumTrackTintColor={'#000'}
+                                maximumTrackTintColor={'rgba(0,0,0,0.2)'}
+                                thumbTintColor={'#000'}
+                                onValueChange={value => { this.setState({ volume: value });
+                                        if (this.state.isLoaded) {
+                                            this.state.soundObject.setVolumeAsync(value / 10.0); 
+                                        }
+                                    }
+                                }
+                            />
+                            <Text style={HomeTheme.sliderValue}>{this.state.volume}</Text>
+                        </View>
+                        <Text style={HomeTheme.sliderDescription}>volume of ads</Text>
+                        <View style={HomeTheme.sliderContainer}>
+                            <Text style={HomeTheme.sliderLabel}>ad freq</Text>
+                            <Slider
+                                style={HomeTheme.slider}
+                                step={1}
+                                minimumValue={1}
+                                maximumValue={8}
+                                value={this.state.adInterval}
+                                minimumTrackTintColor={'#000'}
+                                maximumTrackTintColor={'rgba(0,0,0,0.2)'}
+                                thumbTintColor={'#000'}
+                                onValueChange={value => this.setState({ adInterval: value })}
+                            />
+                            <Text style={HomeTheme.sliderValue}>{this.state.adInterval}</Text>
+                        </View>
+                        <Text style={HomeTheme.sliderDescription}>mins between ads</Text>
+                        
+                        <View>
+                            <Button
+                                style={HomeTheme.playButton}
+                                onPress={this.startPlaying}
+                                type="clear"
+                                icon={
+                                    <Icon
+                                        name={this.state.sessionActive ? "pause-circle" : "play-circle"}
+                                        size={170}
+                                        color="rgb(0,0,0)"
+                                    />
+                                }
+                            />
+                        </View>
+                        <TouchableOpacity style={HomeTheme.playButtonLabel}>
+                            <Text style={HomeTheme.playButtonLabelText}> {this.state.sessionActive ? "stop adio" : "start adio"} </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={HomeTheme.logoutButton} onPress={this.signOut}>
+                            <Text style={HomeTheme.logoutButtonText}> logout </Text>
+                        </TouchableOpacity>
+                        <Image source={require('../assets/adio-white.png')} style={HomeTheme.logo}/>
+                    </ImageBackground>
+                </View >
+            )
+        }
     }
 }

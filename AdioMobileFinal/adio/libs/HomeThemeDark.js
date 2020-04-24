@@ -15,8 +15,9 @@ export default StyleSheet.create({
 		top: 40,
 	},
 	avatar: {
-		backgroundColor: "#000",
-	}, 
+        backgroundColor: "#fff",
+        color: "#000"
+	},
 	settings: {
 		position: "absolute",
 		left: 5,
@@ -33,7 +34,7 @@ export default StyleSheet.create({
 		borderRadius: 6
 	},
 	buttonText: {
-		color: '#fff',
+		color: '#000',
 		fontSize: 17,
 		fontWeight: '600'
     },
@@ -49,7 +50,8 @@ export default StyleSheet.create({
 		marginTop: -10,
 	},
 	playButtonLabelText: {
-		fontSize: 24
+        fontSize: 24, 
+        color: "#fff",
 	},
     logo: {
         position: "absolute",
@@ -68,15 +70,16 @@ export default StyleSheet.create({
 		justifyContent: 'center',
 		height: 40,
 		marginTop: 60,
-		// backgroundColor: 'rgba(255,255,255,0.4)',
 	},
 	sliderLabel: {
 		alignSelf: 'center',
-		fontWeight: '500',
+        fontWeight: '500',
+        color: '#fff'
 	},
 	sliderValue: {
 		alignSelf: 'center',
-		fontWeight: '600',
+        fontWeight: '600',
+        color: '#fff',
 	},
 	slider: {
 		width: '40%',
@@ -87,7 +90,7 @@ export default StyleSheet.create({
 		marginBottom: 5,
 		marginTop: -5,
 		marginLeft: 15,
-		color: 'rgba(0,0,0,0.6)'
+		color: 'rgba(255,255,255,0.6)'
 	},
 	logoutButton: {
 		position: "absolute",
@@ -101,7 +104,7 @@ export default StyleSheet.create({
 		borderRadius: 4,
 	},
 	logoutButtonText: {
-		color: '#fff',
+		color: '#000',
 		fontSize: 16,
 		alignSelf: "center",
 		fontWeight: '600'

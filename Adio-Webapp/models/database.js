@@ -22,13 +22,13 @@ var dbCheckLogin = function (email, password, route_callback) {
     if (err) {
       route_callback(false, err);
     } else if (acc === null) {
-      route_callback(false, null, "Company does not exist");
+      route_callback(false, null, null, "Company does not exist");
     } else {
       hash = crypto.pbkdf2Sync(password, acc.get('salt'), 1000, 64, `sha512`).toString(`hex`);
       if (acc.get('hash') === hash) {
-        route_callback(true, acc.get('firstname'), null);
+        route_callback(true, acc.get('firstname'), acc.get('companyname'), null);
       } else {
-        route_callback(false, null, "Incorrect password");
+        route_callback(false, null, null, "Incorrect password");
       }
     }
   });
