@@ -47,7 +47,7 @@ export default class Settings extends React.Component {
                     <ImageBackground source={require('../assets/background3Dark.png')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
                         <Text style={{textAlign: 'center', color: '#fff', fontFamily: 'comfortaa', fontSize: 50, marginTop: 120}}>settings</Text>
                         <View style={SettingsThemeDark.darkModeContainer}>
-                            <Text style={SettingsThemeDark.darkModeLabel}>dark mode</Text>
+                            <Text style={SettingsThemeDark.darkModeLabel}>night mode</Text>
                             <Switch
                                 style={SettingsThemeDark.darkModeSwitch}
                                 trackColor={{ false: "#767577", true: "#fff" }}
@@ -106,7 +106,7 @@ export default class Settings extends React.Component {
                     <ImageBackground source={require('../assets/background3Light.jpg')} style={{flex: 1, width: '100%', height: '100%',}} imageStyle={{opacity:0.99}}>
                         <Text style={{textAlign: 'center', color: '#000', fontFamily: 'comfortaa', fontSize: 50, marginTop: 120}}>settings</Text>
                         <View style={SettingsTheme.darkModeContainer}>
-                            <Text style={SettingsTheme.darkModeLabel}>dark mode</Text>
+                            <Text style={SettingsTheme.darkModeLabel}>night mode</Text>
                             <Switch
                                 style={SettingsTheme.darkModeSwitch}
                                 trackColor={{ false: "#767577", true: "#000" }}
