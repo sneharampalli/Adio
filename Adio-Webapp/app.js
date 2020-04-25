@@ -36,7 +36,7 @@ const upload = multer({
     bucket: 'adio-1131216-adio',
     acl: 'public-read',
     key: function (req, file, cb) {
-      var path = req.session.email + '_' + Date.now() + '_' + file.originalname;
+      var path = req.session.email + '_' + req.body.campaignName + '_' + Date.now() + '_' + file.originalname;
       cb(null, path);
     }
   })
@@ -46,25 +46,48 @@ app.use(upload.array());
 app.post('/audio', upload.array('ad', 5), function (req, res, next) {
   if (req.files) {
     console.log('Successfully uploaded ad to s3!');
-    
     for (i = 0; i < req.files.length; i++) {
       var params = {
         Item: {
-          'uniqueID': req.files[i].key,
-          'campaignName': req.body.campaignName,
-          'adName': req.files[i].originalname,
-          'email': req.session.email,
-          'maxLat': Number.parseFloat(req.body.maxLat),
-          'maxLng': Number.parseFloat(req.body.maxLng),
-          'minLat': Number.parseFloat(req.body.minLat),
-          'minLng': Number.parseFloat(req.body.minLng),
-          'description': req.body.description,
-          'numImpressions': '0',
-          'file': {'bucket': req.files[i].bucket, 'key': req.files[i].key, 'region': 'us-east-1' }
+          'uniqueID': {
+            S: req.files[i].key
+          }, 
+          'campaignName': {
+            S: req.body.campaignName
+          }, 
+          'adName': {
+            S: req.files[i].originalname
+          },
+          'email': {
+            S: req.session.email
+          },
+          'maxLat': {
+            N: req.body.maxLat
+          },
+          'maxLng': {
+            N: req.body.maxLng
+          },
+          'minLat': {
+            N: req.body.minLat
+          },
+          'minLng': {
+            N: req.body.minLng
+          },
+          'maxLng#minLat#minLng': {
+            S: req.body.maxLng + '#' + req.body.minLat + '#' + req.body.minLng
+          },
+          'description': {
+            S: req.body.description
+          },
+          'numImpressions': {
+            N: '0'
+          },
+          'file': {'M': {'bucket': {'S': req.files[i].bucket}, 'key': {'S': req.files[i].key}, 'region': {'S': 'us-east-1'}}}
         }, 
+        ReturnConsumedCapacity: 'TOTAL', 
         TableName: 'Ad-hlqdhevr3jbxlifobmcnha2vxu-adio'
       };
-      docClient.put(params, function(err, data) {
+      dynamoDB.putItem(params, function(err, data) {
         if (err) {
           console.log(err, err.stack); 
         } else {
@@ -73,11 +96,59 @@ app.post('/audio', upload.array('ad', 5), function (req, res, next) {
         } 
       });
     }
-    res.send({redirectUrl: '/account'});
   } else {
     console.log('Error!');
   }  
 });
+
+// const upload = multer({
+//   storage: multerS3({
+//     s3: s3,
+//     bucket: 'adio-1131216-adio',
+//     acl: 'public-read',
+//     key: function (req, file, cb) {
+//       var path = req.session.email + '_' + Date.now() + '_' + file.originalname;
+//       cb(null, path);
+//     }
+//   })
+// })
+
+// app.use(upload.array());
+// app.post('/audio', upload.array('ad', 5), function (req, res, next) {
+//   if (req.files) {
+//     console.log('Successfully uploaded ad to s3!');
+    
+//     for (i = 0; i < req.files.length; i++) {
+//       var params = {
+//         Item: {
+//           'uniqueID': req.files[i].key,
+//           'campaignName': req.body.campaignName,
+//           'adName': req.files[i].originalname,
+//           'email': req.session.email,
+//           'maxLat': Number.parseFloat(req.body.maxLat),
+//           'maxLng': Number.parseFloat(req.body.maxLng),
+//           'minLat': Number.parseFloat(req.body.minLat),
+//           'minLng': Number.parseFloat(req.body.minLng),
+//           'description': req.body.description,
+//           'numImpressions': '0',
+//           'file': {'bucket': req.files[i].bucket, 'key': req.files[i].key, 'region': 'us-east-1' }
+//         }, 
+//         TableName: 'Ad-hlqdhevr3jbxlifobmcnha2vxu-adio'
+//       };
+//       docClient.put(params, function(err, data) {
+//         if (err) {
+//           console.log(err, err.stack); 
+//         } else {
+//           console.log('Successfully put into Ads dynamodb!')
+//           console.log(data);
+//         } 
+//       });
+//     }
+//     res.send({redirectUrl: '/account'});
+//   } else {
+//     console.log('Error!');
+//   }  
+// });
 
 app.post('/deleteFiles', routes.delete_audio);
 app.post('/editCampaign', upload.array('ad', 5), function (req, res) {
@@ -153,6 +224,6 @@ app.post('/editCampaign', upload.array('ad', 5), function (req, res) {
   
 });
 
-http.listen(process.env.PORT);
-// http.listen(8080);
-// console.log('Server running on port 8080.');
+// http.listen(process.env.PORT);
+http.listen(8080);
+console.log('Server running on port 8080.');
