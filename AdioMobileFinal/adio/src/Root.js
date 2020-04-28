@@ -154,8 +154,7 @@ export default class Root extends React.Component {
         }
         if (!this.state.sessionActive) {
             this.setState({ sessionActive: true });
-            timer.setInterval("ads", this.playAd, 5000);
-            // timer.setInterval("ads", this.playAd, this.state.adInterval * 60000);
+            timer.setInterval("ads", this.playAd, this.state.adInterval * 60000);
         } else {
             this.setState({sessionActive: false});
             if (this.state.isPlaying) {
@@ -238,17 +237,13 @@ export default class Root extends React.Component {
         }
         
         let location = await Location.getCurrentPositionAsync({});
-        // this.setState({ currLat: location.coords.latitude, currLong: location.coords.longitude });
-        // this.setState({ currLat: 40.3869957, currLong: -74.5335435999999 });
-        // this.setState({ currLat: 50, currLong: 50 });
-        this.setState({ currLat: 39.942335, currLong: -75.178789});
+        this.setState({ currLat: location.coords.latitude, currLong: location.coords.longitude });
         console.log("Current location is " + this.state.currLat + " " + this.state.currLong);
     };
 
     getAdsList = async () => {
         console.log("Refresh ad list");
         await this._getLocationAsync();
-        console.log("getting ads at " + this.state.currLat + " " + this.state.currLong);
         try {
             const response = await API.graphql(graphqlOperation(queries.listAds, {
                 filter: {

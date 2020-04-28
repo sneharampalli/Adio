@@ -16,12 +16,6 @@ export default class Settings extends React.Component {
     }
 
     async componentDidMount() {
-        // Auth.currentAuthenticatedUser({}).then(user => 
-        //     this.setState({ initials: user.attributes.name.charAt(0).toUpperCase() + user.attributes.family_name.charAt(0).toUpperCase(), 
-        //         name: user.attributes.name + ' ' + user.attributes.family_name, 
-        //         email: user.attributes.email,
-        //         phone: user.attributes.phone_number})
-        // )
     }
 
 
