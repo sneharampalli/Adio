@@ -7,7 +7,7 @@
    "dependencies": {
       "async": "*",
       "athena-express": "^5.1.1",
-      "aws-sdk": "^2.585.0",
+      "aws-sdk": "^2.814.0",
       "dtrace-provider": "^0.8.8",
       "dynamodb": "^1.2.1",
       "ejs": "^3.0.1",
